@@ -1,0 +1,8 @@
+%header.subhead#overview
+  %h2 Edit Catalog
+  .subnav
+    %ul.nav.nav-pills
+      %li= link_to "Show", [:admin, @catalog]
+      %li= link_to "View All", admin_catalogs_path
+
+= render 'form'

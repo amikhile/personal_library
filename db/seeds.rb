@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -8,8 +10,8 @@
 
 puts '--> Roles'
 [
-    {:name => 'Admin', :description => 'יכול הכל'},
-    {:name => 'SimpleUser', :description => 'User to work with the personal library'},
+    {:name => 'Admin', :description => 'כל יכול'},
+    {:name => 'SimpleUser', :description => 'User to work with the personal library'}
 ].each{|r| Role.find_or_create_by_name(r)}
 
 puts '--> Users'

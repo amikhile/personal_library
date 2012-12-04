@@ -1,0 +1,11 @@
+= simple_form_for [@filter] do |f|
+  = display_actions f, @filter.id ? filter_url(@filter) :filters_url
+  %hr.soften
+  = display_errors f
+
+  .filters
+    = f.input :name, :label => 'Name'
+    = f.input :text, :label => 'Text',:as => :string
+    = f.input :from_date,:as => :date
+    = f.input :to_date,:as => :date
+

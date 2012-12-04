@@ -1,0 +1,21 @@
+%header.subhead#overview
+  %h2 label
+  .subnav
+    %ul.nav.nav-pills
+      -if can?(:update, @label)
+        %li
+          = link_to "Edit", edit_label_path(@label)
+      -if can?(:destroy, @label)
+        %li
+          = link_to "Destroy", label_path(@label), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
+      -if can?(:read, @label)
+        %li
+          = link_to "View All", labels_path
+
+%section.well
+  %p
+    %strong label:
+  = display_show_item('Name', @label.name)
+  = display_show_item('Text', @label.text)
+  = display_show_item('Created', @label.created.to_s(:long_ordinal))
+  = display_show_item('Updated', @label.updated.to_s(:long_ordinal))

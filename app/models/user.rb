@@ -21,4 +21,8 @@ class User < ActiveRecord::Base
     update_attribute column, token
   end
 
+  def role?(role)
+    return !!self.roles.find_by_name(role.to_s.camelize)
+  end
+
 end

@@ -1,0 +1,23 @@
+%header.subhead#overview
+  %h2 Filter
+  .subnav
+    %ul.nav.nav-pills
+      -if can?(:update, @filter)
+        %li
+          = link_to "Edit", edit_filter_path(@filter)
+      -if can?(:destroy, @filter)
+        %li
+          = link_to "Destroy", filter_path(@filter), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
+      -if can?(:read, @filter)
+        %li
+          = link_to "View All", filters_path
+
+%section.well
+  %p
+    %strong Filter:
+  = display_show_item('Name', @filter.name)
+  = display_show_item('Text', @filter.text)
+  = display_show_item('From date', @filter.from_date)
+  = display_show_item('To date', @filter.to_date)
+  = display_show_item('Created', @filter.created.to_s(:long_ordinal))
+  = display_show_item('Updated', @filter.updated.to_s(:long_ordinal))

@@ -1,0 +1,8 @@
+%header.subhead#overview
+  %h2 Edit Filter
+  .subnav
+    %ul.nav.nav-pills
+      %li= link_to "Show", [@filter]
+      %li= link_to "View All", filters_path
+
+= render 'form'

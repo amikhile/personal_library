@@ -1,0 +1,28 @@
+%header.subhead#overview
+  %h2 labels
+  %p
+    = link_to "New label", new_label_path, :class => 'btn btn-success btn-large pull-right'
+
+%section
+  = paginate @labels
+
+  %table.table.table-striped.table-bordered.table-condensed
+    %thead
+      %tr
+        %th= "Name"
+        %th= 'Text'
+        %th= 'Actions'
+    %tbody
+      - @labels.each do |label|
+        %tr(class="#{cycle('odd', 'even')}")
+          %td.small= label.name
+          %td.small= label.text
+          -if can?(:read, label)
+            %td
+              = link_to 'Show', [ label]
+          -if can?(:update, label)
+            %td
+              = link_to 'Edit', edit_label_path(label)
+          -if can?(:destroy, label)
+            %td
+              = link_to 'Destroy', label_path(label), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'

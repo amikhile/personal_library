@@ -1,0 +1,23 @@
+%header.subhead#overview
+  %h2 User
+  .subnav
+    %ul.nav.nav-pills
+      -if can?(:update, @user)
+        %li
+          = link_to "Edit", edit_admin_user_path(@user)
+      -if can?(:destroy, @user)
+        %li
+          = link_to "Destroy", admin_user_path(@user), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
+      -if can?(:read, @user)
+        %li
+          = link_to "View All", admin_users_path
+
+%section.well
+  = display_show_item('ID', @user.id)
+  = display_show_item('Name', "#{@user.first_name} #{@user.last_name}")
+  = display_show_item('Email', @user.email)
+  = display_show_item('Roles', @user.roles.collect{|r| r.name}.join(', '))
+  = display_show_item('Department', @user.department.try(:name))
+  = display_show_item('Created At', @user.created_at.to_s(:long_ordinal))
+  = display_show_item('Last Sign In', @user.last_sign_in_at.blank? ? 'Never' : @user.last_sign_in_at.to_s(:long_ordinal))
+  = display_show_item('Sign In Count', @user.sign_in_count)

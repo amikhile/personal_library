@@ -8,7 +8,26 @@
 /.bundle
 
 # Ignore the default SQLite database.
-/db/*.sqlite3
+db/schema.rb
+db/*.sqlite3
+log/*
+tmp/**/*
+config/database.yml
+.idea/
+*_core.*
+*_delta.*
+*.bat
+*.sphinx.conf
+*.jar
+*.pid
+Gemfile.lock
+solr/data/**/*
+.sass-cache/
+public/assets/**/*
+public/assets/*
+php
+.rspec
+development.log
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
