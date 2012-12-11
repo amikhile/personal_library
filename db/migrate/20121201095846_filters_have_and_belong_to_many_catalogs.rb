@@ -1,5 +1,6 @@
-class FiltersHaveManyCatalogs < ActiveRecord::Migration
+class FiltersHaveAndBelongToManyCatalogs < ActiveRecord::Migration
   create_table :filters_catalogs, :id => false do |t|
-    t.references :filters, :catalogs
+    t.references :filters
+    t.integer :kmedia_catalog_id
   end
 end

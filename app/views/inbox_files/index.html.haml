@@ -1,51 +1,17 @@
 %header.subhead#overview
-  %h2 Catalogs
-  - if can?(:create, Catalog)
-    %p
-      = link_to "New Catalog", new_admin_catalog_path, :class => 'btn btn-success btn-large pull-right'
 
 %section
-  = paginate @catalogs
+  = paginate @files
 
   %table.table.table-striped.table-bordered.table-condensed
     %thead
       %tr
-        %th= sortable("catalognodename", "Catalog")
-        %th= sortable("label", "Label")
-        %th= sortable("created", "Created")
-        %th= sortable("updated", "Updated")
-        %th= sortable("secure", "Secure")
-        %th= sortable("visible", "Visibility")
-        %th= sortable("open", "State")
-        = display_actions_title(Catalog)
+        %th= 'File Name'
+        %th= 'Record Date'
+        %th= 'Description'
     %tbody
-      - @catalogs.each do |catalog|
+      - @files.each do |file|
         %tr(class="#{cycle('odd', 'even')}")
-          %td
-            - if catalog.parent
-              %span.small
-                = catalog.parent.catalognodename.gsub(/\//, ' / ')
-                (
-                = catalog.parentnodeid
-                ) /
-            %span.bold
-              = catalog.catalognodename.gsub(/\//, ' / ')
-              %span.small
-                (
-                = catalog.catalognodeid
-                )
-          %td.small= catalog.label
-          %td.small= catalog.created.to_date
-          %td.small= catalog.updated.to_date
-          %td= display_secure(catalog.secure)
-          %td= catalog.visible ? 'visible' : 'hidden'
-          %td= catalog.open ? 'open' : 'closed'
-          -if can?(:read, catalog)
-            %td
-              = link_to 'Show', [:admin, catalog]
-          -if can?(:update, catalog)
-            %td
-              = link_to 'Edit', edit_admin_catalog_path(catalog)
-          -if can?(:destroy, catalog)
-            %td
-              = link_to 'Destroy', admin_catalog_path(catalog), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
+          %td= file.name
+          %td= file.date
+          %td= file.description

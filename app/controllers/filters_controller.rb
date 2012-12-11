@@ -14,7 +14,7 @@ class FiltersController < ApplicationController
     @filter = Filter.new
     authorize! :create, @filter
 
-    @filter.attributes=params[:lesson]
+    @filter.attributes=params[:filter]
 
     if @filter.save
       redirect_to inbox_files_path, :notice => "Filter Successfully created"
@@ -35,7 +35,7 @@ class FiltersController < ApplicationController
     @filter = Filter.find(params[:id])
     authorize! :update, @filter
 
-    @filter.attributes = params[:lesson]
+    @filter.attributes = params[:filter]
     if @filter.save
       redirect_to filter_path(@filter), :notice => "Filter was Successfully updated"
     else

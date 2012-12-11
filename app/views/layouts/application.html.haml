@@ -1,21 +1,30 @@
 !!! 5
 %html
-%head
-%title
-= content_for?(:title) ? yield(:title) : "Personal Library"
-%meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
-= stylesheet_link_tag 'user'
-= javascript_include_tag 'user'
-= csrf_meta_tag
-= yield(:head)
-%body(data-spy="scroll" data-target=".subnav" data-offset="50" data-rendering="true")
-- if current_user
-= render 'layouts/navigation'
-- else
-.container
-= render 'layouts/navigation'
-.container
-- flash.each do |name, msg|
-- klass = (name.to_s == 'error' || name.to_s == 'alert') ? 'alert fade in alert-error' : 'alert fade in alert-info'
-= content_tag :div, "<a class='close' data-dismiss='alert' href='#'>&times;</a>#{msg}".html_safe, :class => klass
-.common_background= yield
+  %head
+    %title
+      = content_for?(:title) ? yield(:title) : "Personal Library"
+    %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
+    = stylesheet_link_tag 'user'
+    = javascript_include_tag 'user'
+    = csrf_meta_tag
+    = yield(:head)
+  %body(data-spy="scroll" data-target=".subnav" data-offset="50" data-rendering="true")
+    - if current_user
+      = render 'layouts/navigation'
+    - else
+      .container
+        = render 'layouts/navigation'
+    #leftcolumn{:style => "width:170px;margin:0;padding:0;margin-top:5px;float:left;"}
+      %h5.left
+        %span.left_h5
+          = yield(:filters)
+          - content_for :filters do
+            Filters
+    .container
+      - flash.each do |name, msg|
+        - klass = (name.to_s == 'error' || name.to_s == 'alert') ? 'alert fade in alert-error' : 'alert fade in alert-info'
+        = content_tag :div, "<a class='close' data-dismiss='alert' href='#'>&times;</a>#{msg}".html_safe, :class => klass
+      = yield
+      = yield(:javascripts)
+
+

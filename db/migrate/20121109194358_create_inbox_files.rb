@@ -6,6 +6,7 @@ class CreateInboxFiles < ActiveRecord::Migration
        t.integer :kmedia_id
        t.string :url
        t.text :description
+       t.boolean :archived, :default => false
       t.timestamps
     end
   end
