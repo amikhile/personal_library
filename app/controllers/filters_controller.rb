@@ -1,7 +1,12 @@
 class FiltersController < ApplicationController
   load_and_authorize_resource
+  before_filter :load_filters_and_labels
 
   def index
+    @filters = @filters.order(:id).page(params[:page])
+  end
+
+  def for_menu
     @filters = @filters.order(:id).page(params[:page])
   end
 
@@ -15,7 +20,7 @@ class FiltersController < ApplicationController
     authorize! :create, @filter
 
     @filter.attributes=params[:filter]
-
+    @filter.users << current_user
     if @filter.save
       redirect_to inbox_files_path, :notice => "Filter Successfully created"
     end
@@ -36,10 +41,18 @@ class FiltersController < ApplicationController
     authorize! :update, @filter
 
     @filter.attributes = params[:filter]
+    @filter.users << curent_user
     if @filter.save
       redirect_to filter_path(@filter), :notice => "Filter was Successfully updated"
     else
       render :action => 'edit'
     end
   end
+
+  protected
+  def load_filters_and_labels
+    @filters_for_menu = current_user.filters.order(:name)
+    @labels_for_menu =  current_user.labels.order(:name)
+  end
+
 end

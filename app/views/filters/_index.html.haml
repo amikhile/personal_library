@@ -1,0 +1,10 @@
+.well
+  %ul.nav.nav-list
+    %li.nav-header Filters
+    %li.active Inbox
+    - @filters_for_menu.each do |filter|
+      %li= filter.name
+    %li.divider
+    %li.nav-header Labels
+    - @labels_for_menu.each do |label|
+      %li= label.name

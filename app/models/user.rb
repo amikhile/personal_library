@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name
 
   has_and_belongs_to_many :roles, :uniq => true
+  has_and_belongs_to_many :labels, :uniq => true
+  has_and_belongs_to_many :filters, :uniq => true
 
   # Generate a token by looping and ensuring does not already exist.
   def generate_token(column = :reset_password_token)

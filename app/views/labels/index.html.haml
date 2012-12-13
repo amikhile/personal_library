@@ -1,5 +1,5 @@
 %header.subhead#overview
-  %h2 labels
+  %h2 Labels
   %p
     = link_to "New label", new_label_path, :class => 'btn btn-success btn-large pull-right'
 
@@ -10,13 +10,13 @@
     %thead
       %tr
         %th= "Name"
-        %th= 'Text'
+        %th= 'Description'
         %th= 'Actions'
     %tbody
       - @labels.each do |label|
         %tr(class="#{cycle('odd', 'even')}")
           %td.small= label.name
-          %td.small= label.text
+          %td.small= label.description
           -if can?(:read, label)
             %td
               = link_to 'Show', [ label]

@@ -1,6 +1,6 @@
 class LabelsController < ApplicationController
   load_and_authorize_resource
-
+  before_filter :load_filters_and_labels
 
   def index
     @labels = @labels.order(:id).page(params[:page])
@@ -16,7 +16,7 @@ class LabelsController < ApplicationController
     authorize! :create, @label
 
     @label.attributes=params[:label]
-
+    @label.users << current_user
     if @label.save
       redirect_to inbox_files_path, :notice => "Label Successfully created"
     end
@@ -43,4 +43,11 @@ class LabelsController < ApplicationController
       render :action => 'edit'
     end
   end
+
+  protected
+  def load_filters_and_labels
+    @filters_for_menu = current_user.filters.order(:name)
+    @labels_for_menu =  current_user.labels.order(:name)
+  end
+
 end

@@ -2,6 +2,8 @@ class InboxFilesController < ApplicationController
   require 'rest_client'
   require 'json'
   load_and_authorize_resource
+  before_filter :load_filters_and_labels
+
 
   def index
     @files = InboxFile.order(:id).page(params[:page])
@@ -44,6 +46,12 @@ class InboxFilesController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+
+  protected
+  def load_filters_and_labels
+    @filters_for_menu = current_user.filters.order(:name)
+    @labels_for_menu =  current_user.labels.order(:name)
   end
 
 
