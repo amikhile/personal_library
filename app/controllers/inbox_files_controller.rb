@@ -6,13 +6,20 @@ class InboxFilesController < ApplicationController
 
 
   def index
-    @files = InboxFile.order(:id).page(params[:page])
-    token = get_kmedia_token
+    authorize! :index, InboxFile
+    @filter = params[:filter]
+    if (@filter)
+      @files = InboxFile.joins(:filters).where("filters.id" => @filter).order(:id).page(params[:page])
+    else
+      @files = InboxFile.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
+      #@files =  InboxFile.order(:id).page(params[:page])
+    end
+    #token = get_kmedia_token
   end
 
   def new
     @file = InboxFile.new
-    authorize! :new, @filter
+    authorize! :new, @file
   end
 
   def create
@@ -51,7 +58,7 @@ class InboxFilesController < ApplicationController
   protected
   def load_filters_and_labels
     @filters_for_menu = current_user.filters.order(:name)
-    @labels_for_menu =  current_user.labels.order(:name)
+    @labels_for_menu = current_user.labels.order(:name)
   end
 
 
