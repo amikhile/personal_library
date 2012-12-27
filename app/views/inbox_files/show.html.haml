@@ -1,0 +1,23 @@
+%header.subhead#overview
+  %h2 File
+  .subnav
+    %ul.nav.nav-pills
+      -if can?(:update, @file)
+        %li
+          = link_to "Edit", edit_inbox_file_path(@file)
+      -if can?(:destroy, @file)
+        %li
+          = link_to "Destroy", inbox_file_path(@file), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
+      -if can?(:read, @file)
+        %li
+          = link_to "Back to Inbox", inbox_files_path
+
+%section.well
+  %p
+  = display_show_item('Name', @file.name)
+  = display_show_item('Date', @file.date)
+  = display_show_item('Description', @file.description)
+  = display_show_item('Url', @file.url)
+  = display_show_item('Archived', @file.archived)
+  = display_show_item('Created', @file.created_at.to_s(:long_ordinal))
+  = display_show_item('Updated', @file.updated_at.to_s(:long_ordinal))

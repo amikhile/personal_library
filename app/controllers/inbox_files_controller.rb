@@ -11,10 +11,10 @@ class InboxFilesController < ApplicationController
     if (@filter)
       @files = InboxFile.joins(:filters).where("filters.id" => @filter).order(:id).page(params[:page])
     else
-      @files = InboxFile.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
-      #@files =  InboxFile.order(:id).page(params[:page])
+      # inbox folder
+      @files = InboxFile.not_archived.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
     end
-    #token = get_kmedia_token
+    token = get_kmedia_token
   end
 
   def new
@@ -55,6 +55,15 @@ class InboxFilesController < ApplicationController
     end
   end
 
+  def archive
+    @file = InboxFile.find(params[:id])
+    authorize! :update, @file
+
+    @file.archived = params[:archived]
+    @file.save
+    redirect_to inbox_files_path
+  end
+
   protected
   def load_filters_and_labels
     @filters_for_menu = current_user.filters.order(:name)
@@ -66,15 +75,30 @@ class InboxFilesController < ApplicationController
 
   def get_kmedia_token
 
-    #response = RestClient.post 'http://localhost:4000/admin/api/tokens.json',
-    #                           :email => 'ana@email.com', :password => '123456', :content_type => :json
+    response = RestClient.post 'http://localhost:4000/admin/api/tokens.json',
+                               :email => 'ana@email.com', :password => '123456', :content_type => :json
 
-    response = RestClient.post 'http://kmedia.kbb1.com/admin/api/tokens.json',
-                               :email => 'annamik@gmail.com', :password => 'mili10', :content_type => :json
+    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/tokens.json',
+    #                           :email => 'annamik@gmail.com', :password => 'mili10', :content_type => :json
 
     hash = JSON.parse response
     token = hash['token']
 
+    get_content_types token
+
+  end
+
+
+  def get_content_types token
+    response = RestClient.post 'http://localhost:4000/admin/api/api/content_types.json',
+                               :auth_token => token, :content_type => :json
+
+    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/content_types.json',
+    #                           :auth_token => token, :content_type => :json
+
+
+    hash = JSON.parse response
+    content_types = hash['item']
   end
 
 

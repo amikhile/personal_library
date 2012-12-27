@@ -8,6 +8,7 @@
       = f.input :name, :label => 'name'
       = f.input :date
       = f.input :description, :label => 'description' ,:as => :string
-      = f.input :archived, :as => :boolean, :inline_label => 'Archive', :label => false
+      = f.input :url
+      = f.input :archived
   %hr.soften
   = display_actions f, inbox_files_url

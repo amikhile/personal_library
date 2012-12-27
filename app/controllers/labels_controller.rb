@@ -37,6 +37,7 @@ class LabelsController < ApplicationController
     authorize! :update, @label
 
     @label.attributes = params[:label]
+    @label.users << current_user unless @label.users.include? current_user
     if @label.save
       redirect_to label_path(@label), :notice => "label was Successfully updated"
     else

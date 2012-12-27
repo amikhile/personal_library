@@ -13,7 +13,11 @@ PersonalLibrary::Application.routes.draw do
 
   resources :filters
   resources :labels
-  resources :inbox_files
+  resources :inbox_files do
+    member do
+      put 'archive'
+    end
+  end
 
   root :to => "inbox_files#index"
 

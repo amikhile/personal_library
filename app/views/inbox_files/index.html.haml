@@ -9,9 +9,14 @@
         %th= 'File Name'
         %th= 'Record Date'
         %th= 'Description'
+        %th= 'Actions'
     %tbody
       - @files.each do |file|
         %tr(class="#{cycle('odd', 'even')}")
-          %td= file.name
+          %td= link_to file.name, file.url
           %td= file.date
           %td= file.description
+          %td= link_to 'Show', [file]
+          %td= link_to 'Edit', edit_inbox_file_path(file)
+          %td= button_to 'Archive', archive_inbox_file_path(file, :archived => true), :class => "btn btn-small", :method => :put
+          %td= link_to 'Destroy', inbox_file_path(file), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'

@@ -41,7 +41,7 @@ class FiltersController < ApplicationController
     authorize! :update, @filter
 
     @filter.attributes = params[:filter]
-    @filter.users << curent_user
+    @filter.users <<  current_user unless @filter.users.include? current_user
     if @filter.save
       redirect_to filter_path(@filter), :notice => "Filter was Successfully updated"
     else

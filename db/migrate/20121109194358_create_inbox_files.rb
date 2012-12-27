@@ -1,3 +1,4 @@
+
 class CreateInboxFiles < ActiveRecord::Migration
   def change
     create_table :inbox_files do |t|
@@ -7,7 +8,7 @@ class CreateInboxFiles < ActiveRecord::Migration
        t.string :url
        t.text :description
        t.boolean :archived, :default => false
-      t.timestamps
+       t.timestamps
     end
   end
 end
