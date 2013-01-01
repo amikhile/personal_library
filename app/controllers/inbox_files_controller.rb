@@ -14,7 +14,6 @@ class InboxFilesController < ApplicationController
       # inbox folder
       @files = InboxFile.not_archived.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
     end
-    token = get_kmedia_token
   end
 
   def new
@@ -84,7 +83,9 @@ class InboxFilesController < ApplicationController
     hash = JSON.parse response
     token = hash['token']
 
-    get_content_types token
+   # get_content_types token
+    #get_file_types token
+    get_languages token
 
   end
 
@@ -99,6 +100,30 @@ class InboxFilesController < ApplicationController
 
     hash = JSON.parse response
     content_types = hash['item']
+  end
+
+  def get_file_types token
+    response = RestClient.post 'http://localhost:4000/admin/api/api/file_types.json',
+                               :auth_token => token, :content_type => :json
+
+    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/file_types.json',
+    #                           :auth_token => token, :content_type => :json
+
+
+    hash = JSON.parse response
+    file_types = hash['item']
+  end
+
+  def get_languages(token)
+    response = RestClient.post 'http://localhost:4000/admin/api/api/languages.json',
+                               :auth_token => token, :content_type => :json
+
+    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/languages.json',
+    #                           :auth_token => token, :content_type => :json
+
+
+    hash = JSON.parse response
+    hash['item']
   end
 
 

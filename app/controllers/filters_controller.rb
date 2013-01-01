@@ -1,6 +1,6 @@
 class FiltersController < ApplicationController
   load_and_authorize_resource
-  before_filter :load_filters_and_labels
+  before_filter :load_filters_and_labels, :load_content_types
 
   def index
     @filters = @filters.order(:id).page(params[:page])
@@ -41,7 +41,7 @@ class FiltersController < ApplicationController
     authorize! :update, @filter
 
     @filter.attributes = params[:filter]
-    @filter.users <<  current_user unless @filter.users.include? current_user
+    @filter.users << current_user unless @filter.users.include? current_user
     if @filter.save
       redirect_to filter_path(@filter), :notice => "Filter was Successfully updated"
     else
@@ -52,7 +52,10 @@ class FiltersController < ApplicationController
   protected
   def load_filters_and_labels
     @filters_for_menu = current_user.filters.order(:name)
-    @labels_for_menu =  current_user.labels.order(:name)
+    @labels_for_menu = current_user.labels.order(:name)
   end
 
+  def load_content_types
+    @content_types = ContentType.get_content_types.map { |ct| [ct['name'], ct['id']] }
+  end
 end

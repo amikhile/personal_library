@@ -8,4 +8,6 @@
     = f.input :text, :label => 'Text',:as => :string
     = f.input :from_date,:as => :date
     = f.input :to_date,:as => :date
+    = f.association :content_types, :collection => @content_types, :label => 'Type', :prompt => '-- Please select content type --', :input_html => {:class => 'span5'}
+
 
