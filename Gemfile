@@ -38,6 +38,13 @@ gem 'rest-client'
 gem 'jsonify-rails'
 gem 'yajl-ruby', :require => "yajl" # Required if we want json with utf8 strings
 
+group :development, :test do
+  gem "ruby-debug-base19x", '>= 0.11.30.pre10'
+  gem "ruby-debug-ide", '>= 0.4.17.beta14'
+  gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+  gem "sextant" # rake routes in the browser
+  gem 'bullet'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -14,6 +14,7 @@ class InboxFilesController < ApplicationController
       # inbox folder
       @files = InboxFile.not_archived.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
     end
+
   end
 
   def new

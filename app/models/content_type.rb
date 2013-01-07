@@ -1,6 +1,6 @@
 class ContentType < ActiveRecord::Base
 
-  has_and_belongs_to_many :filters, :join_table => "filters_content_types"
+  has_and_belongs_to_many :filters
 
   def self.get_content_types
     if ContentType.all.empty?
