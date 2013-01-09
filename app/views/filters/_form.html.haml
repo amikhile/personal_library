@@ -10,5 +10,6 @@
     = f.input :to_date,:as => :date
     = f.association :content_types, :collection => @content_types, :label => 'Content Type', :prompt => '-- Please select content type --', :input_html => {:class => 'span5'}
     = f.association :media_types, :collection => @media_types, :label => 'Media Type', :prompt => '-- Please select media type --', :input_html => {:class => 'span5'}
+    = f.association :languages, :collection => @languages, :label => 'Language', :prompt => '-- Please select language --', :input_html => {:class => 'span5'}
 
 

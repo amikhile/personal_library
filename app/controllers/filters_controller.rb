@@ -58,5 +58,6 @@ class FiltersController < ApplicationController
   def load_from_kmedia
     @content_types = ContentType.get_content_types.map { |ct| [ct['name'], ct['id']] }
     @media_types = MediaType.get_media_types.map { |mt| [mt['name'], mt['id']] }
+    @languages = Language.get_languages.map { |l| [l['name'], l['id']] }
   end
 end
