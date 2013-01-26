@@ -16,6 +16,7 @@ PersonalLibrary::Application.routes.draw do
   resources :inbox_files do
     member do
       put 'archive'
+      post 'description'
     end
   end
 

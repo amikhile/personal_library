@@ -58,5 +58,13 @@ module PersonalLibrary
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    config.assets.paths << Rails.root.join("app","assets","bootstrap-editable","css")
+    config.assets.paths << Rails.root.join("app","assets","bootstrap-editable","img")
+    config.assets.paths << Rails.root.join("app","assets","bootstrap-editable","js")
+
+
+    # add these three lines:
+    #config.sass.load_paths ||= []
+   # config.sass.load_paths << "#{Rails.root}/lib/assets/bootstrap-editable"
   end
 end

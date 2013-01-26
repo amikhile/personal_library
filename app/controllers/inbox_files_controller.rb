@@ -47,12 +47,20 @@ class InboxFilesController < ApplicationController
     @file = InboxFile.find(params[:id])
     authorize! :update, @file
 
-    @file.attributes = params[:inbox_file]
-    if @file.save
+    if @file.update_attributes(params[:inbox_file])
       redirect_to filter_path(@file), :notice => "File was Successfully updated"
     else
       render :action => 'edit'
     end
+  end
+
+  def description
+    @file = InboxFile.find(params[:id])
+    authorize! :update, @file
+
+    @file.description = params[:value]
+    @file.save
+    redirect_to inbox_files_path
   end
 
   def archive
@@ -84,7 +92,7 @@ class InboxFilesController < ApplicationController
     hash = JSON.parse response
     token = hash['token']
 
-   # get_content_types token
+    # get_content_types token
     #get_file_types token
     get_languages token
 

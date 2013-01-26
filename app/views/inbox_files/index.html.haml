@@ -15,8 +15,10 @@
         %tr(class="#{cycle('odd', 'even')}")
           %td= link_to file.name, file.url
           %td= file.date
-          %td= file.description
+          %td.editable
+            %a{:id =>"description#{file.id}", "data-original-title" => "Enter description", "data-name"=>"description", "data-pk" => file.id, "data-type" => "text", "data-url" => description_inbox_file_url(file), :href => "#"}= file.description
           %td= link_to 'Show', [file]
           %td= link_to 'Edit', edit_inbox_file_path(file)
           %td= button_to 'Archive', archive_inbox_file_path(file, :archived => true), :class => "btn btn-small", :method => :put
           %td= link_to 'Destroy', inbox_file_path(file), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
+
