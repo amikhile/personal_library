@@ -11,7 +11,11 @@ PersonalLibrary::Application.routes.draw do
     end
   end
 
-  resources :filters
+  resources :filters do
+    collection do
+      get 'kmedia_catalogs'
+    end
+  end
   resources :labels
   resources :inbox_files do
     member do

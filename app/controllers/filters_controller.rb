@@ -20,6 +20,7 @@ class FiltersController < ApplicationController
     authorize! :create, @filter
 
     @filter.attributes=params[:filter]
+    @filter.catalogs=params[:selected_catalogs]
     @filter.users << current_user
     if @filter.save
       redirect_to inbox_files_path, :notice => "Filter Successfully created"
@@ -41,6 +42,7 @@ class FiltersController < ApplicationController
     authorize! :update, @filter
 
     @filter.attributes = params[:filter]
+    @filter.catalogs=params[:selected_catalogs]
     @filter.users << current_user unless @filter.users.include? current_user
     if @filter.save
       redirect_to filter_path(@filter), :notice => "Filter was Successfully updated"
@@ -49,7 +51,35 @@ class FiltersController < ApplicationController
     end
   end
 
-  protected
+  def kmedia_catalogs
+    catalog_id = params[:catalog_id]
+    token = KmediaToken.get_token
+    response = RestClient.post 'http://localhost:4000/admin/api/api/catalogs.json',
+                               :auth_token => token, :content_type => :json, :root => catalog_id
+
+    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/catalogs.json',
+    #                           :auth_token => token, :content_type => :json
+
+
+    hash = JSON.parse response
+    tree = transform_for_tree(hash['item'])
+    render json: tree.to_json
+  end
+
+
+  private
+
+  def transform_for_tree(catalogs)
+    catalogs.map { |c|
+      {
+        :data => c['name'],
+        :attr => {:id => c['id']},
+        :state => "closed",
+      }
+    }
+  end
+
+
   def load_filters_and_labels
     @filters_for_menu = current_user.filters.order(:name)
     @labels_for_menu = current_user.labels.order(:name)
@@ -59,5 +89,9 @@ class FiltersController < ApplicationController
     @content_types = ContentType.get_content_types.map { |ct| [ct['name'], ct['id']] }
     @media_types = MediaType.get_media_types.map { |mt| [mt['name'], mt['id']] }
     @languages = Language.get_languages.map { |l| [l['name'], l['id']] }
+  #  @catalogs = catalogs
+    t="j"
   end
+
+
 end

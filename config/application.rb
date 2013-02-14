@@ -63,6 +63,9 @@ module PersonalLibrary
     config.assets.paths << Rails.root.join("app","assets","bootstrap-editable","js")
 
 
+    config.assets.paths << Rails.root.join("vendor","assets","jstree_pre1.0_fix_1","themes","default")
+    config.assets.paths << Rails.root.join("vendor","assets","jstree_pre1.0_fix_1","js")
+
     # add these three lines:
     #config.sass.load_paths ||= []
    # config.sass.load_paths << "#{Rails.root}/lib/assets/bootstrap-editable"
