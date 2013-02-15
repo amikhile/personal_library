@@ -24,12 +24,8 @@ class ContentType < ActiveRecord::Base
 
   def self.get_from_kmedia
     token = KmediaToken.get_token
-    response = RestClient.post 'http://localhost:4000/admin/api/api/content_types.json',
+    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/content_types.json",
                                :auth_token => token, :content_type => :json
-
-    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/content_types.json',
-    #                           :auth_token => token, :content_type => :json
-
 
     hash = JSON.parse response
     hash['item']

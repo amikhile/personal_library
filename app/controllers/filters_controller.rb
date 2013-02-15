@@ -54,13 +54,8 @@ class FiltersController < ApplicationController
   def kmedia_catalogs
     catalog_id = params[:catalog_id]
     token = KmediaToken.get_token
-    response = RestClient.post 'http://localhost:4000/admin/api/api/catalogs.json',
+    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/catalogs.json",
                                :auth_token => token, :content_type => :json, :root => catalog_id
-
-    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/catalogs.json',
-    #                           :auth_token => token, :content_type => :json
-
-
     hash = JSON.parse response
     tree = transform_for_tree(hash['item'])
     render json: tree.to_json
