@@ -32,6 +32,15 @@ HAML
     engine.render self, :form => f
   end
 
+  def display_actions_filter_form(f, location)
+    engine = Haml::Engine.new <<-HAML
+.actions
+  %button.btn.btn-primary.btn-large{:onclick => "get_selected_catalogs(this); return true", :type => 'submit', :'data-disable-with' => 'Please wait...'} Update
+  %button.btn.btn-large{:onclick => "location.href='#{location}'; return false;", :type => 'button'} Cancel
+    HAML
+    engine.render self, :form => f
+  end
+
   def display_actions_with_mark(f, location)
     engine = Haml::Engine.new <<-HAML
 .actions

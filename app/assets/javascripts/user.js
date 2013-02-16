@@ -27,29 +27,21 @@ $(document).ready(function () {
                 "url":"/filters/kmedia_catalogs.json",
                 "data": function (n) {
                     return { catalog_id:n.attr ? n.attr("id") : ""};
-                    }
-
-}
+                    },
+                "success": function (new_data) {
+                    return new_data;
+                },
+                "correct_state" : true
+            }
         },
         "themes":{
             "theme":"apple",
             "icons":false,
             "dots":false
         },
-        "plugins":[ "themes", "json_data", "ui", "checkbox"]
-   }).bind("check_node.jstree", function(e,data) {
-            var checked_ids = [];
-            $("#catalogs").jstree("get_checked",null,true).each(function(){
-                checked_ids.push(this.id);
-            });
-            document.getElementById('selected_catalogs').value = checked_ids.join(",");
-    }).bind("uncheck_node.jstree", function(e,data) {
-        var checked_ids = [];
-        $("#catalogs").jstree("get_checked",null,true).each(function(){
-            checked_ids.push(this.id);
-        });
-        document.getElementById('selected_catalogs').value = checked_ids.join(",");
-    });
+        "plugins":[ "themes", "json_data", "ui", "checkbox"],
+        "checkbox": { "override_ui" : true}
+    })
 });
 
 
