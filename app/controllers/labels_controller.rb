@@ -3,7 +3,7 @@ class LabelsController < ApplicationController
   before_filter :load_filters_and_labels
 
   def index
-    @labels = @labels.order(:id).page(params[:page])
+    @labels = current_user.labels.order(:id).page(params[:page])
   end
 
   def new
@@ -18,7 +18,7 @@ class LabelsController < ApplicationController
     @label.attributes=params[:label]
     @label.users << current_user
     if @label.save
-      redirect_to inbox_files_path, :notice => "Label Successfully created"
+      redirect_to labels_path, :notice => "Label Successfully created"
     end
   end
 

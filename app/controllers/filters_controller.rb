@@ -3,11 +3,7 @@ class FiltersController < ApplicationController
   before_filter :load_filters_and_labels, :load_from_kmedia
 
   def index
-    @filters = @filters.order(:id).page(params[:page])
-  end
-
-  def for_menu
-    @filters = @filters.order(:id).page(params[:page])
+    @filters = current_user.filters.order(:id).page(params[:page])
   end
 
   def new
@@ -23,7 +19,7 @@ class FiltersController < ApplicationController
     @filter.catalogs=params[:selected_catalogs]
     @filter.users << current_user
     if @filter.save
-      redirect_to inbox_files_path, :notice => "Filter Successfully created"
+      redirect_to filters_path, :notice => "Filter Successfully created"
     end
   end
 
@@ -84,8 +80,6 @@ class FiltersController < ApplicationController
     @content_types = ContentType.get_content_types.map { |ct| [ct['name'], ct['id']] }
     @media_types = MediaType.get_media_types.map { |mt| [mt['name'], mt['id']] }
     @languages = Language.get_languages.map { |l| [l['name'], l['id']] }
-  #  @catalogs = catalogs
-    t="j"
   end
 
 
