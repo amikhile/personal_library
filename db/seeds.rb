@@ -16,7 +16,7 @@ puts '--> Roles'
 
 puts '--> Users'
 [
-    {:user => {:email => 'mgorodetsky@gmoail.com', :password => '123456'}, :role => 'Admin'},
+    {:user => {:email => 'mgorodetsky@gmail.com', :password => '123456'}, :role => 'Admin'},
     {:user => {:email => 'gshilin@gmail.com', :password => '123456'}, :role => 'Admin'},
     {:user => {:email => 'ramigg@gmail.com', :password => '123456'}, :role => 'Admin'},
     {:user => {:email => 'annamik@gmail.com', :password => '123456'}, :role => 'Admin'}
