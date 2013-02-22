@@ -10,5 +10,7 @@
       = f.input :description, :label => 'description' ,:as => :string
       = f.input :url
       = f.input :archived
+      = f.association :filters, :collection =>current_user.filters
+      = f.association :labels, :collection =>current_user.labels
   %hr.soften
   = display_actions f, inbox_files_url
