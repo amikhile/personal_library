@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.5'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -26,7 +26,7 @@ end
 
 gem 'jquery-rails'
 gem 'kaminari', :git => 'https://github.com/amatsuda/kaminari.git' #for pagination
-gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
+gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git', :branch => 'v2.1'
 gem 'nokogiri'
 
 gem "cancan"
@@ -37,6 +37,9 @@ gem 'rest-client'
 
 gem 'jsonify-rails'
 gem 'yajl-ruby', :require => "yajl" # Required if we want json with utf8 strings
+gem 'clockwork'
+gem 'delayed_job'
+
 
 group :development, :test do
   gem "ruby-debug-base19x", '>= 0.11.30.pre10'

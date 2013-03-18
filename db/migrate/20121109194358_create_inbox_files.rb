@@ -2,10 +2,7 @@
 class CreateInboxFiles < ActiveRecord::Migration
   def change
     create_table :inbox_files do |t|
-       t.string :name
-       t.date :date
-       t.integer :kmedia_id
-       t.string :url
+       t.belongs_to :kmedia_file
        t.text :description
        t.boolean :archived, :default => false
        t.timestamps

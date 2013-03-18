@@ -5,6 +5,7 @@ class CreateFilters < ActiveRecord::Migration
       t.text :text
       t.date :from_date
       t.date :to_date
+      t.date :last_sync
       t.timestamps
     end
   end

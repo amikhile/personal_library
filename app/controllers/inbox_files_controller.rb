@@ -9,34 +9,35 @@ class InboxFilesController < ApplicationController
     authorize! :index, InboxFile
     @filter = params[:filter]
     if (@filter)
-      @files = InboxFile.joins(:filters).where("filters.id" => @filter).order(:id).page(params[:page])
+      sync_with_kmedia(@filter)
+      @inbox_files = InboxFile.joins(:filters).where("filters.id" => @filter).order(:id).page(params[:page])
     else
       # inbox folder
-      @files = InboxFile.not_archived.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
+      @inbox_files = InboxFile.not_archived.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
     end
 
   end
 
   def new
-    @file = InboxFile.new
-    authorize! :new, @file
+    @inbox_file= InboxFile.new
+    authorize! :new, @inbox_file
   end
 
   def create
-    @file = InboxFile.new
-    authorize! :create, @file
+    @inbox_file = InboxFile.new
+    authorize! :create, @inbox_file
 
-    @file.attributes = params[:inbox_file]
+    @inbox_file.attributes = params[:inbox_file]
 
-    if @file.save
+    if @inbox_file.save
       redirect_to inbox_files_path, :notice => "File Successfully created"
     end
   end
 
   def show
     begin
-      @file = InboxFile.find(params[:id])
-      authorize! :show, @file
+      @inbox_file = InboxFile.find(params[:id])
+      authorize! :show, @inbox_file
     rescue
       redirect_to inbox_file_path, :alert => "There is no File with ID=#{params[:id]}."
       return
@@ -44,96 +45,54 @@ class InboxFilesController < ApplicationController
   end
 
   def update
-    @file = InboxFile.find(params[:id])
-    authorize! :update, @file
+    @inbox_file = InboxFile.find(params[:id])
+    authorize! :update, @inbox_file
 
-    if @file.update_attributes(params[:inbox_file])
-      redirect_to filter_path(@file), :notice => "File was Successfully updated"
+    if @inbox_file.update_attributes(params[:inbox_file])
+      redirect_to filter_path(@inbox_file), :notice => "File was Successfully updated"
     else
       render :action => 'edit'
     end
   end
 
   def description
-    @file = InboxFile.find(params[:id])
-    authorize! :update, @file
+    @inbox_file = InboxFile.find(params[:id])
+    authorize! :update, @inbox_file
 
-    @file.description = params[:value]
-    @file.save
+    @inbox_file.description = params[:value]
+    @inbox_file.save
     redirect_to inbox_files_path
   end
 
   def archive
-    @file = InboxFile.find(params[:id])
-    authorize! :update, @file
+    @inbox_file = InboxFile.find(params[:id])
+    authorize! :update, @inbox_file
 
-    @file.archived = params[:archived]
-    @file.save
+    @inbox_file.archived = params[:archived]
+    @inbox_file.save
     redirect_to inbox_files_path
   end
 
-  protected
+  def destroy
+    @inbox_file = InboxFile.find(params[:id])
+    authorize! :destroy, @inbox_file
+    @inbox_file.destroy
+    redirect_to inbox_files_path, :notice => "File deleted."
+  end
+
+
+  private
+
   def load_filters_and_labels
     @filters_for_menu = current_user.filters.order(:name)
     @labels_for_menu = current_user.labels.order(:name)
   end
 
 
-  private
-
-  def get_kmedia_token
-
-    response = RestClient.post 'http://localhost:4000/admin/api/tokens.json',
-                               :email => 'ana@email.com', :password => '123456', :content_type => :json
-
-    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/tokens.json',
-    #                           :email => 'annamik@gmail.com', :password => 'mili10', :content_type => :json
-
-    hash = JSON.parse response
-    token = hash['token']
-
-    # get_content_types token
-    #get_file_types token
-    get_languages token
-
-  end
-
-
-  def get_content_types token
-    response = RestClient.post 'http://localhost:4000/admin/api/api/content_types.json',
-                               :auth_token => token, :content_type => :json
-
-    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/content_types.json',
-    #                           :auth_token => token, :content_type => :json
-
-
-    hash = JSON.parse response
-    content_types = hash['item']
-  end
-
-  def get_file_types token
-    response = RestClient.post 'http://localhost:4000/admin/api/api/file_types.json',
-                               :auth_token => token, :content_type => :json
-
-    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/file_types.json',
-    #                           :auth_token => token, :content_type => :json
-
-
-    hash = JSON.parse response
-    file_types = hash['item']
-  end
-
-  def get_languages(token)
-    response = RestClient.post 'http://localhost:4000/admin/api/api/languages.json',
-                               :auth_token => token, :content_type => :json
-
-    #response = RestClient.post 'http://kmedia.kbb1.com/admin/api/api/languages.json',
-    #                           :auth_token => token, :content_type => :json
-
-
-    hash = JSON.parse response
-    hash['item']
-  end
+   def sync_with_kmedia(filter_id)
+     job = FilesSyncJob.new(filter_id)
+     job.perform
+   end
 
 
 end
