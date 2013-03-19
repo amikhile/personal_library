@@ -3,7 +3,7 @@
   %hr.soften
   = display_errors f
 
-  .filters
+  .filters#filters{value: @filter.id}
     = f.input :name, :label => 'Name'
     = f.input :text, :label => 'Text',:as => :string
     = f.input :from_date,:as => :date

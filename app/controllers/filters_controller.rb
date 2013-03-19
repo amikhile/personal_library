@@ -49,25 +49,32 @@ class FiltersController < ApplicationController
 
   def kmedia_catalogs
     catalog_id = params[:catalog_id]
+    selected_catalogs = Filter.find(params[:filter_id]).catalogs.split(",") rescue []
     token = KmediaToken.get_token
     response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/catalogs.json",
                                :auth_token => token, :content_type => :json, :root => catalog_id
     hash = JSON.parse response
-    tree = transform_for_tree(hash['item'])
+    tree = transform_for_tree(hash['item'], selected_catalogs)
     render json: tree.to_json
   end
 
 
   private
 
-  def transform_for_tree(catalogs)
+  def transform_for_tree(catalogs, selected_catalogs)
     catalogs.map { |c|
       {
-        :data => c['name'],
-        :attr => {:id => c['id']},
-        :state => "closed",
+          :data => c['name'],
+          :attr => {:id => c['id'], :class => get_checked(c['id'], selected_catalogs)},
+          :state => "closed",
       }
     }
+  end
+
+  def get_checked(catalog_id, selected_ids)
+    css_class = "jstree-unchecked"
+    css_class = "jstree-checked" if selected_ids.include? catalog_id.to_s()
+    css_class
   end
 
 
