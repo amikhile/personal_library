@@ -105,10 +105,15 @@ class InboxFilesController < ApplicationController
   end
 
 
-   def sync_with_kmedia(filter_id)
-     job = FilesSyncJob.new(filter_id)
-     job.perform
-   end
+  def sync_with_kmedia(filter_id)
+    job = FilesSyncJob.new(filter_id, secure)
+    job.perform
+  end
 
+
+  def secure
+    return 0 if cannot?(:search_secure, KmediaFile)
+    4
+  end
 
 end

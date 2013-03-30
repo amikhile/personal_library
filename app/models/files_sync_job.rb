@@ -1,10 +1,10 @@
-class FilesSyncJob < Struct.new(:filter_id)
+class FilesSyncJob < Struct.new(:filter_id, :secure)
 
 
   def perform
     file_ids = get_file_ids_from_kmedia(filter_id)
     ids_of_files_to_fetch = check_existence(file_ids) unless file_ids.blank?
-    get_the_new_files_from_kmedia(ids_of_files_to_fetch, 0) unless ids_of_files_to_fetch.blank?
+    get_the_new_files_from_kmedia(ids_of_files_to_fetch, secure) unless ids_of_files_to_fetch.blank?
     update_filter_last_sync
   end
 
