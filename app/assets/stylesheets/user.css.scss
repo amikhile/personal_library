@@ -81,3 +81,19 @@ hr.soften {
 .common_background {
 
 }
+
+.inline_field_wrapper {
+  display: inline-block;
+}
+
+.pagination {
+  text-align: center;
+  .pagination ul {
+    background: #fff;
+  }
+  ul > .disabled {
+    & > span, & > a, & > a:hover {
+      background-color: #F5F5F5;
+    }
+  }
+}

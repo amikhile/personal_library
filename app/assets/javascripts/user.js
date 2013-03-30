@@ -42,6 +42,8 @@ $(document).ready(function () {
         "plugins":[ "themes", "json_data", "ui", "checkbox"],
         "checkbox": { "override_ui" : true}
     })
+
+    $('[data-behaviour~=datepicker]').datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
 });
 
 

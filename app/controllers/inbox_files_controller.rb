@@ -9,9 +9,12 @@ class InboxFilesController < ApplicationController
     authorize! :index, InboxFile
     @filter = params[:filter]
     if (@filter)
-      sync_with_kmedia(@filter)
+      sync_with_kmedia(@filter) if Filter.find_by_id(@filter).last_sync.nil?
       @inbox_files = InboxFile.joins(:filters).where("filters.id" => @filter).order(:id).page(params[:page])
     else
+      @filters_for_menu.each do |filter|
+        sync_with_kmedia(filter.id) if filter.last_sync.nil?
+      end
       # inbox folder
       @inbox_files = InboxFile.not_archived.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
     end
@@ -21,6 +24,19 @@ class InboxFilesController < ApplicationController
   def new
     @inbox_file= InboxFile.new
     authorize! :new, @inbox_file
+  end
+
+  def refresh
+    authorize! :index, InboxFile
+    @filter = params[:filter]
+    if (@filter)
+      sync_with_kmedia(@filter)
+    else
+      @filters_for_menu.each do |filter|
+        sync_with_kmedia(filter.id)
+      end
+    end
+    redirect_to inbox_files_path
   end
 
   def create

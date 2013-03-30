@@ -19,8 +19,8 @@
         %tr(class="#{cycle('odd', 'even')}")
           %td.small= filter.name
           %td.small= filter.text
-          %td.small= filter.from_date.to_date
-          %td.small= filter.to_date.to_date
+          %td.small= filter.from_date.try(:to_date)
+          %td.small= filter.to_date.try(:to_date)
           -if can?(:read, filter)
             %td
               = link_to 'Show', [ filter]

@@ -3,8 +3,8 @@ class FilesSyncJob < Struct.new(:filter_id)
 
   def perform
     file_ids = get_file_ids_from_kmedia(filter_id)
-    ids_of_files_to_fetch = check_existence(file_ids)  unless file_ids.blank?
-    get_the_new_files_from_kmedia(ids_of_files_to_fetch) unless ids_of_files_to_fetch.empty?
+    ids_of_files_to_fetch = check_existence(file_ids) unless file_ids.blank?
+    get_the_new_files_from_kmedia(ids_of_files_to_fetch, 0) unless ids_of_files_to_fetch.blank?
     update_filter_last_sync
   end
 
@@ -32,10 +32,12 @@ class FilesSyncJob < Struct.new(:filter_id)
     }
   end
 
-  def get_the_new_files_from_kmedia(ids_of_files_to_fetch)
+  def get_the_new_files_from_kmedia(ids_of_files_to_fetch, secure)
     ids_of_files_to_fetch.each_slice(100) do |ids_chunk|
       response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/files.json",
-                                 :auth_token => @token, :ids => ids_chunk.join(",")
+                                 auth_token: @token,
+                                 ids: ids_chunk.join(","),
+                                 secure: secure
       hash = JSON.parse response
       files = hash['item']
       save_files(files)

@@ -32,6 +32,7 @@ gem 'nokogiri'
 gem "cancan"
 gem 'devise'
 gem 'bootstrap-sass', '~> 2.1.0.0'
+gem 'bootstrap-datepicker-rails'
 gem 'rest-client'
 
 

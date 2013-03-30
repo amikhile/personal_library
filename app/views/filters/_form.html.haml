@@ -5,9 +5,9 @@
 
   .filters#filters{value: @filter.id}
     = f.input :name, :label => 'Name'
-    = f.input :text, :label => 'Text',:as => :string
-    = f.input :from_date,:as => :date
-    = f.input :to_date,:as => :date
+    = f.input :text, :label => 'Text',:as => :string, :wrapper_html => { :class => "inline_field_wrapper" }
+    = f.input :from_date, :required => false, :input_html => { data: {behaviour: "datepicker"}, :class => 'float:left;'}, :as => :string
+    = f.input :to_date, :required => false, :input_html => { data: {behaviour: "datepicker"}}, :as => :string
     = f.association :content_types, :collection => @content_types, :label => 'Content Type', :prompt => '-- Please select content type --', :input_html => {:class => 'span5'}
     = f.association :media_types, :collection => @media_types, :label => 'Media Type', :prompt => '-- Please select media type --', :input_html => {:class => 'span5'}
     = f.association :languages, :collection => @languages, :label => 'Language', :prompt => '-- Please select language --', :input_html => {:class => 'span5'}

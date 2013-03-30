@@ -41,19 +41,6 @@ HAML
     engine.render self, :form => f
   end
 
-  def display_actions_with_mark(f, location)
-    engine = Haml::Engine.new <<-HAML
-.actions
-  %button.btn.btn-primary.btn-large{:type => 'submit', :'data-disable-with' => 'Please wait...'} Update
-  %button.btn.btn-large{:onclick => "location.href='#{location}'; return false;", :type => 'button'} Cancel
-  - if @lesson.lessonid && can?(:merge, @lesson)
-    .merge.pull-right
-      %button.mark_for_merge.btn{:onclick => "mark_me(this); return false;", :'data-mark-path' => mark_for_merge_admin_lesson_path(@lesson), :class => @lesson.marked_for_merge ? 'btn-warning' : '', :type => 'button'}
-        = @lesson.marked_for_merge ? "Unmark" : "Mark"
-      %button.btn.btn-danger{:onclick => "merge_to_me_get_list(this); return false;", :'data-merge-path' => merge_get_list_admin_lesson_path(@lesson)}= 'Merge Preview'
-HAML
-    engine.render self, :form => f
-  end
 
   def display_show_item(name, value, as_is = false)
     engine = Haml::Engine.new <<-HAML
@@ -69,14 +56,6 @@ HAML
     name = security.first[:name].downcase
     klass = security.first[:klass]
     name == 'unsecure' ? 'non-secure' : "<span class='label label-#{klass}'>#{name.humanize}</span>".html_safe
-  end
-
-  def display_visibility(visibility)
-    visibility ? 'Visible' : 'Hidden'
-  end
-
-  def display_catalog_state(state)
-    state ? 'Open' : 'Closed'
   end
 
 

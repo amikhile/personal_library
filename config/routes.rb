@@ -3,7 +3,6 @@ PersonalLibrary::Application.routes.draw do
 
 
 
-
   devise_for :users
   resources :users do
     member do
@@ -21,6 +20,9 @@ PersonalLibrary::Application.routes.draw do
     member do
       put 'archive'
       post 'description'
+    end
+    collection do
+      get 'refresh'
     end
   end
 
