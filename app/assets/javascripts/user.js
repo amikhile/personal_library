@@ -15,35 +15,45 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-    $("#set_theme1").click(function () {
-        $("#catalogs").jstree("set_theme", "apple");
-    });
-    $("#set_theme2").click(function () {
-        $("#catalogs").jstree("set_theme", "default");
-    });
-    $("#catalogs").jstree({
-        "json_data":{
-            "ajax":{
-                "url":"/filters/kmedia_catalogs.json?filter_id="+document.getElementById('filters').getAttribute("value"),
-                "data": function (n) {
-                    return { catalog_id:n.attr ? n.attr("id") : ""};
+    if ($("#catalogs")) {
+        $("#set_theme1").click(function () {
+            $("#catalogs").jstree("set_theme", "apple");
+        });
+        $("#set_theme2").click(function () {
+            $("#catalogs").jstree("set_theme", "default");
+        });
+        $("#catalogs").jstree({
+            "json_data":{
+                "ajax":{
+                    "url":"/filters/kmedia_catalogs.json?filter_id=" + $('#filters').attr("value"),
+                    "data":function (n) {
+                        return { catalog_id:n.attr ? n.attr("id") : ""};
                     },
-                "success": function (new_data) {
-                    return new_data;
-                },
-                "correct_state" : true
-            }
-        },
-        "themes":{
-            "theme":"apple",
-            "icons":false,
-            "dots":false
-        },
-        "plugins":[ "themes", "json_data", "ui", "checkbox"],
-        "checkbox": { "override_ui" : true}
-    })
+                    "success":function (new_data) {
+                        return new_data;
+                    },
+                    "correct_state":true
+                }
+            },
+            "themes":{
+                "theme":"apple",
+                "icons":false,
+                "dots":false
+            },
+            "plugins":[ "themes", "json_data", "ui", "checkbox"],
+            "checkbox":{ "override_ui":true}
+        })
+    }
 
-    $('[data-behaviour~=datepicker]').datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true});
+    $('[data-behaviour~=datepicker]').datepicker({"format":"yyyy-mm-dd", "weekStart":1, "autoclose":true});
+
+
+    $("#check_all").click(function (event) {
+        var selected = this.checked;
+        // Iterate each checkbox
+        $('.checkbox_column input').prop('checked', selected);
+    });
+
 });
 
 

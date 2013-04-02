@@ -8,9 +8,12 @@ class InboxFilesController < ApplicationController
   def index
     authorize! :index, InboxFile
     @filter = params[:filter]
+    @label = params[:label]
     if (@filter)
       sync_with_kmedia(@filter) if Filter.find_by_id(@filter).last_sync.nil?
       @inbox_files = InboxFile.joins(:filters).where("filters.id" => @filter).order(:id).page(params[:page])
+    elsif (@label)
+      @inbox_files = InboxFile.joins(:labels).where("labels.id" => @label).order(:id).page(params[:page])
     else
       @filters_for_menu.each do |filter|
         sync_with_kmedia(filter.id) if filter.last_sync.nil?
@@ -31,12 +34,13 @@ class InboxFilesController < ApplicationController
     @filter = params[:filter]
     if (@filter)
       sync_with_kmedia(@filter)
+      redirect_to inbox_files_path(@filter)
     else
       @filters_for_menu.each do |filter|
         sync_with_kmedia(filter.id)
       end
+      redirect_to inbox_files_path
     end
-    redirect_to inbox_files_path
   end
 
   def create

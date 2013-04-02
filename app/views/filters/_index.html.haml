@@ -1,10 +1,9 @@
 .well
   %ul.nav.nav-list
     %li.nav-header Filters
-    %li= link_to 'Inbox', inbox_files_path
+    %li= do_nav_link('Inbox', inbox_files_path, @filter.nil? && @label.nil?)
     - @filters_for_menu.each do |filter|
-      %li= link_to filter.name, inbox_files_path(:filter => filter)
-    %li.divider
+      %li= nav_link(filter.name, inbox_files_path(:filter => filter), filter, @filter)
     %li.nav-header Labels
     - @labels_for_menu.each do |label|
-      %li= link_to label.name, inbox_files_path(:label => label)
+      %li= nav_link(label.name, inbox_files_path(:label => label), label, @label)
