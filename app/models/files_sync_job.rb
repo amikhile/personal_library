@@ -8,6 +8,10 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
     update_filter_last_sync
   end
 
+  def my_logger
+    @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log")
+  end
+
   private
 
   def update_filter_last_sync
@@ -25,7 +29,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
 
       inbox_file = InboxFile.new()
       inbox_file.kmedia_file = file
-      inbox_file.filters << @filter
+      inbox_file.filter_id = @filter.id
 
       file.save
       inbox_file.save
@@ -56,6 +60,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
         new_files_id << id
       end
     end
+    my_logger.info("New file ids are #{new_files_id} for filter #{@filter.name}")
     new_files_id
   end
 
@@ -72,6 +77,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
 
     @token = KmediaToken.get_token
     @filter = Filter.find_by_id(filter_id)
+    my_logger.info("Syncronizing files for filter #{@filter.name}")
     content_type_ids = @filter.content_types.collect(&:kmedia_id).join(",")
     media_type_ids = @filter.media_types.collect(&:kmedia_id).join(",")
     languages_ids = @filter.languages.collect(&:kmedia_id).join(",")
@@ -83,7 +89,10 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
 
     hash = JSON.parse response
     ids = hash['ids']
+    my_logger.info("retrieved ids #{ids} for filter #{@filter.name}")
+    ids
   end
+
 
 
   #def get_files_from_kmedia(filter_id)

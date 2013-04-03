@@ -1,6 +1,6 @@
 class InboxFile < ActiveRecord::Base
 
-  has_and_belongs_to_many :filters
+  belongs_to :filters
   has_and_belongs_to_many :labels
   belongs_to :kmedia_file
 

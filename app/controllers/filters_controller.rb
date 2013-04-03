@@ -58,6 +58,13 @@ class FiltersController < ApplicationController
     render json: tree.to_json
   end
 
+  def destroy
+    @filter = Filter.find(params[:id])
+    authorize! :destroy, @filter
+    @filter.inbox_files.each(&:destroy)
+    @filter.destroy
+    redirect_to filters_url, :notice => "Filter deleted successfully."
+  end
 
   private
 

@@ -11,7 +11,7 @@ class InboxFilesController < ApplicationController
     @label = params[:label]
     if (@filter)
       sync_with_kmedia(@filter) if Filter.find_by_id(@filter).last_sync.nil?
-      @inbox_files = InboxFile.joins(:filters).where("filters.id" => @filter).order(:id).page(params[:page])
+      @inbox_files = InboxFile.where("filter_id" => @filter).order(:id).page(params[:page])
     elsif (@label)
       @inbox_files = InboxFile.joins(:labels).where("labels.id" => @label).order(:id).page(params[:page])
     else
@@ -19,7 +19,7 @@ class InboxFilesController < ApplicationController
         sync_with_kmedia(filter.id) if filter.last_sync.nil?
       end
       # inbox folder
-      @inbox_files = InboxFile.not_archived.joins(:filters).where("filters.id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
+      @inbox_files = InboxFile.not_archived.where("filter_id" => @filters_for_menu.collect(&:id)).order(:id).page(params[:page])
     end
 
   end
