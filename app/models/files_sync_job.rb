@@ -50,7 +50,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
 
 
   def check_existence(file_ids_string)
-    ids = file_ids_string.split(",")
+    ids = file_ids_string.split(",").flatten
     new_files_id=[]
     ids.each do |id|
       file = KmediaFile.find_by_kmedia_id(id)
@@ -60,15 +60,16 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
         new_files_id << id
       end
     end
-    my_logger.info("New file ids are #{new_files_id} for filter #{@filter.name}")
+    my_logger.info("Found #{new_files_id.size} new files. New file ids are #{new_files_id} for filter #{@filter.name}")
     new_files_id
   end
 
   def check_filter_association(file)
-    filter_file = @filter.inbox_files.where(:kmedia_file_id => file.id).first rescue nil
+    filter_file = InboxFile.where("kmedia_file_id = ? AND filter_id = ?", file.id, filter_id).first rescue nil
     if (filter_file.nil?)
-      inbox_file=InboxFile.new
-      inbox_file.kmedia_file=file
+      inbox_file = InboxFile.new
+      inbox_file.kmedia_file = file
+      inbox_file.filter_id = filter_id
       inbox_file.save
     end
   end
@@ -89,10 +90,9 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
 
     hash = JSON.parse response
     ids = hash['ids']
-    my_logger.info("retrieved ids #{ids} for filter #{@filter.name}")
+    my_logger.info("Found #{ids.size} ids. Retrieved ids #{ids} for filter #{@filter.name}")
     ids
   end
-
 
 
   #def get_files_from_kmedia(filter_id)
