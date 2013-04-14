@@ -14,7 +14,7 @@
     %tbody
       - @inbox_files.each do |inbox_file|
         %tr(class="#{cycle('odd', 'even')}")
-          %td.checkbox_column= check_box_tag "file_selection_#{inbox_file.id}", '', false
+          %td.checkbox_column= check_box_tag "#{inbox_file.id}", '', false
           %td= link_to inbox_file.kmedia_file.name, inbox_file.kmedia_file.url
           %td= inbox_file.kmedia_file.date
           %td.editable

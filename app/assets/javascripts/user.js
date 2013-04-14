@@ -54,6 +54,16 @@ $(document).ready(function () {
         $('.checkbox_column input').prop('checked', selected);
     });
 
+    $("#delete_btn").click(function (event) {
+        var checked =  $('.checkbox_column input:checked');
+        var checked_ids =[]
+        checked.each(function(){
+            checked_ids.push(this.id);
+        });
+        $("#selected_files").value = checked_ids.join(",");
+    });
+
+
 });
 
 

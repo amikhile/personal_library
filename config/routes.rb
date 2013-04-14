@@ -22,6 +22,7 @@ PersonalLibrary::Application.routes.draw do
       post 'description'
     end
     collection do
+      delete 'delete_multiple'
       get 'refresh'
     end
   end

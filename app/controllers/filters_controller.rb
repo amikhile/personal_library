@@ -40,6 +40,7 @@ class FiltersController < ApplicationController
     @filter.attributes = params[:filter]
     @filter.catalogs=params[:selected_catalogs]
     @filter.users << current_user unless @filter.users.include? current_user
+    @filter.last_sync=nil
     if @filter.save
       redirect_to filter_path(@filter), :notice => "Filter was Successfully updated"
     else

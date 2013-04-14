@@ -82,16 +82,24 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
     content_type_ids = @filter.content_types.collect(&:kmedia_id).join(",")
     media_type_ids = @filter.media_types.collect(&:kmedia_id).join(",")
     languages_ids = @filter.languages.collect(&:kmedia_id).join(",")
-    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/file_ids.json",
-                               :auth_token => @token, :content_type_ids => content_type_ids, :catalog_ids => @filter.catalogs,
-                               :from_date => @filter.from_date, :to_date => @filter.to_date, :media_type_ids => media_type_ids,
-                               :lang_ids => languages_ids, :query_string => @filter.text, :created_from_date => @filter.last_sync
+    params = {:content_type_ids => content_type_ids, :catalog_ids => @filter.catalogs,
+              :from_date => @filter.from_date, :to_date => @filter.to_date, :media_type_ids => media_type_ids,
+              :lang_ids => languages_ids, :query_string => @filter.text, :created_from_date => @filter.last_sync }
+    my_logger.info("with parameters #{params}")
+    params[:auth_token] = @token
+    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/file_ids.json",params
 
 
     hash = JSON.parse response
-    ids = hash['ids']
-    my_logger.info("Found #{ids.size} ids. Retrieved ids #{ids} for filter #{@filter.name}")
+    ids =[]
+    if(hash['error'])
+      my_logger.error("Kmedia return #{hash['error']}")
+    else
+      ids = hash['ids']
+      my_logger.info("Found #{ids.size} ids. Retrieved ids #{ids} for filter #{@filter.name}")
+    end
     ids
+
   end
 
 

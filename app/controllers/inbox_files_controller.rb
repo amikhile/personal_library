@@ -43,6 +43,14 @@ class InboxFilesController < ApplicationController
     end
   end
 
+  def delete_multiple
+    authorize! :destroy, InboxFile
+    @filter = params[:filter]
+    ids = params[:selected_files].split(",") rescue []
+    InboxFile.destroy_all(:id => ids)
+    redirect_to inbox_files_path, :notice => "Files deleted."
+  end
+
   def create
     @inbox_file = InboxFile.new
     authorize! :create, @inbox_file
