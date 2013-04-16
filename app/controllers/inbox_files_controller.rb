@@ -48,7 +48,11 @@ class InboxFilesController < ApplicationController
     @filter = params[:filter]
     ids = params[:selected_files].split(",") rescue []
     InboxFile.destroy_all(:id => ids)
-    redirect_to inbox_files_path, :notice => "Files deleted."
+    if(@filter)
+      redirect_to inbox_files_path(filter: @filter, notice: "Files deleted.")
+    else
+      redirect_to inbox_files_path, notice: "Files deleted."
+    end
   end
 
   def create
