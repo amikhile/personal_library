@@ -2,22 +2,22 @@
   %h2 File
   .subnav
     %ul.nav.nav-pills
-      -if can?(:update, @file)
+      -if can?(:update, @inbox_file)
         %li
-          = link_to "Edit", edit_inbox_file_path(@file)
-      -if can?(:destroy, @file)
+          = link_to "Edit", edit_inbox_file_path(@inbox_file)
+      -if can?(:destroy, @inbox_file)
         %li
-          = link_to "Destroy", inbox_file_path(@file), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
-      -if can?(:read, @file)
+          = link_to "Destroy", inbox_file_path(@inbox_file), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
+      -if can?(:read, @inbox_file)
         %li
           = link_to "Back to Inbox", inbox_files_path
 
 %section.well
   %p
-  = display_show_item('Name', @file.name)
-  = display_show_item('Date', @file.date)
-  = display_show_item('Description', @file.description)
-  = display_show_item('Url', @file.url)
-  = display_show_item('Archived', @file.archived)
-  = display_show_item('Created', @file.created_at.to_s(:long_ordinal))
-  = display_show_item('Updated', @file.updated_at.to_s(:long_ordinal))
+  = display_show_item('Name', @inbox_file.kmedia_file.name)
+  = display_show_item('Date', @inbox_file.kmedia_file.date)
+  = display_show_item('Description', @inbox_file.description)
+  = display_show_item('Url', @inbox_file.kmedia_file.url)
+  = display_show_item('Archived', @inbox_file.archived)
+  = display_show_item('Created', @inbox_file.created_at.to_s(:long_ordinal))
+  = display_show_item('Updated', @inbox_file.updated_at.to_s(:long_ordinal))
