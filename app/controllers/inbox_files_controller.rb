@@ -79,7 +79,6 @@ class InboxFilesController < ApplicationController
   def update
     @inbox_file = InboxFile.find(params[:id])
     authorize! :update, @inbox_file
-
     if @inbox_file.update_attributes(params[:inbox_file])
       redirect_to filter_path(@inbox_file), :notice => "File was Successfully updated"
     else
@@ -99,23 +98,32 @@ class InboxFilesController < ApplicationController
   def archive
     @inbox_file = InboxFile.find(params[:id])
     authorize! :update, @inbox_file
-
     @inbox_file.archived = params[:archived]
     @inbox_file.save
-    redirect_to inbox_files_path
+    if(@filter)
+      redirect_to inbox_files_path(filter: @filter, notice: "File archived.")
+    else
+      redirect_to inbox_files_path, :notice => "File archived."
+    end
   end
 
   def destroy
     @inbox_file = InboxFile.find(params[:id])
     authorize! :destroy, @inbox_file
     @inbox_file.destroy
-    redirect_to inbox_files_path, :notice => "File deleted."
+    if(@filter)
+      redirect_to inbox_files_path(filter: @filter, notice: "File deleted.")
+    else
+      redirect_to inbox_files_path, :notice => "File deleted."
+    end
+
   end
 
 
   private
 
   def load_filters_and_labels
+    @filter = params[:filter]
     @filters_for_menu = current_user.filters.order(:name)
     @labels_for_menu = current_user.labels.order(:name)
   end
