@@ -1,12 +1,14 @@
 development:
   kmedia_url: 'http://localhost:4000'
-  kmedia_user: 'ana@email.com'
-  kmedia_password: '123456'
+  kmedia_user: 'mylibrary@gmail.com'
+  kmedia_password: 'mlke78951'
+  library_url: 'mylibrary.kbb1.com'
 
 
 production:
   kmedia_url: 'http://kmedia.kbb1.com'
-  kmedia_user: 'annamik@gmail.com'
-  kmedia_password: 'mili10'
+  kmedia_user: 'mylibrary@gmail.com'
+  kmedia_password: 'mlke78951'
+  library_url: 'mylibrary.kbb1.com'
 
 

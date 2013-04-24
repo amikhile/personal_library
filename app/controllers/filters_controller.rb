@@ -1,6 +1,7 @@
 class FiltersController < ApplicationController
   load_and_authorize_resource
-  before_filter :load_filters_and_labels, :load_from_kmedia
+  before_filter :load_filters_and_labels, :load_from_kmedia, :authenticate_user!
+
 
   def index
     @filters = current_user.filters.order(:id).page(params[:page])

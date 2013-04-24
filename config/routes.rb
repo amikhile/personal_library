@@ -5,10 +5,11 @@ PersonalLibrary::Application.routes.draw do
 
   devise_for :users
   resources :users do
-    member do
-      get :become
+    collection do
+      post :after_login
     end
   end
+  match "after_login" => "users#after_login"
 
   resources :filters do
     collection do
@@ -27,7 +28,7 @@ PersonalLibrary::Application.routes.draw do
     end
   end
 
-  root :to => "inbox_files#index"
+  root :to => "users#sign_in"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

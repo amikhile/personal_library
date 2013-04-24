@@ -1,8 +1,9 @@
 class InboxFilesController < ApplicationController
   require 'rest_client'
   require 'json'
-  load_and_authorize_resource
-  before_filter :load_filters_and_labels
+  load_resource
+  before_filter :load_filters_and_labels, :authenticate_user!
+
 
 
   def index
