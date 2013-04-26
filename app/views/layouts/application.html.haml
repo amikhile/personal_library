@@ -12,7 +12,8 @@
       = render 'layouts/navigation'
     - else
       .container
-        = link_to 'Click here to sign in', "http://archivesupport.kbb1.com/home/kbmedia?redirect_url=#{APP_CONFIG['library_url']}"
+        = render 'layouts/navigation'
+        = link_to 'Click here to sign in', "http://archivesupport.kbb1.com/home/kbmedia?redirect_url=#{APP_CONFIG['library_url']}", :id => "sign_in_link"
     .container-fluid
       .row-fluid
         - if current_user
