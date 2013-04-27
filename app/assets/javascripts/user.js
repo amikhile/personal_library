@@ -61,7 +61,17 @@ $(document).ready(function () {
             checked_ids.push(this.id);
         });
         var joined = checked_ids.join(",");
-        document.getElementById("selected_files").value = joined;
+        document.getElementById("selected_files_for_delete").value = joined;
+    });
+
+    $("#submit_archive").click(function (event) {
+        var checked =  $('.checkbox_column input:checked');
+        var checked_ids =[];
+        checked.each(function(){
+            checked_ids.push(this.id);
+        });
+        var joined = checked_ids.join(",");
+        document.getElementById("selected_files_for_archive").value = joined;
     });
 
 

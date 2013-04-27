@@ -56,6 +56,21 @@ class InboxFilesController < ApplicationController
     end
   end
 
+  def archive_multiple
+    authorize! :update, InboxFile
+    @filter = params[:filter]
+    ids = params[:selected_files].split(",") rescue []
+
+    InboxFile.update_all({archived: true}, ["id in (?)",ids])
+
+    if(@filter)
+      redirect_to inbox_files_path(filter: @filter, notice: "Files archived.")
+    else
+      redirect_to inbox_files_path, :notice => "Files archived."
+    end
+  end
+
+
   def create
     @inbox_file = InboxFile.new
     authorize! :create, @inbox_file

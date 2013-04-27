@@ -24,6 +24,7 @@ PersonalLibrary::Application.routes.draw do
     end
     collection do
       delete 'delete_multiple'
+      post 'archive_multiple'
       get 'refresh'
     end
   end
