@@ -45,6 +45,14 @@ class LabelsController < ApplicationController
     end
   end
 
+
+  def destroy
+    @label = Label.find(params[:id])
+    authorize! :destroy, @label
+    @label.destroy
+    redirect_to labels_url, :notice => "Label deleted successfully."
+  end
+
   protected
   def load_filters_and_labels
     @filters_for_menu = current_user.filters.order(:name)
