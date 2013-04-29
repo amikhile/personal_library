@@ -35,7 +35,7 @@ class InboxFilesController < ApplicationController
     @filter = params[:filter]
     if (@filter)
       sync_with_kmedia(@filter)
-      redirect_to inbox_files_path(@filter)
+      redirect_to inbox_files_path(filter: @filter)
     else
       @filters_for_menu.each do |filter|
         sync_with_kmedia(filter.id)
