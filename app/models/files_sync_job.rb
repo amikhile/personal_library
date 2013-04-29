@@ -78,7 +78,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
 
     @token = KmediaToken.get_token
     @filter = Filter.find_by_id(filter_id)
-    my_logger.info("Syncronizing files for filter #{@filter.name}")
+    my_logger.info("Synchronizing files for filter #{@filter.name}")
     content_type_ids = @filter.content_types.collect(&:kmedia_id).join(",")
     media_type_ids = @filter.media_types.collect(&:kmedia_id).join(",")
     languages_ids = @filter.languages.collect(&:kmedia_id).join(",")

@@ -22,7 +22,7 @@
     .btn-group{style: 'float: right;' }
       = link_to "New Filter", new_filter_path, :class => "btn"
       = link_to "New Label", new_label_path, :class => "btn"
-      = link_to "Refresh", refresh_inbox_files_path, :class => "btn"
+      = link_to "Refresh", refresh_inbox_files_path(:filter => @filter), :class => "btn"
     .btn-group{:id => 'btn_group'}
       = form_tag delete_multiple_inbox_files_path(:filter => @filter), :method => :delete, :onsubmit => "return true;" , style: "display: inline;" do
         = image_submit_tag ("/assets/trash.gif"), :id => 'submit_delete', :confirm => 'Are you sure?', class: "btn"
