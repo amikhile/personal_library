@@ -54,24 +54,23 @@ $(document).ready(function () {
         $('.checkbox_column input').prop('checked', selected);
     });
 
-    $("#submit_delete").click(function (event) {
-        var checked =  $('.checkbox_column input:checked');
-        var checked_ids =[];
-        checked.each(function(){
+
+    function getChecked() {
+        var checked = $('.checkbox_column input:checked');
+        var checked_ids = [];
+        checked.each(function () {
             checked_ids.push(this.id);
         });
         var joined = checked_ids.join(",");
-        document.getElementById("selected_files_for_delete").value = joined;
+        return joined;
+    }
+
+    $("#submit_delete").click(function (event) {
+        document.getElementById("selected_files_for_delete").value = getChecked();
     });
 
     $("#submit_archive").click(function (event) {
-        var checked =  $('.checkbox_column input:checked');
-        var checked_ids =[];
-        checked.each(function(){
-            checked_ids.push(this.id);
-        });
-        var joined = checked_ids.join(",");
-        document.getElementById("selected_files_for_archive").value = joined;
+        document.getElementById("selected_files_for_archive").value = getChecked();
     });
 
 
