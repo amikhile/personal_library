@@ -25,17 +25,16 @@
     - else
       .container
         = render 'layouts/navigation'
-        = link_to 'Click here to sign in', "http://archivesupport.kbb1.com/home/kbmedia?redirect_url=#{APP_CONFIG['library_url']}", :id => "sign_in_link"
     .container-fluid
       .row-fluid
         - if current_user
           .span2
             = render 'filters/index'
-          .span10
-            - flash.each do |name, msg|
-              - klass = (name.to_s == 'error' || name.to_s == 'alert') ? 'alert fade in alert-error' : 'alert fade in alert-info'
-              = content_tag :div, "<a class='close' data-dismiss='alert' href='#'>&times;</a>#{msg}".html_safe, :class => klass
-            = yield
+        .span10
+          - flash.each do |name, msg|
+            - klass = (name.to_s == 'error' || name.to_s == 'alert') ? 'alert fade in alert-error' : 'alert fade in alert-info'
+            = content_tag :div, "<a class='close' data-dismiss='alert' href='#'>&times;</a>#{msg}".html_safe, :class => klass
+          = yield
     = yield(:javascripts)
     = javascript_include_tag 'user'
 

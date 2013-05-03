@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
   before_filter :get_user, :only => [:index, :new, :edit]
-  #before_filter :authenticate_user!, :except => [:sign_in, :after_login]
   load_resource :only => [:show, :new, :destroy, :edit, :update]
-  #authorize_resource
+  skip_before_filter :authenticate_user!, :check_logged_in
 
 
   def after_login
@@ -25,6 +24,9 @@ class UsersController < ApplicationController
 
     sign_in @user
     redirect_to inbox_files_path
+  end
+
+  def my_sign_in
   end
 
 end

@@ -2,14 +2,11 @@ class InboxFilesController < ApplicationController
   require 'rest_client'
   require 'json'
   load_resource
-  before_filter :load_filters_and_labels, :authenticate_user!
-
+  before_filter :load_filters_and_labels
 
 
   def index
     authorize! :index, InboxFile
-    @filter = params[:filter]
-    @label = params[:label]
     if (@filter)
       sync_with_kmedia(@filter) if Filter.find_by_id(@filter).last_sync.nil?
       @inbox_files = InboxFile.where("filter_id" => @filter).order(:id).page(params[:page])
@@ -32,7 +29,6 @@ class InboxFilesController < ApplicationController
 
   def refresh
     authorize! :index, InboxFile
-    @filter = params[:filter]
     if (@filter)
       sync_with_kmedia(@filter)
       redirect_to inbox_files_path(filter: @filter)
@@ -46,10 +42,8 @@ class InboxFilesController < ApplicationController
 
   def delete_multiple
     authorize! :destroy, InboxFile
-    @filter = params[:filter]
-    ids = params[:selected_files].split(",") rescue []
-    InboxFile.destroy_all(:id => ids)
-    if(@filter)
+    InboxFile.destroy_all(:id => @ids)
+    if (@filter)
       redirect_to inbox_files_path(filter: @filter, notice: "Files deleted.")
     else
       redirect_to inbox_files_path, notice: "Files deleted."
@@ -58,16 +52,29 @@ class InboxFilesController < ApplicationController
 
   def archive_multiple
     authorize! :update, InboxFile
-    @filter = params[:filter]
-    ids = params[:selected_files].split(",") rescue []
+    InboxFile.update_all({archived: true}, ["id in (?)", @ids])
 
-    InboxFile.update_all({archived: true}, ["id in (?)",ids])
-
-    if(@filter)
+    if (@filter)
       redirect_to inbox_files_path(filter: @filter, notice: "Files archived.")
     else
       redirect_to inbox_files_path, :notice => "Files archived."
     end
+  end
+
+  def add_label_multiple
+    authorize! :update, InboxFile
+    label = Label.find(params[:add_to_label])
+    #InboxFile.where( id: ids ).update_all( label: label )
+
+    @ids.each do |id|
+      file = InboxFile.find_by_id(id)
+      file.labels << label
+      file.save
+    end
+    #InboxFile.update_all({archived: true}, ["id in (?)", ids])
+
+    redirect_to inbox_files_path(filter: @filter, notice: "Files added to Label.")
+
   end
 
 
@@ -116,7 +123,7 @@ class InboxFilesController < ApplicationController
     authorize! :update, @inbox_file
     @inbox_file.archived = params[:archived]
     @inbox_file.save
-    if(@filter)
+    if (@filter)
       redirect_to inbox_files_path(filter: @filter, notice: "File archived.")
     else
       redirect_to inbox_files_path, :notice => "File archived."
@@ -127,7 +134,7 @@ class InboxFilesController < ApplicationController
     @inbox_file = InboxFile.find(params[:id])
     authorize! :destroy, @inbox_file
     @inbox_file.destroy
-    if(@filter)
+    if (@filter)
       redirect_to inbox_files_path(filter: @filter, notice: "File deleted.")
     else
       redirect_to inbox_files_path, :notice => "File deleted."
@@ -140,6 +147,8 @@ class InboxFilesController < ApplicationController
 
   def load_filters_and_labels
     @filter = params[:filter]
+    @label = params[:label]
+    @ids = params[:selected_files].split(",") rescue []
     @filters_for_menu = current_user.filters.order(:name)
     @labels_for_menu = current_user.labels.order(:name)
   end
@@ -152,8 +161,7 @@ class InboxFilesController < ApplicationController
 
 
   def secure
-    return 0 if cannot?(:search_secure, KmediaFile)
-    4
+    return 0 #if cannot?(:search_secure, KmediaFile)
   end
 
 end

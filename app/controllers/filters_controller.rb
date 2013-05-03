@@ -1,6 +1,6 @@
 class FiltersController < ApplicationController
   load_and_authorize_resource
-  before_filter :load_filters_and_labels, :load_from_kmedia, :authenticate_user!
+  before_filter :load_filters_and_labels, :load_from_kmedia
 
 
   def index

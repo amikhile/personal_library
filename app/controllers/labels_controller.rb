@@ -1,6 +1,6 @@
 class LabelsController < ApplicationController
   load_and_authorize_resource
-  before_filter :load_filters_and_labels, :authenticate_user!
+  before_filter :load_filters_and_labels
 
   def index
     @labels = current_user.labels.order(:id).page(params[:page])
@@ -39,7 +39,7 @@ class LabelsController < ApplicationController
     @label.attributes = params[:label]
     @label.users << current_user unless @label.users.include? current_user
     if @label.save
-      redirect_to label_path(@label), :notice => "label was Successfully updated"
+      redirect_to label_path(@label), :notice => "Label was Successfully updated"
     else
       render :action => 'edit'
     end

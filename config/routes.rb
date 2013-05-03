@@ -7,6 +7,7 @@ PersonalLibrary::Application.routes.draw do
   resources :users do
     collection do
       post :after_login
+      get :my_sign_in
     end
   end
   match "after_login" => "users#after_login"
@@ -25,11 +26,12 @@ PersonalLibrary::Application.routes.draw do
     collection do
       delete 'delete_multiple'
       post 'archive_multiple'
+      post 'add_label_multiple'
       get 'refresh'
     end
   end
 
-  root :to => "users#sign_in"
+  root :to => "inbox_files#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

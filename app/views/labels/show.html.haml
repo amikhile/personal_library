@@ -16,6 +16,6 @@
   %p
     %strong label:
   = display_show_item('Name', @label.name)
-  = display_show_item('Text', @label.text)
-  = display_show_item('Created', @label.created.to_s(:long_ordinal))
-  = display_show_item('Updated', @label.updated.to_s(:long_ordinal))
+  = display_show_item('Description', @label.description)
+  = display_show_item('Created', @label.created_at.to_s(:long_ordinal))
+  = display_show_item('Updated', @label.updated_at.to_s(:long_ordinal))
