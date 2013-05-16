@@ -22,6 +22,11 @@ class InboxFilesController < ApplicationController
 
   end
 
+  #def delete_one_label
+  #  ....
+  #  render partial: 'name-td', locals: {inbox_file: inbox_file}
+  #end
+
   def new
     @inbox_file= InboxFile.new
     authorize! :new, @inbox_file
@@ -68,13 +73,16 @@ class InboxFilesController < ApplicationController
 
     @ids.each do |id|
       file = InboxFile.find_by_id(id)
-      file.labels << label
+      file.labels << label unless file.labels.include?(label)
       file.save
     end
-    #InboxFile.update_all({archived: true}, ["id in (?)", ids])
 
-    redirect_to inbox_files_path(filter: @filter, notice: "Files added to Label.")
+    redirect_to inbox_files_path(filter: @filter), notice: "Files added to Label."
 
+  end
+
+  def download_multiple
+    authorize! :read, InboxFile
   end
 
 

@@ -101,7 +101,7 @@ hr.soften {
 #btn_group{
   float:right;
   position:relative;
-  left:-50%;
+  left:-40%;
   text-align:left;
   vertical-align: middle;
 }
@@ -143,3 +143,32 @@ hr.soften {
 span.tab{
   padding: 0 80px; /* Or desired space*/
 }
+
+//.modal.hide.fade.in{
+//  opacity: 1;
+//  color:#CCC;
+//}
+
+
+//.modal-backdrop.fade {
+//  background-color: white;
+//  color: #333;
+//  opacity: 0;
+//}
+//
+//#add-label.modal.hide.fade.in{
+//  opacity: 0.5;
+//}
+
+
+.modal-backdrop.fade.in {
+  filter: alpha(opacity=50);
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
+
+.fade.in {
+  opacity: 1;
+}
+

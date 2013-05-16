@@ -59,7 +59,7 @@ $(document).ready(function () {
         var checked = $('.checkbox_column input:checked');
         var checked_ids = [];
         checked.each(function () {
-            checked_ids.push(this.id);
+            checked_ids.push(this.value);
         });
         var joined = checked_ids.join(",");
         return joined;
@@ -71,6 +71,29 @@ $(document).ready(function () {
 
     $("#submit_archive").click(function (event) {
         document.getElementById("selected_files_for_archive").value = getChecked();
+    });
+
+
+    $('.add_to_label a').on('click', function() {
+        var label = this.getAttribute("label");
+        $.ajax({
+            type:    "GET",
+            url:     this.getAttribute("url"),
+            data:    {"selected_files":  getChecked()},
+
+            error:   function(jqXHR, textStatus, errorThrown) {
+                $('#notice').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Internal server error</div>');
+            },
+            success: function(data, textStatus, jqXHR) {
+                var checked = $('.checkbox_column input:checked');
+                checked.each(function () {
+                    $($(this).parent().siblings()[0]).append('&nbsp;<span class="label">'+label+'</span>');
+                    $(this).prop("checked", false);
+                });
+
+
+            }
+        });
     });
 
 

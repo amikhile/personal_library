@@ -26,8 +26,9 @@ PersonalLibrary::Application.routes.draw do
     collection do
       delete 'delete_multiple'
       post 'archive_multiple'
-      post 'add_label_multiple'
+      get 'add_label_multiple'
       get 'refresh'
+      get 'download_multiple'
     end
   end
 

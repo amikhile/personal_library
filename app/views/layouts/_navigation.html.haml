@@ -20,9 +20,18 @@
 
 
     .btn-group{style: 'float: right;' }
+      %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        Add to Label
+        %span.caret
+      %ul.dropdown-menu
+        -@labels_for_menu.each do |label|
+          %li.add_to_label
+            = link_to label[:name].humanize, "#", url: add_label_multiple_inbox_files_path(filter:  @filter, add_to_label: label[:id]), id: "add_label", label: label[:name]
+
       = link_to "New Filter", new_filter_path, :class => "btn"
       = link_to "New Label", new_label_path, :class => "btn"
       = link_to "Refresh", refresh_inbox_files_path(:filter => @filter), :class => "btn"
+
     .btn-group{:id => 'btn_group'}
       = form_tag delete_multiple_inbox_files_path(:filter => @filter), :method => :delete, :onsubmit => "return true;" , style: "display: inline;" do
         = image_submit_tag ("/assets/trash.gif"), :id => 'submit_delete', :confirm => 'Are you sure?', class: "btn", title: "Delete"
@@ -30,5 +39,4 @@
       = form_tag archive_multiple_inbox_files_path(:filter => @filter), :method => :post, :onsubmit => "return true;", style: "display: inline;" do
         = image_submit_tag ("/assets/archive_16.png"), :id => 'submit_archive', class: "btn", title: "Archive"
         %input#selected_files_for_archive{:name => "selected_files", :type => "hidden", :value => ""}
-
 
