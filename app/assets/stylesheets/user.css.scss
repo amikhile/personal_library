@@ -172,3 +172,19 @@ span.tab{
   opacity: 1;
 }
 
+.close.label-delete {
+   float: none;
+   color: #8b0000;
+   opacity: 1;
+   padding-left: 3px;
+  font-size: 16px;
+ }
+
+.label {
+  display: inline-block;
+  padding: 1px 4px  0;
+  background-color: #CCC;
+  color: #444;
+  font-weight: normal;
+}
+

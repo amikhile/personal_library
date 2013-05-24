@@ -1,26 +1,26 @@
 %header.subhead#overview
+#notice
 %section
   = paginate @inbox_files
-  %form#files_index_form
-    %table.table.table-striped.table-bordered.table-condensed
-      %thead
-        %tr
-          %th= check_box_tag('check_all', '', false)
-          %th= 'File Name'
-          %th= 'Record Date'
-          %th= 'Description'
-          %th= 'Actions'
-      %tbody
-        - @inbox_files.each do |inbox_file|
-          %tr(class="#{cycle('odd', 'even')}")
-            %td.checkbox_column= check_box_tag "cb#{inbox_file.id}", "#{inbox_file.id}", false
-            %td.name= render partial: 'name-td', locals: {inbox_file: inbox_file}
-            %td= inbox_file.kmedia_file.date
-            %td.editable
-              %a{:id =>"description#{inbox_file.id}", "data-original-title" => "Enter description", "data-name"=>"description", "data-pk" => inbox_file.id, "data-type" => "text", "data-url" => description_inbox_file_url(inbox_file), :href => "#"}= inbox_file.description
-            %td= link_to 'Show', inbox_file_path(inbox_file, filter: @filter)
-            %td= link_to 'Edit', edit_inbox_file_path(inbox_file, filter: @filter)
-            %td= button_to 'Archive', archive_inbox_file_path(inbox_file, :archived => true, filter: @filter), :class => "btn btn-small", :method => :put
-            %td= link_to 'Destroy', inbox_file_path(inbox_file, filter: @filter), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
+  %table.table.table-striped.table-bordered.table-condensed
+    %thead
+      %tr
+        %th= check_box_tag('check_all', '', false)
+        %th= 'File Name'
+        %th= 'Record Date'
+        %th= 'Description'
+        %th= 'Actions'
+    %tbody
+      - @inbox_files.each do |inbox_file|
+        %tr(class="#{cycle('odd', 'even')}")
+          %td.checkbox_column= check_box_tag "cb#{inbox_file.id}", "#{inbox_file.id}", false
+          %td.name= render partial: 'name-td', locals: {inbox_file: inbox_file}
+          %td= inbox_file.kmedia_file.date
+          %td.editable
+            %a{:id =>"description#{inbox_file.id}", "data-original-title" => "Enter description", "data-name"=>"description", "data-pk" => inbox_file.id, "data-type" => "text", "data-url" => description_inbox_file_url(inbox_file), :href => "#"}= inbox_file.description
+          %td= link_to 'Show', inbox_file_path(inbox_file)
+          %td= link_to 'Edit', edit_inbox_file_path(inbox_file)
+          %td= button_to 'Archive', archive_inbox_file_path(inbox_file, :archived => true), :class => "btn btn-small", :method => :put
+          %td= link_to 'Destroy', inbox_file_path(inbox_file), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
 
 

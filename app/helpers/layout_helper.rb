@@ -51,12 +51,4 @@ HAML
     engine.render
   end
 
-  def display_secure(secure_level)
-    security = SECURITY.select{|s| s[:level] == secure_level }
-    name = security.first[:name].downcase
-    klass = security.first[:klass]
-    name == 'unsecure' ? 'non-secure' : "<span class='label label-#{klass}'>#{name.humanize}</span>".html_safe
-  end
-
-
 end

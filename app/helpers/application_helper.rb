@@ -1,7 +1,7 @@
 module ApplicationHelper
   def nav_link(text, link, current_label, selected_label)
     recognized = Rails.application.routes.recognize_path(link)
-    active = recognized[:controller] == params[:controller] && recognized[:action] == params[:action] && current_label.id == selected_label.to_i
+    active = recognized[:controller] == params[:controller]  && current_label.id == selected_label.to_i
     do_nav_link(text, link, active)
   end
 

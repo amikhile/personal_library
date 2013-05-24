@@ -74,29 +74,54 @@ $(document).ready(function () {
     });
 
 
-    $('.add_to_label a').on('click', function() {
+    $('.add_to_label a').on('click', function () {
         var label = this.getAttribute("label");
+        var labelId = this.getAttribute("label_id");
         $.ajax({
-            type:    "GET",
-            url:     this.getAttribute("url"),
-            data:    {"selected_files":  getChecked()},
+            type:"GET",
+            url:this.getAttribute("url"),
+            data:{"selected_files":getChecked()},
 
-            error:   function(jqXHR, textStatus, errorThrown) {
+            error:function (jqXHR, textStatus, errorThrown) {
                 $('#notice').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Internal server error</div>');
             },
-            success: function(data, textStatus, jqXHR) {
+            success:function (data, textStatus, jqXHR) {
                 var checked = $('.checkbox_column input:checked');
                 checked.each(function () {
-                    $($(this).parent().siblings()[0]).append('&nbsp;<span class="label">'+label+'</span>');
+                    //see if this label not already drawn on the page
+                    var spanSelector =  "span[name=\""+label+"\"]";
+                    if(!$($(this).parent().siblings()[0]).children(spanSelector).size() > 0){
+                        var fileId = this.value;
+                        $($(this).parent().siblings()[0]).append('<span class="label">' + label +
+                            '<button class="close label-delete" data-fileid=' + fileId + ' data-labelid=' + labelId +
+                            ' type="button" url="/inbox_files/remove_label">×</button></span>');
+                    }
                     $(this).prop("checked", false);
                 });
 
 
             }
         });
+    })
+    ;
+
+    $('table').on('click', '.close.label-delete', function () {
+        var closeButton = this;
+        $.ajax({
+            type:"POST",
+            url:$(this).attr("url"),
+            data:$(this).data(),
+
+            error:function (jqXHR, textStatus, errorThrown) {
+                $('#notice').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Internal server error</div>');
+
+            },
+            success:function (data, textStatus, jqXHR) {
+                $($(closeButton).parent()).parent().html(data);
+            }
+        });
     });
-
-
-});
+})
+;
 
 

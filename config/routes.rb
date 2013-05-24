@@ -29,6 +29,7 @@ PersonalLibrary::Application.routes.draw do
       get 'add_label_multiple'
       get 'refresh'
       get 'download_multiple'
+      post 'remove_label'
     end
   end
 

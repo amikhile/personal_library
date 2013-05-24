@@ -1,4 +1,7 @@
 =link_to inbox_file.kmedia_file.name, inbox_file.kmedia_file.url
+&nbsp;
 - inbox_file.labels.each do |l|
-  &nbsp;
-  %span.label= l.name
+  %span.label{name: l.name}
+    =l.name.strip
+    %button.close.label-delete(type="button" url=remove_label_inbox_files_path data-fileid="#{inbox_file.id}" data-labelid="#{l.id}") &times;
+

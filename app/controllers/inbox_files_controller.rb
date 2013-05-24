@@ -7,6 +7,7 @@ class InboxFilesController < ApplicationController
 
   def index
     authorize! :index, InboxFile
+    init_cookies
     if (@filter)
       sync_with_kmedia(@filter) if Filter.find_by_id(@filter).last_sync.nil?
       @inbox_files = InboxFile.where("filter_id" => @filter).order(:id).page(params[:page])
@@ -22,10 +23,7 @@ class InboxFilesController < ApplicationController
 
   end
 
-  #def delete_one_label
-  #  ....
-  #  render partial: 'name-td', locals: {inbox_file: inbox_file}
-  #end
+
 
   def new
     @inbox_file= InboxFile.new
@@ -36,7 +34,7 @@ class InboxFilesController < ApplicationController
     authorize! :index, InboxFile
     if (@filter)
       sync_with_kmedia(@filter)
-      redirect_to inbox_files_path(filter: @filter)
+      redirect_to inbox_files_path
     else
       @filters_for_menu.each do |filter|
         sync_with_kmedia(filter.id)
@@ -47,29 +45,19 @@ class InboxFilesController < ApplicationController
 
   def delete_multiple
     authorize! :destroy, InboxFile
-    InboxFile.destroy_all(:id => @ids)
-    if (@filter)
-      redirect_to inbox_files_path(filter: @filter, notice: "Files deleted.")
-    else
-      redirect_to inbox_files_path, notice: "Files deleted."
-    end
+    InboxFile.destroy_all(id: @ids)
+    redirect_to inbox_files_path, notice: "Files deleted."
   end
 
   def archive_multiple
     authorize! :update, InboxFile
     InboxFile.update_all({archived: true}, ["id in (?)", @ids])
-
-    if (@filter)
-      redirect_to inbox_files_path(filter: @filter, notice: "Files archived.")
-    else
-      redirect_to inbox_files_path, :notice => "Files archived."
-    end
+    redirect_to inbox_files_path, notice: "Files archived."
   end
 
   def add_label_multiple
     authorize! :update, InboxFile
     label = Label.find(params[:add_to_label])
-    #InboxFile.where( id: ids ).update_all( label: label )
 
     @ids.each do |id|
       file = InboxFile.find_by_id(id)
@@ -77,8 +65,15 @@ class InboxFilesController < ApplicationController
       file.save
     end
 
-    redirect_to inbox_files_path(filter: @filter), notice: "Files added to Label."
+    redirect_to inbox_files_path, notice: "Files added to Label."
+  end
 
+  def remove_label
+    authorize! :update, InboxFile
+    @inbox_file = InboxFile.find(params[:fileid])
+    @inbox_file.labels.delete(Label.find(params[:labelid]))
+    @inbox_file.save
+    render partial: 'name-td', locals: {inbox_file: @inbox_file}
   end
 
   def download_multiple
@@ -93,7 +88,7 @@ class InboxFilesController < ApplicationController
     @inbox_file.attributes = params[:inbox_file]
 
     if @inbox_file.save
-      redirect_to inbox_files_path, :notice => "File Successfully created"
+      redirect_to inbox_files_path, notice: "File Successfully created"
     end
   end
 
@@ -102,7 +97,7 @@ class InboxFilesController < ApplicationController
       @inbox_file = InboxFile.find(params[:id])
       authorize! :show, @inbox_file
     rescue
-      redirect_to inbox_file_path, :alert => "There is no File with ID=#{params[:id]}."
+      redirect_to inbox_file_path, alert: "There is no File with ID=#{params[:id]}."
       return
     end
   end
@@ -111,7 +106,7 @@ class InboxFilesController < ApplicationController
     @inbox_file = InboxFile.find(params[:id])
     authorize! :update, @inbox_file
     if @inbox_file.update_attributes(params[:inbox_file])
-      redirect_to filter_path(@inbox_file), :notice => "File was Successfully updated"
+      redirect_to inbox_files_path,  notice: "File updated."
     else
       render :action => 'edit'
     end
@@ -131,22 +126,18 @@ class InboxFilesController < ApplicationController
     authorize! :update, @inbox_file
     @inbox_file.archived = params[:archived]
     @inbox_file.save
-    if (@filter)
-      redirect_to inbox_files_path(filter: @filter, notice: "File archived.")
-    else
-      redirect_to inbox_files_path, :notice => "File archived."
-    end
+
+      redirect_to inbox_files_path, notice: "File archived."
+
   end
 
   def destroy
     @inbox_file = InboxFile.find(params[:id])
     authorize! :destroy, @inbox_file
     @inbox_file.destroy
-    if (@filter)
-      redirect_to inbox_files_path(filter: @filter, notice: "File deleted.")
-    else
-      redirect_to inbox_files_path, :notice => "File deleted."
-    end
+
+  redirect_to inbox_files_path, notice: "File deleted."
+
 
   end
 
@@ -154,13 +145,25 @@ class InboxFilesController < ApplicationController
   private
 
   def load_filters_and_labels
-    @filter = params[:filter]
-    @label = params[:label]
     @ids = params[:selected_files].split(",") rescue []
     @filters_for_menu = current_user.filters.order(:name)
     @labels_for_menu = current_user.labels.order(:name)
   end
 
+  def init_cookies
+    if (params[:filter])
+      cookies.permanent[:filter] = params[:filter]
+      cookies.permanent[:label] = nil
+    elsif (params[:label])
+      cookies.permanent[:filter] = nil
+      cookies.permanent[:label] = params[:label]
+    elsif(params[:inbox])
+      cookies.permanent[:label] = nil
+      cookies.permanent[:filter] = nil
+    end
+    @filter = cookies[:filter] if cookies[:filter].present?
+    @label = cookies[:label] if cookies[:label].present?
+  end
 
   def sync_with_kmedia(filter_id)
     job = FilesSyncJob.new(filter_id, secure)
