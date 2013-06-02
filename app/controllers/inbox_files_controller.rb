@@ -24,7 +24,6 @@ class InboxFilesController < ApplicationController
   end
 
 
-
   def new
     @inbox_file= InboxFile.new
     authorize! :new, @inbox_file
@@ -55,6 +54,18 @@ class InboxFilesController < ApplicationController
     redirect_to inbox_files_path, notice: "Files archived."
   end
 
+  def download_multiple
+    authorize! :index, InboxFile
+    if @ids.present?
+      task = DownloadTask.new()
+      task.status = DownloadTask::STATUSES[:submitted]
+      task.files = @ids.join(",")
+      task.user = current_user
+      task.save
+    end
+    redirect_to inbox_files_path
+  end
+
   def add_label_multiple
     authorize! :update, InboxFile
     label = Label.find(params[:add_to_label])
@@ -75,11 +86,6 @@ class InboxFilesController < ApplicationController
     @inbox_file.save
     render partial: 'name-td', locals: {inbox_file: @inbox_file}
   end
-
-  def download_multiple
-    authorize! :read, InboxFile
-  end
-
 
   def create
     @inbox_file = InboxFile.new
@@ -106,7 +112,7 @@ class InboxFilesController < ApplicationController
     @inbox_file = InboxFile.find(params[:id])
     authorize! :update, @inbox_file
     if @inbox_file.update_attributes(params[:inbox_file])
-      redirect_to inbox_files_path,  notice: "File updated."
+      redirect_to inbox_files_path, notice: "File updated."
     else
       render :action => 'edit'
     end
@@ -127,7 +133,7 @@ class InboxFilesController < ApplicationController
     @inbox_file.archived = params[:archived]
     @inbox_file.save
 
-      redirect_to inbox_files_path, notice: "File archived."
+    redirect_to inbox_files_path, notice: "File archived."
 
   end
 
@@ -136,7 +142,7 @@ class InboxFilesController < ApplicationController
     authorize! :destroy, @inbox_file
     @inbox_file.destroy
 
-  redirect_to inbox_files_path, notice: "File deleted."
+    redirect_to inbox_files_path, notice: "File deleted."
 
 
   end
@@ -157,7 +163,7 @@ class InboxFilesController < ApplicationController
     elsif (params[:label])
       cookies.permanent[:filter] = nil
       cookies.permanent[:label] = params[:label]
-    elsif(params[:inbox])
+    elsif (params[:inbox])
       cookies.permanent[:label] = nil
       cookies.permanent[:filter] = nil
     end

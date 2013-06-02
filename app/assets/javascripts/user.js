@@ -36,7 +36,7 @@ $(document).ready(function () {
                 }
             },
             "themes":{
-                "theme":"apple",
+                "theme":"   apple",
                 "icons":false,
                 "dots":false
             },
@@ -65,14 +65,10 @@ $(document).ready(function () {
         return joined;
     }
 
-    $("#submit_delete").click(function (event) {
-        document.getElementById("selected_files_for_delete").value = getChecked();
+    // When the download/archive/delete buttons clicked, collect the selected files for the action
+    $(".btn-group input").on('click', function () {
+        $(".files-input").val(getChecked());
     });
-
-    $("#submit_archive").click(function (event) {
-        document.getElementById("selected_files_for_archive").value = getChecked();
-    });
-
 
     $('.add_to_label a').on('click', function () {
         var label = this.getAttribute("label");

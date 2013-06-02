@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles, :uniq => true
   has_and_belongs_to_many :labels, :uniq => true
   has_and_belongs_to_many :filters, :uniq => true
+  has_many :download_tasks, :uniq => true, :dependent => :destroy
 
   # Generate a token by looping and ensuring does not already exist.
   #def generate_token(column = :reset_password_token)
