@@ -26,6 +26,7 @@ gem 'kaminari', :git => 'https://github.com/amatsuda/kaminari.git' #for paginati
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git', :branch => 'v2.1'
 gem 'nokogiri'
 
+gem 'rubyzip'
 gem "cancan"
 gem 'devise'
 gem 'bootstrap-sass', '~> 2.1.0.0'

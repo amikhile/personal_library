@@ -1,6 +1,7 @@
 class InboxFilesController < ApplicationController
   require 'rest_client'
   require 'json'
+  require 'securerandom'
   load_resource
   before_filter :load_filters_and_labels
 
@@ -61,7 +62,10 @@ class InboxFilesController < ApplicationController
       task.status = DownloadTask::STATUSES[:submitted]
       task.files = @ids.join(",")
       task.user = current_user
+      task.zip_name= getRandomName
       task.save
+      job = FilesDownloadJob.new(task)
+      job.perform
     end
     redirect_to inbox_files_path
   end
@@ -181,4 +185,7 @@ class InboxFilesController < ApplicationController
     return 0 #if cannot?(:search_secure, KmediaFile)
   end
 
+  def  getRandomName
+    SecureRandom.urlsafe_base64(9)
+  end
 end
