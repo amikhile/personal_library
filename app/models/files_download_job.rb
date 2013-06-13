@@ -13,7 +13,7 @@ class FilesDownloadJob < Struct.new(:task)
 
 
   def prepare_zip
-
+    my_logger.info("Download task #{task.zip_name}. finished... preparing the zip")
     @zips_folder = FileUtils.mkdir_p("#{Rails.root}/zips")[0]
     zip_filepath = "#{@zips_folder}/#{task.zip_name}"
     FileUtils.rm zip_filepath, :force => true
@@ -23,11 +23,13 @@ class FilesDownloadJob < Struct.new(:task)
         zipfile.add(item, item_path) if File.file? item_path
       end
     }
+    my_logger.info("Zip file is ready for task #{task.zip_name}.")
     File.chmod(0644, zip_filepath)
     FileUtils.rm_rf @download_folder
   end
 
   def download
+    my_logger.info("Processing download task #{task.zip_name}.")
     @download_folder = FileUtils.mkdir_p("#{Rails.root}/downloads/#{task.user_id}/#{task.zip_name}")[0]
 
     inbox_files_ids = task.files.split(",") rescue []
@@ -43,6 +45,7 @@ class FilesDownloadJob < Struct.new(:task)
     # wb , w for write permissions , b for binary
     open(store_file, 'wb') do |file|
       file << open(kmedia_file.url).read
+      my_logger.info("File #{kmedia_file.name} Downloaded.")
     end
   end
 

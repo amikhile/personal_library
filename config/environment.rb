@@ -3,3 +3,4 @@ require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
 PersonalLibrary::Application.initialize!
+Delayed::Worker.logger = Rails.logger

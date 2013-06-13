@@ -65,7 +65,8 @@ class InboxFilesController < ApplicationController
       task.zip_name= getRandomName
       task.save
       job = FilesDownloadJob.new(task)
-      job.perform
+      Delayed::Job.enqueue job, :queue => 'download'
+      #job.perform
     end
     redirect_to inbox_files_path
   end
