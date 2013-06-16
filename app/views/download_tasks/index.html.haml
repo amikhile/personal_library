@@ -1,0 +1,18 @@
+%header.subhead#overview
+  %h2 Files ready for download
+
+%section
+  = paginate @tasks
+
+  %table.table.table-striped.table-bordered.table-condensed
+    %thead
+      %tr
+        %th= "File name"
+        %th= 'Completed at'
+        %th= 'Actions'
+    %tbody
+      - @tasks.each do |task|
+        %tr(class="#{cycle('odd', 'even')}")
+          %td.small= task.zip_name
+          %td.small= task.ready
+          %td= link_to 'Download', download_download_task_path(task)

@@ -32,7 +32,11 @@ PersonalLibrary::Application.routes.draw do
       post 'remove_label'
     end
   end
-
+  resources :download_tasks do
+    member do
+      get 'download'
+    end
+  end
   root :to => "inbox_files#index"
 
   # The priority is based upon order of creation:

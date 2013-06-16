@@ -1,6 +1,5 @@
 class LabelsController < ApplicationController
   load_and_authorize_resource
-  before_filter :load_filters_and_labels
 
   def index
     @labels = current_user.labels.order(:id).page(params[:page])

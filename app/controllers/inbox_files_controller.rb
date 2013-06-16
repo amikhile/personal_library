@@ -3,7 +3,6 @@ class InboxFilesController < ApplicationController
   require 'json'
   require 'securerandom'
   load_resource
-  before_filter :load_filters_and_labels
 
 
   def index

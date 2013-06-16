@@ -1,7 +1,6 @@
 class FiltersController < ApplicationController
   load_and_authorize_resource
-  before_filter :load_filters_and_labels, :load_from_kmedia
-
+  before_filter :load_from_kmedia
 
   def index
     @filters = current_user.filters.order(:id).page(params[:page])
@@ -87,16 +86,6 @@ class FiltersController < ApplicationController
   end
 
 
-  def load_filters_and_labels
-    @filters_for_menu = current_user.filters.order(:name)
-    @labels_for_menu = current_user.labels.order(:name)
-  end
-
-  def load_from_kmedia
-    @content_types = ContentType.get_content_types.map { |ct| [ct['name'], ct['id']] }
-    @media_types = MediaType.get_media_types.map { |mt| [mt['name'], mt['id']] }
-    @languages = Language.get_languages.map { |l| [l['name'], l['id']] }
-  end
 
 
 end
