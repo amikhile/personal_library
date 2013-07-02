@@ -48,6 +48,24 @@ class FiltersController < ApplicationController
     end
   end
 
+  def export
+    authorize! :index, Filter
+    filter = Filter.find(params[:id])
+    files = InboxFile.joins(:kmedia_file).where("filter_id" => params[:id]).multipluck(:name, :url)
+
+
+    file = Tempfile.open(filter.name, Rails.root.join('tmp') ) do |f|
+      files.each do |file_data|
+        f.print(file_data['name'] +'---'+file_data['url']+"\n")
+      end
+      f.flush
+    end
+    send_data file.path,  :filename => filter.name, :x_sendfile=>true, :content_type => 'text/plain'
+    FileUtils.rm file
+  end
+
+
+
   def kmedia_catalogs
     catalog_id = params[:catalog_id]
     selected_catalogs = Filter.find(params[:filter_id]).catalogs.split(",") rescue []

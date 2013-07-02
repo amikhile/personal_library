@@ -36,7 +36,7 @@ $(document).ready(function () {
                 }
             },
             "themes":{
-                "theme":"   apple",
+                "theme":"apple",
                 "icons":false,
                 "dots":false
             },
@@ -101,6 +101,7 @@ $(document).ready(function () {
     })
     ;
 
+    //the delete of the label from inbox file by clicking on the inline x in the label badge
     $('table').on('click', '.close.label-delete', function () {
         var closeButton = this;
         $.ajax({

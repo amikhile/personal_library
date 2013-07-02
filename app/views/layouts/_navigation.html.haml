@@ -18,7 +18,6 @@
       %li
         = link_to 'Labels', labels_path
 
-
     .btn-group{style: 'float: right;' }
       %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
         Add to Label
@@ -40,4 +39,3 @@
       = form_tag archive_multiple_inbox_files_path, :method => :post, :onsubmit => "return true;", style: "display: inline;" do
         = image_submit_tag ("/assets/archive_16.png"), :id => 'submit_archive', class: "btn", title: "Archive"
         %input#selected_files_for_archive{:name => "selected_files", :type => "hidden", :value => "", class: "files-input"}
-

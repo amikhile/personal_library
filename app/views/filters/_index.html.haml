@@ -1,7 +1,7 @@
 .well
   %ul.nav.nav-list
     %li.nav-header Filters
-    %li= do_nav_link('Inbox', inbox_files_path(inbox: true), cookies[:filter].nil? && cookies[:label].nil?)
+    %li= do_nav_link('Inbox', inbox_files_path(inbox: true), !cookies[:filter].present? && !cookies[:label].present? )
     - @filters_for_menu.each do |filter|
       %li= nav_link(filter.name, inbox_files_path(filter: filter), filter, cookies[:filter])
     %li.nav-header Labels

@@ -1,8 +1,6 @@
 PersonalLibrary::Application.routes.draw do
 
 
-
-
   devise_for :users
   resources :users do
     collection do
@@ -13,6 +11,9 @@ PersonalLibrary::Application.routes.draw do
   match "after_login" => "users#after_login"
 
   resources :filters do
+    member do
+      get 'export'
+    end
     collection do
       get 'kmedia_catalogs'
     end

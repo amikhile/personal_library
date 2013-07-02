@@ -52,10 +52,4 @@ class LabelsController < ApplicationController
     redirect_to labels_url, :notice => "Label deleted successfully."
   end
 
-  protected
-  def load_filters_and_labels
-    @filters_for_menu = current_user.filters.order(:name)
-    @labels_for_menu =  current_user.labels.order(:name)
-  end
-
 end

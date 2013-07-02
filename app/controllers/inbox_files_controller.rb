@@ -4,15 +4,14 @@ class InboxFilesController < ApplicationController
   require 'securerandom'
   load_resource
 
-
   def index
     authorize! :index, InboxFile
     init_cookies
-    if (@filter)
-      sync_with_kmedia(@filter) if Filter.find_by_id(@filter).last_sync.nil?
-      @inbox_files = InboxFile.where("filter_id" => @filter).order(:id).page(params[:page])
-    elsif (@label)
-      @inbox_files = InboxFile.joins(:labels).where("labels.id" => @label).order(:id).page(params[:page])
+    if (@selected_filter && Filter.find_by_id(@selected_filter))
+      sync_with_kmedia(@selected_filter) if Filter.find_by_id(@selected_filter).last_sync.nil?
+      @inbox_files = InboxFile.where("filter_id" => @selected_filter).order(:id).page(params[:page])
+    elsif (@selected_label && Label.find_by_id(@selected_label))
+      @inbox_files = InboxFile.joins(:labels).where("labels.id" => @selected_label).order(:id).page(params[:page])
     else
       @filters_for_menu.each do |filter|
         sync_with_kmedia(filter.id) if filter.last_sync.nil?
@@ -31,8 +30,8 @@ class InboxFilesController < ApplicationController
 
   def refresh
     authorize! :index, InboxFile
-    if (@filter)
-      sync_with_kmedia(@filter)
+    if (@selected_filter)
+      sync_with_kmedia(@selected_filter)
       redirect_to inbox_files_path
     else
       @filters_for_menu.each do |filter|
@@ -154,12 +153,6 @@ class InboxFilesController < ApplicationController
 
   private
 
-  def load_filters_and_labels
-    @ids = params[:selected_files].split(",") rescue []
-    @filters_for_menu = current_user.filters.order(:name)
-    @labels_for_menu = current_user.labels.order(:name)
-  end
-
   def init_cookies
     if (params[:filter])
       cookies.permanent[:filter] = params[:filter]
@@ -171,8 +164,8 @@ class InboxFilesController < ApplicationController
       cookies.permanent[:label] = nil
       cookies.permanent[:filter] = nil
     end
-    @filter = cookies[:filter] if cookies[:filter].present?
-    @label = cookies[:label] if cookies[:label].present?
+    @selected_filter = cookies[:filter]
+    @selected_label = cookies[:label]
   end
 
   def sync_with_kmedia(filter_id)
@@ -188,4 +181,5 @@ class InboxFilesController < ApplicationController
   def  getRandomName
     SecureRandom.urlsafe_base64(9)
   end
+
 end

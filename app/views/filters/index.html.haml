@@ -22,11 +22,11 @@
           %td.small= filter.from_date.try(:to_date)
           %td.small= filter.to_date.try(:to_date)
           -if can?(:read, filter)
-            %td
-              = link_to 'Show', [ filter]
+            %td= link_to 'Show', [filter]
           -if can?(:update, filter)
-            %td
-              = link_to 'Edit', edit_filter_path(filter)
+            %td= link_to 'Edit', edit_filter_path(filter)
+          -if can?(:read, filter)
+            %td= link_to 'Export', export_filter_path(filter)
           -if can?(:destroy, filter)
             %td
               = link_to 'Destroy', filter_path(filter), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
