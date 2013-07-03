@@ -51,19 +51,17 @@ class FiltersController < ApplicationController
   def export
     authorize! :index, Filter
     filter = Filter.find(params[:id])
-    files = InboxFile.joins(:kmedia_file).where("filter_id" => params[:id]).multipluck(:name, :url)
-
-
-    file = Tempfile.open(filter.name, Rails.root.join('tmp') ) do |f|
-      files.each do |file_data|
-        f.print(file_data['name'] +'---'+file_data['url']+"\n")
+    begin
+      files = InboxFile.joins(:kmedia_file).where("filter_id" => params[:id]).multipluck(:name, :url)
+      tmp_file = Tempfile.open("export-#{filter.name}", Rails.root.join('tmp'))
+      files.each do |data|
+        tmp_file.write(data['name'] +'---'+data['url']+"\n")
       end
-      f.flush
+      send_file tmp_file.path, :filename => filter.name, :x_sendfile => true, :content_type => 'text/plain'
+    ensure
+      tmp_file.close
     end
-    send_data file.path,  :filename => filter.name, :x_sendfile=>true, :content_type => 'text/plain'
-    FileUtils.rm file
   end
-
 
 
   def kmedia_catalogs
@@ -102,8 +100,6 @@ class FiltersController < ApplicationController
     css_class = "jstree-checked" if selected_ids.include? catalog_id.to_s()
     css_class
   end
-
-
 
 
 end
