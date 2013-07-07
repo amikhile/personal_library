@@ -37,5 +37,15 @@ class ApplicationController < ActionController::Base
     @languages = Language.get_languages.map { |l| [l['name'], l['id']] }
   end
 
-
+  def export_to_file(files, export_file_name)
+    begin
+      tmp_file = Tempfile.open("export-#{export_file_name}", Rails.root.join('tmp'))
+      files.each do |data|
+        tmp_file.write(data['name'] +'---'+data['url']+"\n")
+      end
+      send_file tmp_file.path, :filename => export_file_name, :x_sendfile => true, :content_type => 'text/plain'
+    ensure
+      tmp_file.close
+    end
+  end
 end

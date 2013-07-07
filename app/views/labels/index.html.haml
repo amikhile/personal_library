@@ -23,6 +23,8 @@
           -if can?(:update, label)
             %td
               = link_to 'Edit', edit_label_path(label)
+          -if can?(:read, label)
+            %td= link_to 'Export', export_label_path(label)
           -if can?(:destroy, label)
             %td
               = link_to 'Destroy', label_path(label), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'

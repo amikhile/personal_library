@@ -44,6 +44,14 @@ class LabelsController < ApplicationController
     end
   end
 
+  def export
+    authorize! :index, Filter
+    label = Label.find(params[:id])
+    inbox_files = InboxFile.joins(:labels).where("labels.id" => label.id)
+    files = KmediaFile.where("id in (?)",inbox_files.collect(&:kmedia_file_id)).multipluck(:name, :url) rescue []
+    export_to_file(files, label.name)
+
+  end
 
   def destroy
     @label = Label.find(params[:id])

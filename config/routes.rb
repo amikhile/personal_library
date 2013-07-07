@@ -18,7 +18,11 @@ PersonalLibrary::Application.routes.draw do
       get 'kmedia_catalogs'
     end
   end
-  resources :labels
+  resources :labels do
+    member do
+      get 'export'
+    end
+  end
   resources :inbox_files do
     member do
       put 'archive'
