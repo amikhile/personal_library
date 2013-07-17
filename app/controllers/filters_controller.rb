@@ -63,7 +63,8 @@ class FiltersController < ApplicationController
     response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/catalogs.json",
                                :auth_token => token, :content_type => :json, :root => catalog_id
     hash = JSON.parse response
-    tree = transform_for_tree(hash['item'], selected_catalogs)
+    retrieved_catalogs =  hash['item'].sort_by{|e| e['name']}
+    tree = transform_for_tree(retrieved_catalogs, selected_catalogs)
     render json: tree.to_json
   end
 

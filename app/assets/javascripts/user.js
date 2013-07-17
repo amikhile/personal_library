@@ -40,7 +40,7 @@ $(document).ready(function () {
                 "icons":false,
                 "dots":false
             },
-            "plugins":[ "themes", "json_data", "ui", "checkbox"],
+            "plugins":[ "themes", "json_data", "ui", "checkbox", "sort"],
             "checkbox":{ "override_ui":true}
         })
     }
