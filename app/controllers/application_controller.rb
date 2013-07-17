@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     begin
       tmp_file = Tempfile.open("export-#{export_file_name}", Rails.root.join('tmp'))
       files.each do |data|
-        tmp_file.write(data['name'] +'---'+data['url']+"\n")
+        tmp_file.write(data['name'] +' ---> '+data['url']+"\r\n")
       end
       send_file tmp_file.path, :filename => export_file_name, :x_sendfile => true, :content_type => 'text/plain'
     ensure
