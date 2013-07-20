@@ -21,6 +21,6 @@
   = display_show_item('To date', @filter.to_date)
   = display_show_item('Content Type', @filter.content_types.first.try(:name))
   = display_show_item('Media Type', @filter.media_types.first.try(:name))
-  = display_show_item('Language', @filter.languages.first.try(:name))
+  = display_show_item('Language', @filter.languages.first.try(:language))
   = display_show_item('Created', @filter.created_at.to_s(:long_ordinal))
   = display_show_item('Updated', @filter.updated_at.to_s(:long_ordinal))

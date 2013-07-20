@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :mailer_set_url_options, :check_logged_in, :authenticate_user!, :load_filters_and_labels
+  before_filter :mailer_set_url_options, :check_logged_in, :authenticate_user!, :set_data
 
   def mailer_set_url_options
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   def load_from_kmedia
     @content_types = ContentType.get_content_types.map { |ct| [ct['name'], ct['id']] }
     @media_types = MediaType.get_media_types.map { |mt| [mt['name'], mt['id']] }
-    @languages = Language.get_languages.map { |l| [l['name'], l['id']] }
+    @languages = Language.get_languages.map { |l| [l['language'], l['id']] }
   end
 
   def export_to_file(files, export_file_name)
@@ -47,5 +47,26 @@ class ApplicationController < ActionController::Base
     ensure
       tmp_file.close
     end
+  end
+
+
+  # For any url_for (except devise)
+  def default_url_options(options={})
+    {:locale => (params[:locale] || I18n.locale)}
+  end
+
+  # Devise plugin only
+  def self.default_url_options(options={})
+    {:locale => I18n.locale}
+  end
+
+  private
+
+  def set_data
+    load_filters_and_labels
+    I18n.locale = @locale = params[:locale] || cookies[:library_locale] || 'en'
+    cookies[:library_locale] = @locale
+    @menu_languages = Language.menu_languages('en', 'he', 'ru', 'es', 'de').map{|x| [x['language'], root_url(x['locale'])]}
+    @current_menu_language = root_url(@locale)
   end
 end
