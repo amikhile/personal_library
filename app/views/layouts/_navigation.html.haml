@@ -5,22 +5,23 @@
         - user = "<span class='brand-user'>#{current_user.email}(#{current_user.roles.collect{|r| r.name}.join(', ').truncate(40)})</span>".html_safe
       - else
         - user = ''
-      = link_to "Personal Library <br/>#{user}".html_safe, '#', :class => 'brand'
+      = link_to "#{t('title')} <br/>#{user}".html_safe, '#', :class => 'brand'
       - if current_user
         = link_to 'Logout', destroy_user_session_path, :class => 'brand logout', :style => 'float: right;'
+        = select_tag 'languages', options_for_select(@menu_languages, selected: @current_menu_language), class: 'languages'
 
   - if current_user
     %ul.nav.nav-tabs
       %li.active
-        = link_to 'Inbox', inbox_files_path
+        = link_to t('ui.sidebar.inbox'), inbox_files_path
       %li
-        = link_to 'Filters', filters_path
+        = link_to t('ui.sidebar.filters'), filters_path
       %li
-        = link_to 'Labels', labels_path
+        = link_to t('ui.sidebar.labels'), labels_path
 
     .btn-group{style: 'float: right;' }
       %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-        Add to Label
+        = t('navbar.add_to_label')
         %span.caret
       %ul.dropdown-menu
         -@labels_for_menu.each do |label|
@@ -28,14 +29,14 @@
             %li.add_to_label
               = link_to label[:name].humanize, "#", url: add_label_multiple_inbox_files_path(add_to_label: label[:id]), id: "add_label", label: label[:name], label_id: label[:id]
 
-      = link_to "New Filter", new_filter_path, class: "btn"
-      = link_to "New Label", new_label_path, class: "btn"
-      = link_to "Refresh", refresh_inbox_files_path, class: "btn"
+      = link_to t('navbar.new_filter'), new_filter_path, class: "btn"
+      = link_to t('navbar.new_label'), new_label_path, class: "btn"
+      = link_to t('navbar.refresh'), refresh_inbox_files_path, class: "btn"
 
     .btn-group{:id => 'btn_group'}
       = form_tag delete_multiple_inbox_files_path, :method => :delete, :onsubmit => "return true;" , style: "display: inline;" do
-        = image_submit_tag ("/assets/trash.gif"), :id => 'submit_delete', :confirm => 'Are you sure?', class: "btn my-btn", title: "Delete"
+        = image_submit_tag ("/assets/trash.gif"), :id => 'submit_delete', :confirm => 'Are you sure?', class: "btn my-btn", title: t('ui.icons.delete')
         %input#selected_files_for_delete{:name => "selected_files", :type => "hidden", :value => "", class: "files-input"}
       = form_tag archive_multiple_inbox_files_path, :method => :post, :onsubmit => "return true;", style: "display: inline;" do
-        = image_submit_tag ("/assets/archive_16.png"), :id => 'submit_archive', class: "btn", title: "Archive"
+        = image_submit_tag ("/assets/archive_16.png"), :id => 'submit_archive', class: "btn", title: t('ui.icons.archive')
         %input#selected_files_for_archive{:name => "selected_files", :type => "hidden", :value => "", class: "files-input"}

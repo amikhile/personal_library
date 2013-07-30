@@ -1,0 +1,68 @@
+ru:
+  title: Персональная Библиотека
+  navbar:
+    search: 'Поиск'
+    inbox: 'Входящие'
+    filters: 'Фильтры'
+    labels: 'Ярлыки'
+    add_to_label: 'Добавитъ ярлык'
+    new_filter: 'Новый фильтр'
+    new_label: 'Новый ярлык'
+    refresh: 'Обновитъ'
+
+  ui:
+    sidebar:
+      filters: 'Фильтры'
+      labels: 'Ярлыки'
+      inbox: 'Входящие'
+
+    content:
+      file_name: 'Имя файла'
+      record_date: 'Дата'
+      description: 'Описание'
+      actions: 'Действия'
+      empty: 'пусто'
+      file: 'Файл'
+      archived: 'заархивирован'
+      created: 'Создан'
+      updated: 'Изменён'
+      name: 'Имя'
+      text: 'Техт'
+      from_date: 'From date'
+      to_date: 'To date'
+      edit_file: 'Редактировать файл'
+      new_filter: 'Новый фильтр'
+      content_type: 'Тип содержимого'
+      media_type: 'Тип медии'
+      language: 'Язык'
+      catalogs: 'Каталоги'
+      filter: 'Фильтр'
+      edit_filter: 'Изменение фильтра'
+      new_label: 'Новый ярлык'
+      edit_label: 'Изменение ярлыка'
+      label: 'Ярлык'
+
+    instructions:
+      select_ct: 'Выбери тип содержимого'
+      select_mt: 'Выбери тип медии'
+      select_language: 'Выбери язык'
+
+    actions:
+      archive: 'Архивировать'
+      show: 'Показать'
+      edit: 'Редактировать'
+      delete: 'Удалить'
+      confirm: 'Вы уверены?'
+      back_to_inbox: 'назад'
+      export: 'Экспортировать'
+      view_all: 'Показать все'
+
+    icons:
+      delete: 'Удалить'
+      archive: 'Архивировать'
+
+    buttons:
+      update: 'Сохранить'
+      cancel: 'Отмена'
+      new_filter: 'Создать фильтр'
+      new_label: 'Создать ярлык'

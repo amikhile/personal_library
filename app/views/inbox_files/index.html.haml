@@ -6,10 +6,10 @@
     %thead
       %tr
         %th= check_box_tag('check_all', '', false)
-        %th= 'File Name'
-        %th= 'Record Date'
-        %th= 'Description'
-        %th= 'Actions'
+        %th= t('ui.content.file_name')
+        %th= t('ui.content.record_date')
+        %th= t('ui.content.description')
+        %th= t('ui.content.actions')
     %tbody
       - @inbox_files.each do |inbox_file|
         %tr(class="#{cycle('odd', 'even')}")
@@ -18,9 +18,9 @@
           %td= inbox_file.kmedia_file.date
           %td.editable
             %a{:id =>"description#{inbox_file.id}", "data-original-title" => "Enter description", "data-name"=>"description", "data-pk" => inbox_file.id, "data-type" => "text", "data-url" => description_inbox_file_url(inbox_file), :href => "#"}= inbox_file.description
-          %td= link_to 'Show', inbox_file_path(inbox_file)
-          %td= link_to 'Edit', edit_inbox_file_path(inbox_file)
-          %td= button_to 'Archive', archive_inbox_file_path(inbox_file, :archived => true), :class => "btn btn-small", :method => :put
-          %td= link_to 'Destroy', inbox_file_path(inbox_file), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
+          %td= link_to t('ui.actions.show'), inbox_file_path(inbox_file)
+          %td= link_to t('ui.actions.edit'), edit_inbox_file_path(inbox_file)
+          %td= button_to t('ui.actions.archive'), archive_inbox_file_path(inbox_file, :archived => true), :class => "btn btn-small", :method => :put
+          %td= link_to t('ui.actions.delete'), inbox_file_path(inbox_file), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
 
 

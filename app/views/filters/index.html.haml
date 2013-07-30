@@ -1,7 +1,8 @@
 %header.subhead#overview
-  %h2 Filters
+  %h2
+    =t('ui.sidebar.filters')
   %p
-    = link_to "New Filter", new_filter_path, :class => 'btn btn-success btn-large pull-right'
+    = link_to t('ui.buttons.new_filter'), new_filter_path, class: 'btn btn-success btn-large pull-right'
 
 %section
   = paginate @filters
@@ -9,11 +10,11 @@
   %table.table.table-striped.table-bordered.table-condensed
     %thead
       %tr
-        %th= "Name"
-        %th= 'Text'
-        %th= 'From_date'
-        %th= 'To_date'
-        %th= 'Actions'
+        %th=t('ui.content.name')
+        %th=t('ui.content.text')
+        %th=t('ui.content.from_date')
+        %th=t('ui.content.to_date')
+        %th=t('ui.content.actions')
     %tbody
       - @filters.each do |filter|
         %tr(class="#{cycle('odd', 'even')}")
@@ -22,11 +23,11 @@
           %td.small= filter.from_date.try(:to_date)
           %td.small= filter.to_date.try(:to_date)
           -if can?(:read, filter)
-            %td= link_to 'Show', [filter]
+            %td= link_to t('ui.actions.show'), [filter]
           -if can?(:update, filter)
-            %td= link_to 'Edit', edit_filter_path(filter)
+            %td= link_to t('ui.actions.edit'), edit_filter_path(filter)
           -if can?(:read, filter)
-            %td= link_to 'Export', export_filter_path(filter)
+            %td= link_to t('ui.actions.export'), export_filter_path(filter)
           -if can?(:destroy, filter)
             %td
-              = link_to 'Destroy', filter_path(filter), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
+              = link_to t('ui.actions.delete'), filter_path(filter), :confirm => t('ui.actions.confirm'), :method => :delete, :class => 'btn-small btn-danger'

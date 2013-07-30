@@ -1,16 +1,14 @@
 %header.subhead#overview
-  %h2 File
+  %h2
+    =t('ui.content.file')
   .subnav
     %ul.nav.nav-pills
       -if can?(:update, @inbox_file)
         %li
-          = link_to "Edit", edit_inbox_file_path(@inbox_file)
+          = link_to t('ui.actions.edit'), edit_inbox_file_path(@inbox_file)
       -if can?(:destroy, @inbox_file)
         %li
-          = link_to "Destroy", inbox_file_path(@inbox_file), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
-      -if can?(:read, @inbox_file)
-        %li
-          = link_to "Back to Inbox", inbox_files_path
+          = link_to t('ui.actions.delete'), inbox_file_path(@inbox_file), :class => 'label label-important', :confirm => t('ui.actions.confirm'), :method => :delete
 
 %section.well
   %p

@@ -118,6 +118,10 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#languages').change(function () {
+        window.location = $(this).val();
+    });
 })
 ;
 

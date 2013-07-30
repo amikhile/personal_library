@@ -5,9 +5,9 @@
 
   .files
     - if can?(:edit, @inbox_file)
-      = f.input :description, :label => 'description' ,:as => :string
-      = f.input :archived
-      = f.association :labels, :collection => @labels_for_menu, :label => 'Labels',  :input_html => {:class => 'span5'}
+      = f.input :description, label: t('ui.content.description') ,as: :string
+      = f.input :archived, label: t('ui.content.archived')
+      = f.association :labels, collection: @labels_for_menu, label: t('ui.sidebar.labels'),  input_html: {:class => 'span5'}
 
   %hr.soften
   = display_actions f, inbox_files_url

@@ -1,21 +1,21 @@
 %header.subhead#overview
-  %h2 label
+  %h2=t('ui.content.label')
+
   .subnav
     %ul.nav.nav-pills
       -if can?(:update, @label)
         %li
-          = link_to "Edit", edit_label_path(@label)
+          = link_to t('ui.actions.edit'), edit_label_path(@label)
       -if can?(:destroy, @label)
         %li
-          = link_to "Destroy", label_path(@label), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
+          = link_to t('ui.actions.delete'), label_path(@label), class: 'label label-important', confirm: t('ui.actions.confirm'), method: :delete
       -if can?(:read, @label)
         %li
-          = link_to "View All", labels_path
+          = link_to t('ui.actions.view_all'), labels_path
 
 %section.well
   %p
-    %strong label:
-  = display_show_item('Name', @label.name)
-  = display_show_item('Description', @label.description)
-  = display_show_item('Created', @label.created_at.to_s(:long_ordinal))
-  = display_show_item('Updated', @label.updated_at.to_s(:long_ordinal))
+  = display_show_item(t('ui.content.name'), @label.name)
+  = display_show_item(t('ui.content.description'), @label.description)
+  = display_show_item(t('ui.content.created'), @label.created_at.to_s(:long_ordinal))
+  = display_show_item(t('ui.content.updated'), @label.updated_at.to_s(:long_ordinal))

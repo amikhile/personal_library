@@ -4,8 +4,8 @@
   = display_errors f
 
   .labels
-    = f.input :name, :label => 'Name'
-    = f.input :description, :label => 'Description'
+    = f.input :name, :label => t('ui.content.name')
+    = f.input :description, :label => t('ui.content.description')
 
   %hr.soften
   = display_actions f, labels_path

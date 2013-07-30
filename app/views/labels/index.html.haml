@@ -1,7 +1,8 @@
 %header.subhead#overview
-  %h2 Labels
+  %h2=t('ui.sidebar.labels')
+
   %p
-    = link_to "New label", new_label_path, :class => 'btn btn-success btn-large pull-right'
+    = link_to t('ui.buttons.new_label'), new_label_path, :class => 'btn btn-success btn-large pull-right'
 
 %section
   = paginate @labels
@@ -9,9 +10,9 @@
   %table.table.table-striped.table-bordered.table-condensed
     %thead
       %tr
-        %th= "Name"
-        %th= 'Description'
-        %th= 'Actions'
+        %th= t('ui.content.name')
+        %th= t('ui.content.description')
+        %th= t('ui.content.actions')
     %tbody
       - @labels.each do |label|
         %tr(class="#{cycle('odd', 'even')}")
@@ -19,12 +20,12 @@
           %td.small= label.description
           -if can?(:read, label)
             %td
-              = link_to 'Show', [ label]
+              = link_to t('ui.actions.show'), [ label]
           -if can?(:update, label)
             %td
-              = link_to 'Edit', edit_label_path(label)
+              = link_to t('ui.actions.edit'), edit_label_path(label)
           -if can?(:read, label)
-            %td= link_to 'Export', export_label_path(label)
+            %td= link_to t('ui.actions.export'), export_label_path(label)
           -if can?(:destroy, label)
             %td
-              = link_to 'Destroy', label_path(label), :confirm => 'Are you sure?', :method => :delete, :class => 'btn-small btn-danger'
+              = link_to t('ui.actions.delete'), label_path(label), :confirm => t('ui.actions.confirm'), :method => :delete, :class => 'btn-small btn-danger'

@@ -1,8 +1,8 @@
 %header.subhead#overview
-  %h2 Edit label
+  %h2=t('ui.content.edit_filter')
   .subnav
     %ul.nav.nav-pills
-      %li= link_to "Show", [@label]
-      %li= link_to "View All", labels_path
+      %li= link_to t('ui.actions.show'), [@label]
+      %li= link_to t('ui.actions.view_all'), labels_path
 
 = render 'form'

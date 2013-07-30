@@ -1,5 +1,71 @@
 # Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  title: Personal Library
+  navbar:
+    search: 'Search'
+    inbox: 'Inbox'
+    filters: 'Filters'
+    labels: 'Labels'
+    add_to_label: 'Add to Label'
+    new_filter: 'New Filter'
+    new_label: 'New Label'
+    refresh: 'Refresh'
+
+  ui:
+    sidebar:
+      filters: 'Filters'
+      labels: 'Labels'
+      inbox: 'Inbox'
+
+    content:
+      file_name: 'File Name'
+      record_date: 'Record Date'
+      description: 'Description'
+      actions: 'Actions'
+      empty: 'Empty'
+      file: 'File'
+      url: 'Url'
+      archived: 'archived'
+      created: 'created'
+      updated: 'updated'
+      name: 'Name'
+      text: 'Text'
+      from_date: 'From date'
+      to_date: 'To date'
+      edit_file: 'Edit File'
+      new_filter: 'New filter'
+      content_type: 'Content Type'
+      media_type: 'Media Type'
+      language: 'Language'
+      catalogs: 'Catalogs'
+      filter: 'Filter'
+      edit_filter: 'Edit Filter'
+      new_label: 'New Label'
+      edit_label: 'Edit Label'
+      label: 'Label'
+
+    instructions:
+      select_ct: 'Select content type'
+      select_mt: 'Select media type'
+      select_language: 'Select language'
+
+    actions:
+      archive: 'Archive'
+      show: 'Show'
+      edit: 'Edit'
+      delete: 'Delete'
+      confirm: 'Are you sure'
+      export: 'Export'
+      view_all: 'View all'
+
+    icons:
+      delete: 'Delete'
+      archive: 'Archive'
+
+    buttons:
+      update: 'Update'
+      cancel: 'Cancel'
+      new_filter: 'New filter'
+      new_label: 'New Label'

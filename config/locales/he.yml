@@ -1,0 +1,68 @@
+he:
+  title: סיפרייה אישית
+  navbar:
+    search: 'חיפוש'
+    inbox: 'נכנס'
+    filters: 'פילטרים'
+    labels: 'תוויות'
+    add_to_label: 'הוסף תווית'
+    new_filter: 'פילטר חדש'
+    new_label: 'תווית חדשה'
+    refresh: 'רענן'
+
+  ui:
+    sidebar:
+      filters: 'פילטרים'
+      labels: 'תוויות'
+      inbox: 'נכנס'
+
+    content:
+      file_name: 'שם'
+      record_date: 'תאריך'
+      description: 'תיאור'
+      actions: 'פעולות'
+      empty: 'ריק'
+      file: 'קובץ'
+      url: 'Url'
+      archived: 'בארכיון'
+      created: 'נוצר'
+      updated: 'עודכן'
+      name: 'שם'
+      text: 'טקסט'
+      from_date: 'מתאריך'
+      to_date: 'עד תאריך'
+      edit_file: 'עידכון קובץ'
+      new_filter: 'פילטר חדש'
+      content_type: 'סוג התוכן'
+      media_type: 'סוג מדיה'
+      language: 'שפה'
+      catalogs: 'קטלוגים'
+      filter: 'פילטר'
+      edit_filter: 'עריכת פילטר'
+      new_label: 'תווית חדשה'
+      label: 'תווית'
+
+    instructions:
+      select_ct: 'בחר סוג תוכן'
+      select_mt: 'בחר סוג מדיה'
+      select_language: 'בחר שפה'
+
+    actions:
+      archive: 'העבר לארכיון'
+      show: 'הצג'
+      edit: 'ערוך'
+      delete: 'מחק'
+      confirm: 'אתה בטוח'
+      back_to_inbox: 'לחזור'
+      export: 'יצא'
+      view_all: 'הצג את כולם'
+
+    icons:
+      delete: 'מחק'
+      archive: 'העבר לארכיון'
+
+    buttons:
+      update: 'עדכן'
+      cancel: 'בטל'
+      new_filter: 'צור פילטר חדש'
+      new_label: 'צור תווית חדשה'

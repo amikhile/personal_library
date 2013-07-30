@@ -203,3 +203,22 @@ span.tab {
   font-weight: normal;
 }
 
+.navbar-fixed-top {
+  z-index: 1200;
+  .container {
+    position: relative;
+    .navbar-form {
+      float: right;
+    }
+    .languages {
+      float: right;
+      width: 100px;
+      margin: 5px 10px 0 5px;
+    }
+  }
+}
+
+li.nav-header{
+  font-size: 14px;
+}
+

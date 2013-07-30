@@ -1,8 +1,10 @@
 %header.subhead#overview
-  %h2 Edit Filter
+  %h2
+    =t('ui.content.edit_filter')
+
   .subnav
     %ul.nav.nav-pills
-      %li= link_to "Show", [@filter]
-      %li= link_to "View All", filters_path
+      %li= link_to t('ui.actions.show'), [@filter]
+      %li= link_to t('ui.actions.view_all'), filters_path
 
 = render 'form'

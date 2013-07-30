@@ -2,7 +2,7 @@
 %html
   %head
     %title
-      = content_for?(:title) ? yield(:title) : "Personal Library"
+      = content_for?(:title) ? yield(:title) : t('title')
     %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
     = stylesheet_link_tag 'user'
     = csrf_meta_tag
@@ -18,8 +18,8 @@
       ga('send', 'pageview', {
         'page': '#{request.path}'
       });
-
-  %body(data-spy="scroll" data-target=".subnav" data-offset="50" data-rendering="true")
+  - klass = "#{@locale} #{@locale == 'he' || @locale == 'ar' ? 'rtl' : ''}"
+  %body(data-spy="scroll" data-target=".subnav" data-offset="50" data-rendering="true" class=klass)
     - if current_user
       = render 'layouts/navigation'
     - else
