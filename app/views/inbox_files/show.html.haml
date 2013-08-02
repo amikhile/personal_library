@@ -12,10 +12,10 @@
 
 %section.well
   %p
-  = display_show_item('Name', @inbox_file.kmedia_file.name)
-  = display_show_item('Date', @inbox_file.kmedia_file.date)
-  = display_show_item('Description', @inbox_file.description)
-  = display_show_item('Url', @inbox_file.kmedia_file.url)
-  = display_show_item('Archived', @inbox_file.archived)
-  = display_show_item('Created', @inbox_file.created_at.to_s(:long_ordinal))
-  = display_show_item('Updated', @inbox_file.updated_at.to_s(:long_ordinal))
+  = display_show_item(t('ui.content.name'), @inbox_file.kmedia_file.name)
+  = display_show_item(t('ui.content.record_date'), @inbox_file.kmedia_file.date)
+  = display_show_item(t('ui.content.description'), @inbox_file.description)
+  = display_show_item(t('ui.content.url'), @inbox_file.kmedia_file.url)
+  = display_show_item(t('ui.content.archived'), @inbox_file.archived)
+  = display_show_item(t('ui.content.created'), @inbox_file.created_at.to_s(:long_ordinal))
+  = display_show_item(t('ui.content.updated'), @inbox_file.updated_at.to_s(:long_ordinal))

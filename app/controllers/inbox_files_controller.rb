@@ -136,7 +136,7 @@ class InboxFilesController < ApplicationController
     @inbox_file.archived = params[:archived]
     @inbox_file.save
 
-    redirect_to inbox_files_path, notice: "File archived."
+    redirect_to inbox_files_path, notice: t('message.file_archived')
 
   end
 

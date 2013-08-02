@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :get_user, :only => [:index, :new, :edit]
   load_resource :only => [:show, :new, :destroy, :edit, :update]
-  skip_before_filter :authenticate_user!, :check_logged_in, :load_filters_and_labels, :load_from_kmedia
+  skip_before_filter :authenticate_user!, :check_logged_in, :load_filters_and_labels, :load_from_kmedia, :set_data
 
 
   def after_login

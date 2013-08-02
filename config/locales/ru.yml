@@ -56,6 +56,8 @@ ru:
       back_to_inbox: 'назад'
       export: 'Экспортировать'
       view_all: 'Показать все'
+      logout: 'Выход'
+      click_to_login: 'Нажмите здесь чтобы войти'
 
     icons:
       delete: 'Удалить'
@@ -66,3 +68,6 @@ ru:
       cancel: 'Отмена'
       new_filter: 'Создать фильтр'
       new_label: 'Создать ярлык'
+
+  message:
+    file_archived: 'Файл заархивирован'

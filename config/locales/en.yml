@@ -59,6 +59,8 @@ en:
       confirm: 'Are you sure'
       export: 'Export'
       view_all: 'View all'
+      logout: 'Logout'
+      click_to_login: 'Click here to sign in'
 
     icons:
       delete: 'Delete'
@@ -69,3 +71,6 @@ en:
       cancel: 'Cancel'
       new_filter: 'New filter'
       new_label: 'New Label'
+
+  message:
+    file_archived: 'File archived.'

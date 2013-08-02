@@ -4,6 +4,7 @@
 */
 @import "bootstrap";
 @import "bootstrap-editable";
+@import "bootstrap-rtl";
 
 body {
   font-family: Arial;
@@ -32,6 +33,7 @@ body {
 .brand.logout {
   font-size: 14px;
   line-height: 24px;
+  float: right;
 }
 
 .navbar-search {
@@ -220,5 +222,9 @@ span.tab {
 
 li.nav-header{
   font-size: 14px;
+}
+
+.float-button-group{
+  float: right
 }
 

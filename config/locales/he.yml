@@ -23,7 +23,7 @@ he:
       actions: 'פעולות'
       empty: 'ריק'
       file: 'קובץ'
-      url: 'Url'
+      url: 'קִשּׁוּר'
       archived: 'בארכיון'
       created: 'נוצר'
       updated: 'עודכן'
@@ -56,6 +56,8 @@ he:
       back_to_inbox: 'לחזור'
       export: 'יצא'
       view_all: 'הצג את כולם'
+      logout: 'לצאת'
+      click_to_login: 'לחץ כאן כדי להכנס'
 
     icons:
       delete: 'מחק'
@@ -66,3 +68,7 @@ he:
       cancel: 'בטל'
       new_filter: 'צור פילטר חדש'
       new_label: 'צור תווית חדשה'
+
+
+  message:
+    file_archived: 'קובץ הועבר לארכיון.'

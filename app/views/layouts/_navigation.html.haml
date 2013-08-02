@@ -2,12 +2,12 @@
   .navbar-inner
     .container
       - if current_user
-        - user = "<span class='brand-user'>#{current_user.email}(#{current_user.roles.collect{|r| r.name}.join(', ').truncate(40)})</span>".html_safe
+        - user = "<span class='brand-user'>#{current_user.email}</span>".html_safe
       - else
         - user = ''
       = link_to "#{t('title')} <br/>#{user}".html_safe, '#', :class => 'brand'
       - if current_user
-        = link_to 'Logout', destroy_user_session_path, :class => 'brand logout', :style => 'float: right;'
+        = link_to t('ui.actions.logout'), destroy_user_session_path, :class => 'brand logout'
         = select_tag 'languages', options_for_select(@menu_languages, selected: @current_menu_language), class: 'languages'
 
   - if current_user
@@ -19,7 +19,7 @@
       %li
         = link_to t('ui.sidebar.labels'), labels_path
 
-    .btn-group{style: 'float: right;' }
+    .btn-group{class: 'float-button-group' }
       %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
         = t('navbar.add_to_label')
         %span.caret
