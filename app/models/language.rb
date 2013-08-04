@@ -13,8 +13,9 @@ class Language < ActiveRecord::Base
   LOCALE_CODE3.freeze
 
   def self.get_languages
-    if Language.all.empty? || !Language.first.code3.present?
+    if Language.all.empty? || APP_CONFIG['reload'] == 'true'
       languages = get_from_kmedia
+      Language.delete_all
       save_languages(languages)
     end
     Language.all
