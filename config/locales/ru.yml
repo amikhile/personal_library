@@ -42,6 +42,31 @@ ru:
       edit_label: 'Изменение ярлыка'
       label: 'Ярлык'
 
+    content-type:
+      all: 'Всё'
+      lesson: 'Урок'
+      lecture: 'Лекция'
+      program: 'Программа'
+      song: 'Песня'
+      clip: 'Клип'
+      book: 'Книга'
+      declamation: 'Чтение'
+      audio: 'Аудио'
+      video: 'Видео'
+      text: 'Текст'
+      image: 'Картинка'
+      audiodisk: 'Аудио диск'
+      videodisk:  'Видео диск'
+      magazine: 'Журнал'
+
+    media-type:
+      audio: 'Аудио'
+      video: 'Видео'
+      text: 'Текст'
+      graph: 'Картинка'
+      baner: 'Банер'
+      info: 'Информация'
+
     instructions:
       select_ct: 'Выбери тип содержимого'
       select_mt: 'Выбери тип медии'

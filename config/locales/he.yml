@@ -42,6 +42,31 @@ he:
       new_label: 'תווית חדשה'
       label: 'תווית'
 
+    content-type:
+      all: 'כל הסוגים'
+      lesson: 'שיעורים'
+      lecture: 'הרצאות'
+      program: 'תוכניות'
+      song: 'שירים'
+      clip: 'קליפים'
+      book: 'ספרים'
+      declamation: 'דיקלומים'
+      audio: 'אודיו'
+      video: 'וידיאו'
+      text: 'טקסט'
+      image: 'תמונה'
+      audiodisk: 'אודיו דיסק'
+      videodisk:  'וידיו דיסק'
+      magazine: 'כְּתַב עֵת'
+
+    media-type:
+      audio: 'אודיו'
+      video: 'וידיאו'
+      text: 'טקסט'
+      graph: 'תמונה'
+      baner: 'בנר'
+      info: 'מידע'
+
     instructions:
       select_ct: 'בחר סוג תוכן'
       select_mt: 'בחר סוג מדיה'

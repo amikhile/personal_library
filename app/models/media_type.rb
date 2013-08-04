@@ -3,8 +3,9 @@ class MediaType < ActiveRecord::Base
   has_and_belongs_to_many :filters
 
   def self.get_media_types
-    if MediaType.all.empty?
+    if MediaType.all.empty? || APP_CONFIG['reload'] == 'true'
       media_types = get_from_kmedia
+      MediaType.delete_all
       save_media_types(media_types)
     end
     MediaType.all

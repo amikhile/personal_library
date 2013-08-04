@@ -46,6 +46,31 @@ en:
       edit_label: 'Edit Label'
       label: 'Label'
 
+    content-type:
+      all: 'Any'
+      lesson: 'Lesson'
+      lecture: 'Lecture'
+      program: 'Program'
+      song: 'Song'
+      clip: 'Clip'
+      book: 'Book'
+      declamation: 'Declamation'
+      audio: 'Audio'
+      video: 'Video'
+      text: 'Text'
+      image: 'Image'
+      audiodisk: 'Аудио диск'
+      videodisk:  'Видео диск'
+      magazine: 'Журнал'
+
+    media-type:
+      video: 'Video'
+      audio: 'Audio'
+      text: 'Text'
+      graph: 'Image'
+      baner: 'Baner'
+      info: 'Info'
+
     instructions:
       select_ct: 'Select content type'
       select_mt: 'Select media type'

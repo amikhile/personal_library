@@ -3,12 +3,13 @@ development:
   kmedia_user: 'mylibrary@gmail.com'
   kmedia_password: 'mlke78951'
   library_url: 'mylibrary.kbb1.com'
-
+  reload: 'false'
 
 production:
   kmedia_url: 'http://kmedia.kbb1.com'
   kmedia_user: 'mylibrary@gmail.com'
   kmedia_password: 'mlke78951'
   library_url: 'mylibrary.kbb1.com'
+  reload: 'false'
 
 

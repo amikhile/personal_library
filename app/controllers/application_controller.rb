@@ -32,8 +32,8 @@ class ApplicationController < ActionController::Base
 
 
   def load_from_kmedia
-    @content_types = ContentType.get_content_types.map { |ct| [ct['name'], ct['id']] }
-    @media_types = MediaType.get_media_types.map { |mt| [mt['name'], mt['id']] }
+    @content_types = ContentType.get_content_types.map { |ct| [t('ui.content-type.'+ct['name']), ct['id']] }
+    @media_types = MediaType.get_media_types.map { |mt| [t('ui.media-type.'+mt['name']), mt['id']] }
     @languages = Language.get_languages.map { |l| [l['language'], l['id']] }
   end
 
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
     load_filters_and_labels
     I18n.locale = @locale = params[:locale] || cookies[:library_locale] || 'en'
     cookies[:library_locale] = @locale
-    @menu_languages = Language.menu_languages('en', 'he', 'ru', 'es', 'de').map{|x| [x['language'], root_url(x['locale'])]}
+    @menu_languages = Language.menu_languages('en', 'he', 'ru').map{|x| [x['language'], root_url(x['locale'])]}
     @current_menu_language = root_url(@locale)
   end
 end
