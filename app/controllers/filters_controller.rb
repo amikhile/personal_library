@@ -61,7 +61,7 @@ class FiltersController < ApplicationController
     selected_catalogs = Filter.find(params[:filter_id]).catalogs.split(",") rescue []
     token = KmediaToken.get_token
     response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/catalogs.json",
-                               :auth_token => token, :content_type => :json, :root => catalog_id
+                               auth_token: token, content_type: :json, root: catalog_id, locale: I18n.locale
     hash = JSON.parse response
     retrieved_catalogs =  hash['item'].sort_by{|e| e['name']}
     tree = transform_for_tree(retrieved_catalogs, selected_catalogs)

@@ -1,4 +1,4 @@
-//= require jquery
+    //= require jquery
 //= require modernizr.custom
 //= require jquery_ujs
 //= require_self
@@ -17,11 +17,13 @@ $(document).ready(function () {
 $(document).ready(function () {
     if ($("#catalogs")) {
         $("#set_theme1").click(function () {
-            $("#catalogs").jstree("set_theme", "apple");
-        });
-        $("#set_theme2").click(function () {
             $("#catalogs").jstree("set_theme", "default");
         });
+        $("#set_theme2").click(function () {
+            $("#catalogs").jstree("set_theme", "default-rtl");
+        });
+        theme = $('body').hasClass('rtl') ? "default-rtl" : "default";
+        rtl = $('body').hasClass('rtl')
         $("#catalogs").jstree({
             "json_data":{
                 "ajax":{
@@ -36,7 +38,8 @@ $(document).ready(function () {
                 }
             },
             "themes":{
-                "theme":"apple",
+                "rtl": rtl,
+                "theme":theme,
                 "icons":false,
                 "dots":false
             },
