@@ -39,6 +39,7 @@ gem 'yajl-ruby', :require => "yajl" # Required if we want json with utf8 strings
 gem 'clockwork'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'rufus-scheduler'
 
 group :development, :test do
   gem "ruby-debug-base19x", '>= 0.11.30.pre10'
