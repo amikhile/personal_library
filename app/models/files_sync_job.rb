@@ -9,7 +9,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
   end
 
   def my_logger
-    @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log")
+    @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log", 10, 100.megabytes)
   end
 
   private
@@ -84,7 +84,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
     languages_ids = @filter.languages.collect(&:kmedia_id).join(",")
     params = {:content_type_ids => content_type_ids, :catalog_ids => @filter.catalogs,
               :from_date => @filter.from_date, :to_date => @filter.to_date, :media_type_ids => media_type_ids,
-              :lang_ids => languages_ids, :query_string => @filter.text, :created_from_date => @filter.last_sync }
+              :lang_ids => languages_ids, :query_string => @filter.text}#, :created_from_date => @filter.last_sync }
     my_logger.info("with parameters #{params}")
     params[:auth_token] = @token
     response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/file_ids.json",params
@@ -96,10 +96,9 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
       my_logger.error("Kmedia return #{hash['error']}")
     else
       ids = hash['ids']
-      my_logger.info("Found #{ids.size} ids. Retrieved ids #{ids} for filter #{@filter.name}")
+      my_logger.info("Found #{ids.split(',').size} ids. Retrieved ids #{ids} for filter #{@filter.name}")
     end
     ids
-
   end
 
 
