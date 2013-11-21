@@ -83,6 +83,7 @@ ru:
       view_all: 'Показать все'
       logout: 'Выход'
       click_to_login: 'Нажмите здесь чтобы войти'
+      open_in_google: 'Открыть в google drive'
 
     icons:
       delete: 'Удалить'

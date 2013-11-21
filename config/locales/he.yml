@@ -83,6 +83,7 @@ he:
       view_all: 'הצג את כולם'
       logout: 'לצאת'
       click_to_login: 'לחץ כאן כדי להכנס'
+      open_in_google: 'לפתוח ב google drive'
 
     icons:
       delete: 'מחק'

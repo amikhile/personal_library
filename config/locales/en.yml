@@ -79,6 +79,7 @@ en:
     actions:
       archive: 'Archive'
       show: 'Show'
+      open_in_google: 'Open in google drive'
       edit: 'Edit'
       delete: 'Delete'
       confirm: 'Are you sure'

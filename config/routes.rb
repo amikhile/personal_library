@@ -10,6 +10,14 @@ PersonalLibrary::Application.routes.draw do
     end
     match "after_login" => "users#after_login"
 
+    match 'oauth2callback' => 'documents#set_google_drive_token' # user return to this after login to google drive
+
+    resources :documents do
+      member do
+        get 'open_in_google_docs'
+      end
+    end
+
     resources :filters do
       member do
         get 'export'
