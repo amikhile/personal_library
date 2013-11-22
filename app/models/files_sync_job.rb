@@ -26,6 +26,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
       file.date= f['date']
       file.url= f['url']
       file.kmedia_id= f['id']
+      file.ext= f['type']
 
       inbox_file = InboxFile.new()
       inbox_file.kmedia_file = file

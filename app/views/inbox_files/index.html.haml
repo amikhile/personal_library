@@ -18,8 +18,8 @@
           %td= inbox_file.kmedia_file.date
           %td.editable
             %a{:id =>"description#{inbox_file.id}", "data-original-title" => "Enter description", "data-name"=>"description", "data-pk" => inbox_file.id, "data-type" => "text", "data-url" => description_inbox_file_url(inbox_file), :href => "#"}= inbox_file.description
-          - if is_gmail_user
-          %td= link_to t('ui.actions.open_in_google'), open_in_google_docs_document_path(inbox_file)
+          - if is_gmail_user && is_text_document(inbox_file.kmedia_file.ext)
+            %td= link_to t('ui.actions.open_in_google'), open_in_google_docs_document_path(inbox_file)
           %td= link_to t('ui.actions.show'), inbox_file_path(inbox_file)
           %td= link_to t('ui.actions.edit'), edit_inbox_file_path(inbox_file)
           %td= button_to t('ui.actions.archive'), archive_inbox_file_path(inbox_file, :archived => true), :class => "btn btn-small", :method => :put

@@ -13,4 +13,14 @@ module ApplicationHelper
       end
   end
 
+  def is_gmail_user
+    return current_user.email.end_with?("@gmail.com")
+  end
+
+  def is_text_document (type)
+    #html,htm,txt,doc,pdf,rtf,epu,epub
+    text_extensions = ['html', 'htm', 'txt', 'doc', 'pdf', 'rtf', 'epu', 'epub']
+    return text_extensions.include? type
+  end
+
 end
