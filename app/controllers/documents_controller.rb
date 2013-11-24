@@ -36,7 +36,7 @@ class DocumentsController < ApplicationController
 
   def upload_file(file_path, file_name)
     google_session = GoogleDrive.login_with_oauth(session[:google_token])
-    google_session.upload_from_file(file_path, file_name, :convert => false)
+    google_session.upload_from_file(file_path, file_name, :convert => true)
     file = google_session.file_by_title(file_name)
     FileUtils.rm file_path, :force => true
     redirect_to file.human_url
