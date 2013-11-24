@@ -9,7 +9,7 @@ class DocumentsController < ApplicationController
     # if redirect is needed to google for authorization the selected inbox file id is stored in session
     @inbox_file = InboxFile.find(params[:id].present? ? params[:id] : session[:inbox_file_id])
 
-    # find if file already present in user's drive
+    # find if file already present in personal library folder in user's drive
     file_in_drive = find_file(@inbox_file.kmedia_file.name)
     if file_in_drive.present?
       redirect_to file_in_drive.human_url
@@ -28,16 +28,25 @@ class DocumentsController < ApplicationController
 
   def find_file(file_name)
     google_session = GoogleDrive.login_with_oauth(session[:google_token])
-    google_session.files.each do |file|
-      return file if file.title==file_name
+    library_dir = get_personal_library_folder
+    library_dir.file_by_title(file_name)
+  end
+
+  def get_personal_library_folder
+    google_session = GoogleDrive.login_with_oauth(session[:google_token])
+    library_dir = google_session.root_collection.subcollection_by_title("Personal library")
+    unless library_dir.present?
+      library_dir =  google_session.root_collection.create_subcollection("Personal library")
     end
-    return
+    library_dir
   end
 
   def upload_file(file_path, file_name)
     google_session = GoogleDrive.login_with_oauth(session[:google_token])
-    google_session.upload_from_file(file_path, file_name, :convert => true)
+    file = google_session.upload_from_file(file_path, file_name, :convert => true)
     file = google_session.file_by_title(file_name)
+    get_personal_library_folder.add(file)
+    google_session.root_collection.remove(file)
     FileUtils.rm file_path, :force => true
     redirect_to file.human_url
   end
