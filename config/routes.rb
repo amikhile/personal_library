@@ -50,6 +50,11 @@ PersonalLibrary::Application.routes.draw do
         get 'download'
       end
     end
+    resources :reports do
+      collection do
+        get 'show_user_logins'
+      end
+    end
     root :to => "inbox_files#index"
 
     # The priority is based upon order of creation:

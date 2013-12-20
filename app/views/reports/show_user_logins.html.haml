@@ -1,0 +1,24 @@
+%header.subhead#overview
+  %h2='Users of the library'
+
+  %p
+    = link_to "Export to csv",  show_user_logins_reports_path(format: "csv"), :class => 'btn btn-success'
+
+  %table.table.table-striped.table-bordered.table-condensed
+    %thead
+      %tr
+        %th= 'Username'
+        %th= 'Email'
+        %th= 'Registered on'
+        %th= 'Last week'
+        %th= 'Last month'
+        %th= 'Total logins'
+    %tbody
+      - @reports.each do |report|
+        %tr(class="#{cycle('odd', 'even')}")
+          %td.small= report.user.username
+          %td.small= report.user.email
+          %td.small= report.user.created_at.to_date.to_s(:long_ordinal)
+          %td.small= report.login_last_week
+          %td.small= report.login_last_month
+          %td.small= report.logins_count

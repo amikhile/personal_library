@@ -1,5 +1,5 @@
 require File.expand_path('../boot', __FILE__)
-
+require 'csv'
 require 'rails/all'
 
 if defined?(Bundler)
@@ -65,6 +65,9 @@ module PersonalLibrary
 
     config.assets.paths << Rails.root.join("vendor","assets","jstree_pre1.0_fix_1","themes","default")
     config.assets.paths << Rails.root.join("vendor","assets","jstree_pre1.0_fix_1","js")
+
+    # Autoload lib/ folder including all subdirectories
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
     # add these three lines:
     #config.sass.load_paths ||= []

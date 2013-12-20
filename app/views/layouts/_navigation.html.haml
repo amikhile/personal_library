@@ -18,6 +18,10 @@
         = link_to t('ui.sidebar.filters'), filters_path
       %li
         = link_to t('ui.sidebar.labels'), labels_path
+      -if can?(:show_user_logins, :report)
+        %li
+          = link_to t('ui.sidebar.reports'), show_user_logins_reports_path
+
 
     .btn-group{class: 'float-button-group' }
       %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
