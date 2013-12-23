@@ -98,5 +98,14 @@ en:
       new_filter: 'New filter'
       new_label: 'New Label'
 
+    report:
+      username: 'Username'
+      email: 'Email'
+      registered: 'Registered on'
+      last_week: 'Last week'
+      last_month: 'Last month'
+      total_logins: 'Total logins'
+      reports: 'Reports'
+
   message:
     file_archived: 'File archived.'

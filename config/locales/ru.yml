@@ -95,5 +95,15 @@ ru:
       new_filter: 'Создать фильтр'
       new_label: 'Создать ярлык'
 
+    report:
+      username: 'Логин'
+      email: 'И-мейл'
+      registered: 'Дата	регистрации'
+      last_week: 'За прошедшую неделе'
+      last_month: 'За прошедший месяц'
+      total_logins: 'Кол-во входов'
+      reports: 'Отчёт'
+
+
   message:
     file_archived: 'Файл заархивирован'

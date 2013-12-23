@@ -7,12 +7,12 @@
   %table.table.table-striped.table-bordered.table-condensed
     %thead
       %tr
-        %th= 'Username'
-        %th= 'Email'
-        %th= 'Registered on'
-        %th= 'Last week'
-        %th= 'Last month'
-        %th= 'Total logins'
+        %th= t('ui.report.username')
+        %th= t('ui.report.email')
+        %th= t('ui.report.registered')
+        %th= t('ui.report.last_week')
+        %th= t('ui.report.last_month')
+        %th= t('ui.report.total_logins')
     %tbody
       - @reports.each do |report|
         %tr(class="#{cycle('odd', 'even')}")

@@ -95,6 +95,15 @@ he:
       new_filter: 'צור פילטר חדש'
       new_label: 'צור תווית חדשה'
 
+    report:
+      username: 'שם משתמש'
+      email: 'דואר אלקטרוני'
+      registered: 'תאריך רישום'
+      last_week: 'בשבוע אחרון'
+      last_month: 'בחודש אחרון'
+      total_logins: 'סה"כ כניסות'
+      reports: 'דוחות'
+
 
   message:
     file_archived: 'קובץ הועבר לארכיון.'
