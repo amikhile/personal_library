@@ -174,6 +174,9 @@ Devise.setup do |config|
   # Defines name of the authentication token params key
   config.token_authentication_key = :auth_token
 
+  config.secret_key = 'd214ab2f4fa8dbee866146e312bf638d9a705203b4ef1021cdfc7684c7996df8ef0321501d3853686fb088cbfc333a6dbe32149e49cc9b4b99da5076c151842a'
+
+
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you

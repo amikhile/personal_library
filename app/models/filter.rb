@@ -8,4 +8,8 @@ class Filter < ActiveRecord::Base
 
 
   validates :name, :presence => true
+
+  def to_s
+    "Name:#{self.name} [Id:#{self.id}]"
+  end
 end

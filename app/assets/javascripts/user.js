@@ -1,4 +1,4 @@
-    //= require jquery
+//= require jquery
 //= require modernizr.custom
 //= require jquery_ujs
 //= require_self
@@ -38,7 +38,7 @@ $(document).ready(function () {
                 }
             },
             "themes":{
-                "rtl": rtl,
+                "rtl":rtl,
                 "theme":theme,
                 "icons":false,
                 "dots":false
@@ -88,8 +88,8 @@ $(document).ready(function () {
                 var checked = $('.checkbox_column input:checked');
                 checked.each(function () {
                     //see if this label not already drawn on the page
-                    var spanSelector =  "span[name=\""+label+"\"]";
-                    if(!$($(this).parent().siblings()[0]).children(spanSelector).size() > 0){
+                    var spanSelector = "span[name=\"" + label + "\"]";
+                    if (!$($(this).parent().siblings()[0]).children(spanSelector).size() > 0) {
                         var fileId = this.value;
                         $($(this).parent().siblings()[0]).append('<span class="label">' + label +
                             '<button class="close label-delete" data-fileid=' + fileId + ' data-labelid=' + labelId +
@@ -125,6 +125,37 @@ $(document).ready(function () {
     $('#languages').change(function () {
         window.location = $(this).val();
     });
+
+    //remember the last selected tab
+    $('#main-tabs a').on('click', function () {
+        localStorage.setItem('lastTabId', $(this).parent().attr('id'));
+    });
+
+    //mark as active latest selected tab, if it exists:
+    var lastTabId = localStorage.getItem('lastTabId');
+    if (lastTabId) {
+        $('#'+lastTabId).addClass('active');
+    }
+    else
+    {
+        // Set the first tab
+        $('#tab1').addClass('active');
+    }
+
+    handleSideBar();
+
+    //if the latest tab is Reports show the reports side menu
+    function handleSideBar() {
+        if($('#tab4').hasClass('active'))
+        {
+            $('#main.well').hide();
+            $('#reports.well').show();
+        }
+        else{
+            $('#main.well').show();
+            $('#reports.well').hide();
+        }
+    }
 })
 ;
 

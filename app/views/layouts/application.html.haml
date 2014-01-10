@@ -29,7 +29,7 @@
       .row-fluid
         - if current_user
           .span2
-            = render 'filters/index'
+            = render 'layouts/sidebar'
         .span10
           - flash.each do |name, msg|
             - klass = (name.to_s == 'error' || name.to_s == 'alert') ? 'alert fade in alert-error' : 'alert fade in alert-info'

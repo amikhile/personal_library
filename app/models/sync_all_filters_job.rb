@@ -1,7 +1,7 @@
 class SyncAllFiltersJob
 
   def self.my_logger
-    @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log", 10, 100.megabytes)
+    @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log", 10, 10.megabytes)
   end
 
   def self.sync_all

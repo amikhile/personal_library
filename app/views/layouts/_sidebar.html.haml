@@ -1,0 +1,19 @@
+.well{id:'main'}
+  %ul.nav.nav-list
+    %li= do_nav_link(t('ui.sidebar.inbox'), inbox_files_path(inbox: true), !cookies[:filter].present? && !cookies[:label].present? )
+    %li.divider
+    %li.nav-header
+      =t('ui.sidebar.filters')
+    - @filters_for_menu.each do |filter|
+      %li= nav_link(filter.name, inbox_files_path(filter: filter), filter, cookies[:filter])
+    %li.divider
+    %li.nav-header
+      =t('ui.sidebar.labels')
+    - @labels_for_menu.each do |label|
+      %li= nav_link(label.name, inbox_files_path(label: label), label, cookies[:label])
+
+
+.well{id:'reports'}
+  %ul.nav.nav-list
+    %li= do_nav_link('Library', show_user_logins_reports_path,false)
+

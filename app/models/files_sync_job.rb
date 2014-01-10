@@ -2,14 +2,14 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
 
 
   def perform
-    file_ids = get_file_ids_from_kmedia(filter_id)
+    file_ids = get_file_ids_from_kmedia_by_filter_id(filter_id)
     ids_of_files_to_fetch = check_existence(file_ids) unless file_ids.blank?
     get_the_new_files_from_kmedia(ids_of_files_to_fetch, secure) unless ids_of_files_to_fetch.blank?
     update_filter_last_sync
   end
 
   def my_logger
-    @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log", 10, 100.megabytes)
+    @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log", 10, 10.megabytes)
   end
 
   private
@@ -75,23 +75,34 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
     end
   end
 
-  def get_file_ids_from_kmedia(filter_id)
+  def get_file_ids_from_kmedia_by_filter_id(filter_id)
+    get_file_ids_from_kmedia_by_filter(Filter.find_by_id(filter_id) )
+  end
 
-    @token = KmediaToken.get_token
-    @filter = Filter.find_by_id(filter_id)
-    my_logger.info("Synchronizing files for filter #{@filter.name}")
+  def get_file_ids_from_kmedia_by_filter(filter)
+
+    @filter = filter
     content_type_ids = @filter.content_types.collect(&:kmedia_id).join(",")
     media_type_ids = @filter.media_types.collect(&:kmedia_id).join(",")
     languages_ids = @filter.languages.collect(&:kmedia_id).join(",")
-    params = {:content_type_ids => content_type_ids, :catalog_ids => @filter.catalogs,
+    options = {:content_type_ids => content_type_ids, :catalog_ids => @filter.catalogs,
               :from_date => @filter.from_date, :to_date => @filter.to_date, :media_type_ids => media_type_ids,
-              :lang_ids => languages_ids, :query_string => @filter.text}#, :created_from_date => @filter.last_sync }
-    my_logger.info("with parameters #{params}")
-    params[:auth_token] = @token
-    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/file_ids.json",params
+              :lang_ids => languages_ids, :query_string => @filter.text, :created_from_date => @filter.last_sync }
+
+    get_file_ids_from_kmedia(options)
 
 
+  end
+
+  def get_file_ids_from_kmedia(options = {})
+
+    @token = KmediaToken.get_token
+    my_logger.info("Synchronizing files for filter #{@filter}")
+    my_logger.info("with parameters #{options}")
+    options[:auth_token] = @token
+    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/file_ids.json", options
     hash = JSON.parse response
+
     ids =[]
     if(hash['error'])
       my_logger.error("Kmedia return #{hash['error']}")
@@ -103,15 +114,4 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
   end
 
 
-  #def get_files_from_kmedia(filter_id)
-  #
-  #  token = KmediaToken.get_token
-  #  filter = Filter.find_by_id(filter_id)
-  #
-  #  response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/files.json",
-  #                             :auth_token => token, :content_type => :json, :catalogs => filter.catalogs
-  #
-  #  hash = JSON.parse response
-  #  files = hash['item']
-  #end
-end
+  end

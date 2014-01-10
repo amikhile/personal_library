@@ -53,6 +53,8 @@ PersonalLibrary::Application.routes.draw do
     resources :reports do
       collection do
         get 'show_user_logins'
+        get 'menu'
+        get 'show_library_report'
       end
     end
     root :to => "inbox_files#index"

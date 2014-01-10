@@ -1,8 +1,8 @@
-scheduler = Rufus::Scheduler.start_new
+scheduler = Rufus::Scheduler.new
 
 
 def self.my_logger
-  @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log", 10, 100.megabytes)
+  @@my_logger ||= Logger.new("#{Rails.root}/log/files_sync_job.log", 10, 10.megabytes)
 end
 
 

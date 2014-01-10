@@ -11,15 +11,15 @@
         = select_tag 'languages', options_for_select(@menu_languages, selected: @current_menu_language), class: 'languages'
 
   - if current_user
-    %ul.nav.nav-tabs
-      %li.active
+    %ul.nav.nav-tabs{id: "main-tabs"}
+      %li{id: "tab1"}
         = link_to t('ui.sidebar.inbox'), inbox_files_path
-      %li
+      %li{id: "tab2"}
         = link_to t('ui.sidebar.filters'), filters_path
-      %li
+      %li{id: "tab3"}
         = link_to t('ui.sidebar.labels'), labels_path
       -if can?(:show_user_logins, :report)
-        %li
+        %li{id: "tab4"}
           = link_to t('ui.report.reports'), show_user_logins_reports_path
 
 
