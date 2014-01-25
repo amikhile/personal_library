@@ -1,0 +1,14 @@
+json.morning_lessons @morning_lessons do |lang_to_dates_hash|
+  json.lang lang_to_dates_hash['lang']
+  json.dates lang_to_dates_hash['dates'] do |files_by_date|
+     json.date files_by_date['date']
+     json.files files_by_date['files'] do |file|
+         json.id file['id']
+         json.name file['name']
+         json.updated file['updated']
+         json.url file['url']
+         json.size file['size']
+         json.type file['type']
+     end
+  end
+end

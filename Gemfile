@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.16'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -40,6 +40,7 @@ gem 'clockwork'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'rufus-scheduler'
+gem 'dalli'
 
 group :development, :test do
   gem "ruby-debug-base19x", '>= 0.11.30.pre10'

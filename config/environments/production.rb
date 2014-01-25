@@ -40,6 +40,7 @@ PersonalLibrary::Application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
   config.logger = Logger.new("log/#{Rails.env}.log", 8, 4 * 1024**2)
 
+  config.cache_store = :dalli_store
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 

@@ -59,6 +59,14 @@ PersonalLibrary::Application.routes.draw do
     end
     root :to => "inbox_files#index"
 
+
+    resources :api, only: [] do
+      collection do
+        get :morning_lessons
+      end
+
+    end
+
     # The priority is based upon order of creation:
     # first created -> highest priority.
 

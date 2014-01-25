@@ -39,12 +39,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
 
   def get_the_new_files_from_kmedia(ids_of_files_to_fetch, secure)
     ids_of_files_to_fetch.each_slice(100) do |ids_chunk|
-      response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/files.json",
-                                 auth_token: @token,
-                                 ids: ids_chunk.join(","),
-                                 secure: secure
-      hash = JSON.parse response
-      files = hash['item']
+      files = KmediaClient.get_the_files_from_kmedia(ids_chunk, secure)
       save_files(files)
     end
   end
@@ -76,7 +71,7 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
   end
 
   def get_file_ids_from_kmedia_by_filter_id(filter_id)
-    get_file_ids_from_kmedia_by_filter(Filter.find_by_id(filter_id) )
+    get_file_ids_from_kmedia_by_filter(Filter.find_by_id(filter_id))
   end
 
   def get_file_ids_from_kmedia_by_filter(filter)
@@ -86,8 +81,8 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
     media_type_ids = @filter.media_types.collect(&:kmedia_id).join(",")
     languages_ids = @filter.languages.collect(&:kmedia_id).join(",")
     options = {:content_type_ids => content_type_ids, :catalog_ids => @filter.catalogs,
-              :from_date => @filter.from_date, :to_date => @filter.to_date, :media_type_ids => media_type_ids,
-              :lang_ids => languages_ids, :query_string => @filter.text, :created_from_date => @filter.last_sync }
+               :from_date => @filter.from_date, :to_date => @filter.to_date, :media_type_ids => media_type_ids,
+               :lang_ids => languages_ids, :query_string => @filter.text, :created_from_date => @filter.last_sync}
 
     get_file_ids_from_kmedia(options)
 
@@ -95,23 +90,9 @@ class FilesSyncJob < Struct.new(:filter_id, :secure)
   end
 
   def get_file_ids_from_kmedia(options = {})
-
-    @token = KmediaToken.get_token
     my_logger.info("Synchronizing files for filter #{@filter}")
-    my_logger.info("with parameters #{options}")
-    options[:auth_token] = @token
-    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/file_ids.json", options
-    hash = JSON.parse response
-
-    ids =[]
-    if(hash['error'])
-      my_logger.error("Kmedia return #{hash['error']}")
-    else
-      ids = hash['ids']
-      my_logger.info("Found #{ids.split(',').size} ids. Retrieved ids #{ids} for filter #{@filter.name}")
-    end
-    ids
+    KmediaClient.get_file_ids_from_kmedia(options)
   end
 
 
-  end
+end
