@@ -1,15 +1,17 @@
 class KmediaClient
 
   def self.my_logger
-    @@my_logger ||= Logger.new("#{Rails.root}/log/kmedia_client.log", 10, 10.megabytes)
+    @@my_logger ||= Logger.new("#{Rails.root}/log/kmedia_client.log", 10, 1.megabytes)
   end
 
   def self.get_files_from_morning_lessons
     morning_lessons = []
+    my_logger.debug("Requesting morning lessons files info from kmedia.")
     begin
       response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/morning_lesson_files.json",
                                  nil
       kmedia_response = JSON.parse response
+      my_logger.info("Files for morning lessons retrieved.")
     rescue => e
       my_logger.error("Unable to get files form morning lessons from kmedia , #{e.message}")
     end
