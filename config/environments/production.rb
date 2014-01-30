@@ -3,6 +3,7 @@ PersonalLibrary::Application.configure do
 
   # Code is not reloaded between requests
   config.cache_classes = true
+  config.cache_store = :dalli_store
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
@@ -13,9 +14,6 @@ PersonalLibrary::Application.configure do
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
-
-  # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -40,7 +38,6 @@ PersonalLibrary::Application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
   config.logger = Logger.new("log/#{Rails.env}.log", 8, 4 * 1024**2)
 
-  config.cache_store = :dalli_store
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 
@@ -62,6 +59,14 @@ PersonalLibrary::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Don't fallback to assets pipeline
+  config.assets.compile = true
+  config.assets.precompile += %w( user.js )
+  config.assets.precompile += %w( user.css )
+
+  # Generate digests for assets URLs
+  config.assets.digest = true
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
