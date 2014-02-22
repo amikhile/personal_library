@@ -26,9 +26,9 @@ class FiltersController < ApplicationController
     @filter.users << current_user
     if @filter.save
       if @filter.template
-        redirect_to template_index_filters_path, notice: "Filter Template created successfully."
+        redirect_to template_index_filters_path, notice: t('messages.template_created_successfull', name: @filter.name)
       else
-        redirect_to filters_path, notice: "Filter created successfully."
+        redirect_to filters_path, notice: t('messages.filter_created_successfull', name: @filter.name)
       end
     end
   end
@@ -57,9 +57,9 @@ class FiltersController < ApplicationController
     @filter.last_sync = nil
     if @filter.save
       if @filter.template
-        redirect_to template_index_filters_path, notice: 'Filter Template updated successfully.'
+        redirect_to template_index_filters_path, notice: t('messages.template_updated_successfull', name: @filter.name)
       else
-        redirect_to filter_path(@filter), notice: 'Filter updated successfully.'
+        redirect_to filter_path(@filter), notice: t('messages.filter_updated_successfull', name: @filter.name)
       end
     else
       render action: 'edit'
@@ -78,7 +78,7 @@ class FiltersController < ApplicationController
     @filter.template = false
     @filter.users << current_user
     if @filter.save
-      redirect_to filters_path, notice: "Filter #{@filter.name} created successfully."
+      redirect_to filters_path, notice: t('messages.filter_created_successfull', name: @filter.name)
     end
 
   end
@@ -109,9 +109,9 @@ class FiltersController < ApplicationController
     @filter.inbox_files.each(&:destroy)
     @filter.destroy
     if @filter.template
-      redirect_to template_index_filters_path, notice: "Filter Template deleted successfully."
+      redirect_to template_index_filters_path, notice: t('messages.template_deleted_successfull', name: @filter.name)
     else
-      redirect_to filters_url, notice: "Filter deleted successfully."
+      redirect_to filters_url, notice: t('messages.filter_deleted_successfull', name: @filter.name)
     end
   end
 

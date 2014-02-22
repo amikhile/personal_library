@@ -1,5 +1,9 @@
 %header.subhead#overview
   %h2
-    =t('ui.content.new_filter')
+    -if @filter.template
+      =t('ui.content.new_template')
+    -else
+      =t('ui.content.new_filter')
+
 
 = render 'form'
