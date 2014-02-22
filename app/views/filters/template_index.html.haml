@@ -4,7 +4,8 @@
   %p
     -if can?(:create_template, Filter)
       = link_to t('ui.buttons.new_template'), new_filter_path(template: true), class: 'btn btn-success btn-large pull-right'
-
+  %br
+  %br
 %section
   = paginate @filters
 
