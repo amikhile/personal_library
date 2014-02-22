@@ -21,9 +21,11 @@ PersonalLibrary::Application.routes.draw do
     resources :filters do
       member do
         get 'export'
+        get 'create_from_template'
       end
       collection do
         get 'kmedia_catalogs'
+        get 'template_index'
       end
     end
     resources :labels do

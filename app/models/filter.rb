@@ -7,7 +7,11 @@ class Filter < ActiveRecord::Base
   has_and_belongs_to_many :languages
 
 
-  validates :name, :presence => true
+  validates :name, presence: true
+
+  scope :regular, -> { where(template: false) }
+  scope :template, -> { where(template: true) }
+
 
   def to_s
     "Name:#{self.name} [Id:#{self.id}]"

@@ -5,14 +5,15 @@
 
   .filters#filters{value: @filter.id}
     = f.input :name, label: t('ui.content.name')
-    = f.input :text, label: t('ui.content.text'), as: :string, wrapper_html: { :class => "inline_field_wrapper" }
+    = f.input :text, label: t('ui.content.text'), as: :string, wrapper_html: { class: "inline_field_wrapper" }
     = f.input :from_date, label: t('ui.content.from_date'), required: false, input_html: { data: {behaviour: "datepicker"}, class: 'float:left;'}, as: :string
     = f.input :to_date, label: t('ui.content.to_date'), required: false, input_html: { data: {behaviour: "datepicker"}}, as: :string
     = f.association :content_types, :collection => @content_types, label: t('ui.content.content_type'), prompt: "-- #{t('ui.instructions.select_ct')} --", :input_html => {:class => 'span5'}
     = f.association :media_types, :collection => @media_types, label: t('ui.content.media_type'), prompt: "-- #{t('ui.instructions.select_mt')} --", :input_html => {:class => 'span5'}
     = f.association :languages, :collection => @languages, label: t('ui.content.language'), prompt: "-- #{t('ui.instructions.select_language')} --", :input_html => {:class => 'span5'}
     =t('ui.content.catalogs')
-    %input#selected_catalogs{:name => "selected_catalogs", :type => "hidden", :value => ""}
+    %input#selected_catalogs{name: "selected_catalogs", type: "hidden", value: ""}
+    %input#template{name: "template", type: "hidden", value: @filter.template.to_s}
     #catalogs
   %hr.soften
   = display_actions_filter_form f, @filter.id ? filter_url(@filter) :filters_url

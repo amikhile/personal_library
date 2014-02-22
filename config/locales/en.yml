@@ -12,6 +12,15 @@ en:
     new_filter: 'New Filter'
     new_label: 'New Label'
     refresh: 'Refresh'
+    template: 'Recommended Filters'
+
+  messages:
+    template_updated_successfull: "Recommended Filter '%{name}' updated successfully."
+    filter_updated_successfull: "Filter '%{name}' updated successfully."
+    template_created_successfull: "Recommended Filter '%{name}' created successfully."
+    filter_created_successfull: "Filter '%{name}' created successfully."
+    template_deleted_successfull: "Recommended Filter '%{name}' deleted successfully."
+    filter_deleted_successfull: "Filter '%{name}' deleted successfully."
 
   ui:
     sidebar:
@@ -45,6 +54,10 @@ en:
       new_label: 'New Label'
       edit_label: 'Edit Label'
       label: 'Label'
+      template: 'Recommended Filter'
+      edit_template: 'Edit Recommended Filter'
+      new_template: 'New Recommended Filter'
+
 
     content-type:
       all: 'Any'
@@ -87,6 +100,8 @@ en:
       view_all: 'View all'
       logout: 'Logout'
       click_to_login: 'Click here to sign in'
+      back_to_templates: 'See all Recommended Filters'
+      create_from_template: 'Copy to my filters '
 
     icons:
       delete: 'Delete'
@@ -97,6 +112,7 @@ en:
       cancel: 'Cancel'
       new_filter: 'New filter'
       new_label: 'New Label'
+      new_template: 'New recommended filter'
 
     report:
       username: 'Username'
@@ -109,3 +125,4 @@ en:
 
   message:
     file_archived: 'File archived.'
+    no_files: 'No files found for this filter'

@@ -3,33 +3,47 @@ class FiltersController < ApplicationController
   before_filter :load_from_kmedia
 
   def index
-    @filters = current_user.filters.order(:id).page(params[:page])
+    @filters = current_user.filters.regular.order(:id).page(params[:page])
+  end
+
+  def template_index
+    @filters = Filter.template.order(:id).page(params[:page])
   end
 
   def new
     @filter = Filter.new
     authorize! :new, @filter
+    @filter.template = params[:template]
   end
 
   def create
     @filter = Filter.new
     authorize! :create, @filter
 
-    @filter.attributes=params[:filter]
-    @filter.catalogs=params[:selected_catalogs]
+    @filter.attributes = params[:filter]
+    @filter.catalogs = params[:selected_catalogs]
+    @filter.template = (params[:template] == 'true')
     @filter.users << current_user
     if @filter.save
-      redirect_to filters_path, :notice => "Filter Successfully created"
+      if @filter.template
+        redirect_to template_index_filters_path, notice: "Filter Template created successfully."
+      else
+        redirect_to filters_path, notice: "Filter created successfully."
+      end
     end
   end
+
 
   def show
     begin
       @filter = Filter.find(params[:id])
       authorize! :show, @filter
     rescue
-      redirect_to filters_path, :alert => "There is no Filter with ID=#{params[:id]}."
-      return
+      if @filter.template
+        redirect_to template_index_filters_path, alert: "There is no Filter Template with ID=#{params[:id]}."
+      else
+        redirect_to filters_path, :alert => "There is no Filter with ID=#{params[:id]}."
+      end
     end
   end
 
@@ -38,14 +52,35 @@ class FiltersController < ApplicationController
     authorize! :update, @filter
 
     @filter.attributes = params[:filter]
-    @filter.catalogs=params[:selected_catalogs]
+    @filter.catalogs = params[:selected_catalogs]
     @filter.users << current_user unless @filter.users.include? current_user
-    @filter.last_sync=nil
+    @filter.last_sync = nil
     if @filter.save
-      redirect_to filter_path(@filter), :notice => "Filter was Successfully updated"
+      if @filter.template
+        redirect_to template_index_filters_path, notice: 'Filter Template updated successfully.'
+      else
+        redirect_to filter_path(@filter), notice: 'Filter updated successfully.'
+      end
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
+  end
+
+  def create_from_template
+    authorize! :create, @filter
+
+    @template = Filter.find(params[:id])
+    @filter = @template.dup
+    @filter.languages = @template.languages
+    @filter.content_types = @template.content_types
+    @filter.media_types = @template.media_types
+
+    @filter.template = false
+    @filter.users << current_user
+    if @filter.save
+      redirect_to filters_path, notice: "Filter #{@filter.name} created successfully."
+    end
+
   end
 
   def export
@@ -63,7 +98,7 @@ class FiltersController < ApplicationController
     response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/catalogs.json",
                                auth_token: token, content_type: :json, root: catalog_id, locale: I18n.locale
     hash = JSON.parse response
-    retrieved_catalogs =  hash['item'].sort_by{|e| e['name']}
+    retrieved_catalogs = hash['item'].sort_by { |e| e['name'] }
     tree = transform_for_tree(retrieved_catalogs, selected_catalogs)
     render json: tree.to_json
   end
@@ -73,7 +108,11 @@ class FiltersController < ApplicationController
     authorize! :destroy, @filter
     @filter.inbox_files.each(&:destroy)
     @filter.destroy
-    redirect_to filters_url, :notice => "Filter deleted successfully."
+    if @filter.template
+      redirect_to template_index_filters_path, notice: "Filter Template deleted successfully."
+    else
+      redirect_to filters_url, notice: "Filter deleted successfully."
+    end
   end
 
   private

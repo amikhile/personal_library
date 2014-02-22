@@ -9,6 +9,15 @@ he:
     new_filter: 'פילטר חדש'
     new_label: 'תווית חדשה'
     refresh: 'רענן'
+    template: 'פילטרים מומלצים'
+
+  messages:
+    template_updated_successfull: "פילטר מומלץ '%{name}' עודכן בהצלחה."
+    filter_updated_successfull: "פילטר '%{name}' עודכן בהצלחה."
+    template_created_successfull: "פילטר מומלץ '%{name}' נוצר בהצלחה."
+    filter_created_successfull: "פילטר '%{name}' נוצר בהצלחה."
+    template_deleted_successfull: "פילטר מומלץ '%{name}' נמחק."
+    filter_deleted_successfull: "פילטר '%{name}' נמחק."
 
   ui:
     sidebar:
@@ -41,6 +50,9 @@ he:
       edit_filter: 'עריכת פילטר'
       new_label: 'תווית חדשה'
       label: 'תווית'
+      template: 'המלצה לפילטר'
+      edit_template: 'עריכת המלצה לפילטר'
+      new_template: 'צור המלצה לפילטר'
 
     content-type:
       all: 'כל הסוגים'
@@ -84,6 +96,8 @@ he:
       logout: 'לצאת'
       click_to_login: 'לחץ כאן כדי להכנס'
       open_in_google: 'לפתוח ב google drive'
+      back_to_templates: 'הצג את כל ההמלצות לפילטרים'
+      create_from_template: 'העתק לפילטרים שלי'
 
     icons:
       delete: 'מחק'
@@ -94,6 +108,7 @@ he:
       cancel: 'בטל'
       new_filter: 'צור פילטר חדש'
       new_label: 'צור תווית חדשה'
+      new_template: 'צור פילטר מומלץ'
 
     report:
       username: 'שם משתמש'

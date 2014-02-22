@@ -1,10 +1,18 @@
 %header.subhead#overview
   %h2
-    =t('ui.content.edit_filter')
+    -if @filter.template
+      =t('ui.content.edit_template')
+    -else
+      =t('ui.content.edit_filter')
 
   .subnav
     %ul.nav.nav-pills
       %li= link_to t('ui.actions.show'), [@filter]
-      %li= link_to t('ui.actions.view_all'), filters_path
+      -if @filter.template
+        %li
+          = link_to t('ui.actions.back_to_templates'), template_index_filters_path
+      -else
+        %li
+          = link_to t('ui.actions.view_all'), filters_path
 
 = render 'form'

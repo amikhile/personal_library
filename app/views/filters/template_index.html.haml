@@ -1,0 +1,34 @@
+%header.subhead#overview
+  %h2
+    =t('navbar.template')
+  %p
+    -if can?(:create_template, Filter)
+      = link_to t('ui.buttons.new_template'), new_filter_path(template: true), class: 'btn btn-success btn-large pull-right'
+
+%section
+  = paginate @filters
+
+  %table.table.table-striped.table-bordered.table-condensed
+    %thead
+      %tr
+        %th=t('ui.content.name')
+        %th=t('ui.content.text')
+        %th=t('ui.content.from_date')
+        %th=t('ui.content.to_date')
+        %th=t('ui.content.actions')
+    %tbody
+      - @filters.each do |filter|
+        %tr(class="#{cycle('odd', 'even')}")
+          %td.small= filter.name
+          %td.small= filter.text
+          %td.small= filter.from_date.try(:to_date)
+          %td.small= filter.to_date.try(:to_date)
+          %td= link_to t('ui.actions.create_from_template'), create_from_template_filter_path(filter)
+          -if can?(:read, filter)
+            %td= link_to t('ui.actions.show'), [filter]
+          -if can?(:create_template, Filter)
+            -if can?(:update, filter)
+              %td= link_to t('ui.actions.edit'), edit_filter_path(filter)
+            -if can?(:destroy, filter)
+              %td
+                = link_to t('ui.actions.delete'), filter_path(filter), :confirm => t('ui.actions.confirm'), :method => :delete, :class => 'btn-small btn-danger'

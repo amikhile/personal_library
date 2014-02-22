@@ -6,9 +6,18 @@ ru:
     filters: 'Фильтры'
     labels: 'Ярлыки'
     add_to_label: 'Добавитъ ярлык'
-    new_filter: 'Новый фильтр'
-    new_label: 'Новый ярлык'
+    new_filter: 'Создать фильтр'
+    new_label: 'Создать ярлык'
     refresh: 'Обновитъ'
+    template: 'Рекомендуемые Фильтры'
+
+  messages:
+    template_updated_successfull: "Рекомендуемый фильтр '%{name}' успешно сохранён."
+    filter_updated_successfull: "Фильтр '%{name}' успешно сохранён."
+    template_created_successfull: "Рекомендуемый фильтр '%{name}' успешно создан."
+    filter_created_successfull: "Фильтр '%{name}' успешно создан."
+    template_deleted_successfull: "Рекомендуемый фильтр '%{name}' удалён."
+    filter_deleted_successfull: "Фильтр '%{name}' удалён."
 
   ui:
     sidebar:
@@ -37,10 +46,13 @@ ru:
       language: 'Язык'
       catalogs: 'Каталоги'
       filter: 'Фильтр'
-      edit_filter: 'Изменение фильтра'
+      edit_filter: 'Редактировать фильтр'
       new_label: 'Новый ярлык'
-      edit_label: 'Изменение ярлыка'
+      edit_label: 'Редактировать ярлык'
       label: 'Ярлык'
+      template: 'Рекомендуемые Фильтры'
+      edit_template: 'Редактировать рекомендуемый фильтр'
+      new_template: 'Создать рекомендуемый фильтр'
 
     content-type:
       all: 'Всё'
@@ -84,6 +96,8 @@ ru:
       logout: 'Выход'
       click_to_login: 'Нажмите здесь чтобы войти'
       open_in_google: 'Открыть в google drive'
+      back_to_templates: 'Все рекомендуемые Фильтры'
+      create_from_template: 'Скопировать к себе в фильтры'
 
     icons:
       delete: 'Удалить'
@@ -91,9 +105,10 @@ ru:
 
     buttons:
       update: 'Сохранить'
-      cancel: 'Отмена'
+      cancel: 'Отменить'
       new_filter: 'Создать фильтр'
       new_label: 'Создать ярлык'
+      new_template: 'Создать рекомендуемый фильтр'
 
     report:
       username: 'Логин'

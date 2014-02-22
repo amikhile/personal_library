@@ -14,11 +14,13 @@ class Ability
       can :manage, :all
       can :search_secure, :all
       cannot [:show_user_logins], :report
+      cannot [:create_template], Filter
     elsif user.role? :simple_user
       can :manage, :all
       cannot :manage, User
       cannot :search_secure, :all
       cannot [:show_user_logins], :report
+      cannot [:create_template], Filter
     else # Guest
     end
 
