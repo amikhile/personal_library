@@ -1,2 +1,2 @@
-class Configuration
-end
+MAIN_LANGS = %w(ENG HEB RUS)
+MAIN_LOCALES = %w(en he ru)
