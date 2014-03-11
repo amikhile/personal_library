@@ -14,7 +14,6 @@
     = f.association :languages, :collection => @languages, label: t('ui.content.language'), prompt: "-- #{t('ui.instructions.select_language')} --", :input_html => {:class => 'span5'}
     =t('ui.content.catalogs')
     %input#selected_catalogs{name: "selected_catalogs", type: "hidden", value: ""}
-    %input#template{name: "template", type: "hidden", value: @filter.template.to_s}
     #catalogs
   %hr.soften
   = display_actions_filter_form f, @filter.id ? filter_url(@filter) :filters_url

@@ -1,9 +1,6 @@
 %header.subhead#overview
   %h2
-    -if @filter.template
-      =t('ui.content.template')
-    -else
-      =t('ui.content.filter')
+    =t('ui.content.filter')
   .subnav
     %ul.nav.nav-pills
       -if can?(:read, @filter)
