@@ -9,9 +9,6 @@ class Filter < ActiveRecord::Base
 
   validates :name, presence: true
 
-  scope :regular, -> { where(template: false) }
-  scope :template, -> { where(template: true) }
-
 
   def to_s
     "Name:#{self.name} [Id:#{self.id}]"

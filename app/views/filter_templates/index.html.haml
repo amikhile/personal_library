@@ -2,8 +2,8 @@
   %h2
     =t('navbar.template')
   %p
-    -if can?(:create_template, Filter)
-      = link_to t('ui.buttons.new_template'), new_filter_path(template: true), class: 'btn btn-success btn-large pull-right'
+    -if can?(:create_template, FilterTemplate)
+      = link_to t('ui.buttons.new_template'), new_filter_template_path, class: 'btn btn-success btn-large pull-right'
   %br
   %br
 %section
@@ -24,12 +24,12 @@
           %td.small= filter.text
           %td.small= filter.from_date.try(:to_date)
           %td.small= filter.to_date.try(:to_date)
-          %td= link_to t('ui.actions.create_from_template'), create_from_template_filter_path(filter)
+          %td= link_to t('ui.actions.create_from_template'), create_from_template_filters_path(template_id: filter.id)
           -if can?(:read, filter)
             %td= link_to t('ui.actions.show'), [filter]
-          -if can?(:create_template, Filter)
+          -if can?(:create_template, FilterTemplate)
             -if can?(:update, filter)
-              %td= link_to t('ui.actions.edit'), edit_filter_path(filter)
+              %td= link_to t('ui.actions.edit'), edit_filter_template_path(filter)
             -if can?(:destroy, filter)
               %td
-                = link_to t('ui.actions.delete'), filter_path(filter), :confirm => t('ui.actions.confirm'), :method => :delete, :class => 'btn-small btn-danger'
+                = link_to t('ui.actions.delete'), filter_template_path(filter), :confirm => t('ui.actions.confirm'), :method => :delete, :class => 'btn-small btn-danger'

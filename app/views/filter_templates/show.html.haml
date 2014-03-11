@@ -1,0 +1,41 @@
+%header.subhead#overview
+  %h2
+    =t('ui.content.template')
+
+  .subnav
+    %ul.nav.nav-pills
+      -if can?(:read, @filter)
+        %li
+          = link_to t('ui.actions.back_to_templates'), filter_templates_path
+
+      -if can?(:create_template, @filter)
+        -if can?(:update, @filter)
+          %li
+            = link_to t('ui.actions.edit'), edit_filter_template_path(@filter)
+        -if can?(:destroy, @filter)
+          %li
+            = link_to t('ui.actions.delete'), filter_template_path(@filter), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
+
+
+
+-if can?(:create_template, @filter)
+  %section
+    %strong Name:
+    %table.table.table-striped.table-bordered.table-condensed
+      %tbody
+        - @filter.filter_template_names.each do |name|
+          %tr
+            %td= name.code3
+            %td= name.name
+%section.well
+  %p
+  -if cannot?(:create_template, @filter)
+    = display_show_item(t('ui.content.name'), @filter.name)
+  = display_show_item(t('ui.content.text'), @filter.text)
+  = display_show_item(t('ui.content.from_date'), @filter.from_date)
+  = display_show_item(t('ui.content.to_date'), @filter.to_date)
+  = display_show_item(t('ui.content.content_type'), @filter.content_types.first.try(:name))
+  = display_show_item(t('ui.content.media_type'), @filter.media_types.first.try(:name))
+  = display_show_item(t('ui.content.language'), @filter.languages.first.try(:language))
+  = display_show_item(t('ui.content.created'), @filter.created_at.to_s(:long_ordinal))
+  = display_show_item(t('ui.content.updated'), @filter.updated_at.to_s(:long_ordinal))

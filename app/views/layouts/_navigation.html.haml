@@ -19,7 +19,7 @@
       %li{id: "tab3"}
         = link_to t('ui.sidebar.labels'), labels_path
       %li{id: "tab5"}
-        = link_to t('navbar.template'), template_index_filters_path
+        = link_to t('navbar.template'), filter_templates_path
       -if can?(:show_user_logins, :report)
         %li{id: "tab4"}
           = link_to t('ui.report.reports'), show_user_logins_reports_path

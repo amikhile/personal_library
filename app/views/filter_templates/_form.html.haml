@@ -3,9 +3,11 @@
   %hr.soften
   = display_errors f
 
-  .filters#filters{value: "/filters/kmedia_catalogs.json?filter_id=#{@filter.id}"}
+  .filters#filters{value: "/filter_templates/kmedia_catalogs.json?filter_id=#{@filter.id}"}
 
-    = f.input :name, label: t('ui.content.name')
+    = f.simple_fields_for :filter_template_names, @filter.filter_template_names do |name_form|
+      = name_form.input :code3, value: name_form.object.code3, as: :hidden
+      = name_form.input :name, label: name_form.object.code3
     = f.input :text, label: t('ui.content.text'), as: :string, wrapper_html: { class: "inline_field_wrapper" }
     = f.input :from_date, label: t('ui.content.from_date'), required: false, input_html: { data: {behaviour: "datepicker"}, class: 'float:left;'}, as: :string
     = f.input :to_date, label: t('ui.content.to_date'), required: false, input_html: { data: {behaviour: "datepicker"}}, as: :string
@@ -14,7 +16,7 @@
     = f.association :languages, :collection => @languages, label: t('ui.content.language'), prompt: "-- #{t('ui.instructions.select_language')} --", :input_html => {:class => 'span5'}
     =t('ui.content.catalogs')
     %input#selected_catalogs{name: "selected_catalogs", type: "hidden", value: ""}
-    %input#template{name: "template", type: "hidden", value: @filter.template.to_s}
+
     #catalogs
   %hr.soften
   = display_actions_filter_form f, @filter.id ? filter_url(@filter) :filters_url

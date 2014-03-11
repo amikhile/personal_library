@@ -56,4 +56,18 @@ class KmediaClient
     end
     ids
   end
+
+  def self.get_catalogs_from_kmedia(options = {})
+    retrieved_catalogs=[]
+    begin
+    token = KmediaToken.get_token
+    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/catalogs.json",
+                               auth_token: token, content_type: :json, root: options[:root], locale: I18n.locale
+    hash = JSON.parse response
+    retrieved_catalogs = hash['item'].sort_by { |e| e['name'] }
+    rescue => e
+      my_logger.error("Unable to get catalogs info from kmedia , #{e.message}")
+    end
+    retrieved_catalogs
+  end
 end

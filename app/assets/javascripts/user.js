@@ -27,7 +27,7 @@ $(document).ready(function () {
         $("#catalogs").jstree({
             "json_data":{
                 "ajax":{
-                    "url":"/filters/kmedia_catalogs.json?filter_id=" + $('#filters').attr("value"),
+                    "url":$('#filters').attr("value"),
                     "data":function (n) {
                         return { catalog_id:n.attr ? n.attr("id") : ""};
                     },

@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def load_filters_and_labels
     @ids = params[:selected_files].split(",") rescue []
-    @filters_for_menu = current_user.filters.regular.order(:name)
+    @filters_for_menu = current_user.filters.order(:name)
     @labels_for_menu = current_user.labels.order(:name)
     init_selected_filter_and_label_from_cookies
   end

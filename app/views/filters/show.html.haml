@@ -7,20 +7,14 @@
   .subnav
     %ul.nav.nav-pills
       -if can?(:read, @filter)
-        -if @filter.template
-          %li
-            = link_to t('ui.actions.back_to_templates'), template_index_filters_path
-        -else
-          %li
-            = link_to t('ui.actions.view_all'), filters_path
-
-      -if can?(:create_template, @filter)
-        -if can?(:update, @filter)
-          %li
-            = link_to t('ui.actions.edit'), edit_filter_path(@filter)
-        -if can?(:destroy, @filter)
-          %li
-            = link_to t('ui.actions.delete'), filter_path(@filter), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
+        %li
+          = link_to t('ui.actions.view_all'), filters_path
+      -if can?(:update, @filter)
+        %li
+          = link_to t('ui.actions.edit'), edit_filter_path(@filter)
+      -if can?(:destroy, @filter)
+        %li
+          = link_to t('ui.actions.delete'), filter_path(@filter), :class => 'label label-important', :confirm => 'Are you sure?', :method => :delete
 
 
 %section.well

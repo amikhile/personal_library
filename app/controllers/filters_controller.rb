@@ -3,17 +3,13 @@ class FiltersController < ApplicationController
   before_filter :load_from_kmedia
 
   def index
-    @filters = current_user.filters.regular.order(:id).page(params[:page])
+    @filters = current_user.filters.order(:id).page(params[:page])
   end
 
-  def template_index
-    @filters = Filter.template.order(:id).page(params[:page])
-  end
 
   def new
     @filter = Filter.new
     authorize! :new, @filter
-    @filter.template = params[:template]
   end
 
   def create
@@ -22,14 +18,9 @@ class FiltersController < ApplicationController
 
     @filter.attributes = params[:filter]
     @filter.catalogs = params[:selected_catalogs]
-    @filter.template = (params[:template] == 'true')
     @filter.users << current_user
     if @filter.save
-      if @filter.template
-        redirect_to template_index_filters_path, notice: t('messages.template_created_successfull', name: @filter.name)
-      else
-        redirect_to filters_path, notice: t('messages.filter_created_successfull', name: @filter.name)
-      end
+      redirect_to filters_path, notice: t('messages.filter_created_successfull', name: @filter.name)
     end
   end
 
@@ -39,11 +30,7 @@ class FiltersController < ApplicationController
       @filter = Filter.find(params[:id])
       authorize! :show, @filter
     rescue
-      if @filter.template
-        redirect_to template_index_filters_path, alert: "There is no Filter Template with ID=#{params[:id]}."
-      else
-        redirect_to filters_path, :alert => "There is no Filter with ID=#{params[:id]}."
-      end
+      redirect_to filters_path, :alert => "There is no Filter with ID=#{params[:id]}."
     end
   end
 
@@ -56,26 +43,26 @@ class FiltersController < ApplicationController
     @filter.users << current_user unless @filter.users.include? current_user
     @filter.last_sync = nil
     if @filter.save
-      if @filter.template
-        redirect_to template_index_filters_path, notice: t('messages.template_updated_successfull', name: @filter.name)
-      else
-        redirect_to filter_path(@filter), notice: t('messages.filter_updated_successfull', name: @filter.name)
-      end
+      redirect_to filter_path(@filter), notice: t('messages.filter_updated_successfull', name: @filter.name)
     else
       render action: 'edit'
     end
   end
 
   def create_from_template
+    @filter = Filter.new
     authorize! :create, @filter
 
-    @template = Filter.find(params[:id])
-    @filter = @template.dup
+    @template = FilterTemplate.find(params[:template_id])
+
+    @filter.attributes = @template.attributes
     @filter.languages = @template.languages
     @filter.content_types = @template.content_types
     @filter.media_types = @template.media_types
-
-    @filter.template = false
+    @filter.name = @template.name
+    unless @template.from_date.present?
+      @filter.from_date = Date.today
+    end
     @filter.users << current_user
     if @filter.save
       redirect_to filters_path, notice: t('messages.filter_created_successfull', name: @filter.name)
@@ -92,13 +79,8 @@ class FiltersController < ApplicationController
 
 
   def kmedia_catalogs
-    catalog_id = params[:catalog_id]
+    retrieved_catalogs = KmediaClient.get_catalogs_from_kmedia(root: params[:catalog_id])
     selected_catalogs = Filter.find(params[:filter_id]).catalogs.split(",") rescue []
-    token = KmediaToken.get_token
-    response = RestClient.post "#{APP_CONFIG['kmedia_url']}/admin/api/api/catalogs.json",
-                               auth_token: token, content_type: :json, root: catalog_id, locale: I18n.locale
-    hash = JSON.parse response
-    retrieved_catalogs = hash['item'].sort_by { |e| e['name'] }
     tree = transform_for_tree(retrieved_catalogs, selected_catalogs)
     render json: tree.to_json
   end
@@ -106,13 +88,8 @@ class FiltersController < ApplicationController
   def destroy
     @filter = Filter.find(params[:id])
     authorize! :destroy, @filter
-    @filter.inbox_files.each(&:destroy)
     @filter.destroy
-    if @filter.template
-      redirect_to template_index_filters_path, notice: t('messages.template_deleted_successfull', name: @filter.name)
-    else
-      redirect_to filters_url, notice: t('messages.filter_deleted_successfull', name: @filter.name)
-    end
+    redirect_to filters_url, notice: t('messages.filter_deleted_successfull', name: @filter.name)
   end
 
   private
@@ -132,6 +109,5 @@ class FiltersController < ApplicationController
     css_class = "jstree-checked" if selected_ids.include? catalog_id.to_s()
     css_class
   end
-
 
 end

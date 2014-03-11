@@ -1,0 +1,12 @@
+%header.subhead#overview
+  %h2
+    =t('ui.content.edit_template')
+
+
+  .subnav
+    %ul.nav.nav-pills
+      %li= link_to t('ui.actions.show'), filter_template_url
+      %li
+        = link_to t('ui.actions.back_to_templates'), filter_templates_path
+
+= render 'form'
