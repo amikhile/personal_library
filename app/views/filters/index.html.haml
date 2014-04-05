@@ -16,6 +16,7 @@
         %th=t('ui.content.text')
         %th=t('ui.content.from_date')
         %th=t('ui.content.to_date')
+        %th=t('ui.content.download_to')
         %th=t('ui.content.actions')
     %tbody
       - @filters.each do |filter|
@@ -24,6 +25,7 @@
           %td.small= filter.text
           %td.small= filter.from_date.try(:to_date)
           %td.small= filter.to_date.try(:to_date)
+          %td.small= get_dowload_to_text(filter)
           -if can?(:read, filter)
             %td= link_to t('ui.actions.show'), [filter]
           -if can?(:update, filter)

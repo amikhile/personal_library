@@ -4,9 +4,13 @@
   = display_errors f
 
   .filters#filters{value: "/filters/kmedia_catalogs.json?filter_id=#{@filter.id}"}
-
-    = f.input :name, label: t('ui.content.name')
-    = f.input :text, label: t('ui.content.text'), as: :string, wrapper_html: { class: "inline_field_wrapper" }
+    .row-fluid
+      .span4
+        = f.input :name, label: t('ui.content.name')
+        = f.input :text, label: t('ui.content.text'), as: :string, wrapper_html: { class: "inline_field_wrapper" }
+      .span4
+        = f.input :download_mobile,label: t('ui.content.download_to_mobile')
+        = f.input :download_pc, label: t('ui.content.download_to_pc'), boolean_style: :inline
     = f.input :from_date, label: t('ui.content.from_date'), required: false, input_html: { data: {behaviour: "datepicker"}, class: 'float:left;'}, as: :string
     = f.input :to_date, label: t('ui.content.to_date'), required: false, input_html: { data: {behaviour: "datepicker"}}, as: :string
     = f.association :content_types, :collection => @content_types, label: t('ui.content.content_type'), prompt: "-- #{t('ui.instructions.select_ct')} --", :input_html => {:class => 'span5'}

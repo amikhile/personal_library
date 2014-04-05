@@ -23,4 +23,11 @@ module ApplicationHelper
     return text_extensions.include? type
   end
 
+  def get_dowload_to_text(filter)
+    text=''
+    text+= t('ui.content.mobile')  if filter.download_mobile
+    text+= ", "  if filter.download_mobile && filter.download_pc
+    text+= t('ui.content.pc') if filter.download_pc
+    text
+  end
 end

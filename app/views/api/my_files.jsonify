@@ -1,0 +1,22 @@
+json.response do
+    if @errors.any?
+        json.errors @errors do |error|
+            json.msg error
+        end
+    end
+    if @inbox_files.present?
+        json.metadata do
+            json.total_pages  @inbox_files.total_pages
+            json.current_page  @inbox_files.current_page
+            json.per_page @per_page
+        end
+        json.files @inbox_files do |file|
+            json.id file.id
+            json.name file.kmedia_file.name
+            json.date file.kmedia_file.date
+            json.url file.kmedia_file.url
+            json.type file.kmedia_file.ext
+        end
+    end
+end
+

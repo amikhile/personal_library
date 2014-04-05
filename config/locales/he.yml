@@ -53,6 +53,11 @@ he:
       template: 'המלצה לפילטר'
       edit_template: 'עריכת המלצה לפילטר'
       new_template: 'צור המלצה לפילטר'
+      download_to_mobile: 'הורד לנייד'
+      download_to_pc: 'הורד למחשב'
+      download_to: 'הורדה ל:'
+      mobile: 'נייד'
+      pc: 'מחשב'
 
     content-type:
       all: 'כל הסוגים'

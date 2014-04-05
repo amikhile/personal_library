@@ -9,6 +9,9 @@ class Filter < ActiveRecord::Base
 
   validates :name, presence: true
 
+  scope :mobile, -> { where(download_mobile: true) }
+  scope :pc, -> { where(download_pc: true) }
+
 
   def to_s
     "Name:#{self.name} [Id:#{self.id}]"
