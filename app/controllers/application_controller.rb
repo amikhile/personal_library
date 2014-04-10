@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :mailer_set_url_options, :check_logged_in, :authenticate_user!, :set_data
+  before_filter :mailer_set_url_options, :set_locale, :check_logged_in, :authenticate_user!,  :load_filters_and_labels
+
 
   def mailer_set_url_options
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
@@ -62,11 +63,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_data
-    load_filters_and_labels
+  def set_locale
     I18n.locale = @locale = params[:locale] || cookies[:library_locale] || 'en'
     cookies[:library_locale] = @locale
     @menu_languages = Language.menu_languages('en', 'he', 'ru').map{|x| [x['language'], root_url(x['locale'])]}
     @current_menu_language = root_url(@locale)
   end
+
 end
