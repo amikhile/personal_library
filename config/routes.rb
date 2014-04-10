@@ -71,7 +71,7 @@ PersonalLibrary::Application.routes.draw do
     resources :api, only: [] do
       collection do
         get :morning_lessons
-        get :my_files
+#        get :my_files
       end
 
     end
