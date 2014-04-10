@@ -53,11 +53,11 @@ ru:
       template: 'Рекомендуемые Фильтры'
       edit_template: 'Редактировать рекомендуемый фильтр'
       new_template: 'Создать рекомендуемый фильтр'
-      download_to_mobile: 'Download to mobile'
-      download_to_pc: 'Download to pc'
-      download_to: 'Download to:'
-      mobile: 'mobile'
-      pc: 'pc'
+      download_to_mobile: 'Скачивать на мобильный'
+      download_to_pc: 'Скачивать на компьютер'
+      download_to: 'Скачивать на:'
+      mobile: 'мобильный'
+      pc: 'компьютер'
 
     content-type:
       all: 'Всё'
