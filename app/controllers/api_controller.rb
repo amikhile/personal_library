@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
-  skip_before_filter :check_logged_in, :authenticate_user!, :set_data
+  skip_before_filter :check_logged_in, :authenticate_user!, :set_data, :set_locale, :load_filters_and_labels
 
   #GET http://mylibrary.kbb1.com/api/morning_lessons.json?lang=ENG
   def morning_lessons
@@ -17,7 +17,6 @@ class ApiController < ApplicationController
     @errors=[]
 
     username = params[:usr]
-    #TODO authorize usr when api available
     @user = User.find_by_username(username)
     @errors << "User #{username} not found." unless @user.present?
     @errors << "Mandatory parameter 'for' is missing." unless params[:for].present?
