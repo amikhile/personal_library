@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :mailer_set_url_options, :set_locale, :check_logged_in, :authenticate_user!,  :load_filters_and_labels
-
+  helper_method :sort_direction, :sort_column
 
   def mailer_set_url_options
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
@@ -9,6 +9,26 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : default_sort_direction
+  end
+
+  def sort_column
+    params[:sort] || default_sort_column
+  end
+
+  def sort_order
+    sort_column + ' ' + sort_direction
+  end
+
+  def default_sort_column
+    'id'
+  end
+
+  def default_sort_direction
+    'desc'
   end
 
   private

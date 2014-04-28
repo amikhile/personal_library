@@ -4,7 +4,6 @@ class ReportsController < ApplicationController
   def show_user_logins
     @reports = []
     User.find_each do |user|
-      logins = user.audits
       report = UserReport.new()
       report.user = user
       report.logins_count = user.sign_in_count
@@ -15,6 +14,7 @@ class ReportsController < ApplicationController
     if (params[:format]=='csv')
       send_data UserReport.reports_to_csv(@reports)
     else
+      sort
       @reports
     end
   end
@@ -28,5 +28,37 @@ class ReportsController < ApplicationController
     @report.average_month_new_users= User.group("DATE_TRUNC('month', created_at)").count
     @report
   end
+
+  private
+  #%th= sortable("username", t('ui.report.username'))
+  #%th= sortable("email", t('ui.report.email'))
+  #%th= sortable("registered", t('ui.report.registered'))
+  #%th= sortable("last_week", t('ui.report.last_week'))
+  #%th= sortable("last_month", t('ui.report.last_month'))
+  #%th= sortable("total_logins", t('ui.report.total_logins'))
+  def sort
+      if (sort_column == 'username')
+        @reports = @reports.sort_by{|report| report.user.username} if sort_direction=='asc'
+        @reports = @reports.sort_by{|report| report.user.username}.reverse if sort_direction=='desc'
+      elsif (sort_column == 'email')
+        @reports = @reports.sort_by{|report| report.user.email} if sort_direction=='asc'
+        @reports = @reports.sort_by{|report| report.user.email}.reverse if sort_direction=='desc'
+      elsif (sort_column == 'registered')
+        @reports = @reports.sort_by{|report| report.user.created_at.to_date} if sort_direction=='asc'
+        @reports = @reports.sort_by{|report| report.user.created_at.to_date}.reverse if sort_direction=='desc'
+      elsif (sort_column == 'last_week')
+        @reports = @reports.sort_by{|report| report.login_last_week} if sort_direction=='asc'
+        @reports = @reports.sort_by{|report| report.login_last_week}.reverse if sort_direction=='desc'
+      elsif (sort_column == 'last_month')
+        @reports = @reports.sort_by{|report| report.login_last_month} if sort_direction=='asc'
+        @reports = @reports.sort_by{|report| report.login_last_month}.reverse if sort_direction=='desc'
+      elsif (sort_column == 'total_logins')
+        @reports = @reports.sort_by{|report| report.logins_count} if sort_direction=='asc'
+        @reports = @reports.sort_by{|report| report.logins_count}.reverse if sort_direction=='desc'
+      end
+  end
+
+
+
 
 end

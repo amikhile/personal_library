@@ -7,12 +7,12 @@
   %table.table.table-striped.table-bordered.table-condensed
     %thead
       %tr
-        %th= t('ui.report.username')
-        %th= t('ui.report.email')
-        %th= t('ui.report.registered')
-        %th= t('ui.report.last_week')
-        %th= t('ui.report.last_month')
-        %th= t('ui.report.total_logins')
+        %th= sortable("username", t('ui.report.username'))
+        %th= sortable("email", t('ui.report.email'))
+        %th= sortable("registered", t('ui.report.registered'))
+        %th= sortable("last_week", t('ui.report.last_week'))
+        %th= sortable("last_month", t('ui.report.last_month'))
+        %th= sortable("total_logins", t('ui.report.total_logins'))
     %tbody
       - @reports.each do |report|
         %tr(class="#{cycle('odd', 'even')}")

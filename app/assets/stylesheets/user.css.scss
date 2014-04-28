@@ -228,3 +228,15 @@ li.nav-header{
   float: right
 }
 
+th .current {
+  padding-right: 12px;
+}
+
+th .asc:after {
+  content: "▲";
+
+}
+
+th .desc:after {
+  content: "▼";
+}
